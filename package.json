@@ -1,0 +1,24 @@
+{
+  "name": "fairsplit",
+  "version": "1.0.0",
+  "description": "A web application developed with React and Node to track shared expenses in a group.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IsaacCheng9/fairsplit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IsaacCheng9/fairsplit/issues"
+  },
+  "homepage": "https://github.com/IsaacCheng9/fairsplit#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
