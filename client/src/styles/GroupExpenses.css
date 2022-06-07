@@ -1,0 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+.group-expenses-container {
+  display: grid;
+  grid-template-rows: [image] 70px [title] 45px [balance] 50px;
+  box-shadow: 0 70px 100px -20px rgb(50 50 93 / 25%);
+  border-radius: 8px;
+  margin: 50px auto 0 auto;
+  position: relative;
+  width: 400px;
+  height: 500px;
+  background: linear-gradient(to top, #f6f9fc 70%, #ffffff 30%);
+}
+
+.balance-value {
+  background-color: rgb(61, 201, 112, 0.65);
+  border-radius: 5px;
+  padding: 1px 5px 1px 5px;
+}
+
+.balance {
+  font-size: 15px;
+}
+
+.group-name {
+  margin: 0px auto 0px auto;
+  font-family: "Poppins", sans-serif;
+  color: #39444e;
+}
+
+.group-image {
+  margin: 15px auto 0px auto;
+  width: 50px;
+  height: 50px;
+  background: #ffffff;
+  box-shadow: 0 2px 4px 0px rgb(50 50 93 / 50%);
+  border-radius: 8px;
+}
