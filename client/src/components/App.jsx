@@ -1,4 +1,5 @@
 import React from "react";
+import arrow from "../assets/arrow.svg";
 import "../styles/App.css";
 
 function App() {
@@ -12,6 +13,14 @@ function App() {
 
   return (
     <div className="App">
+      <div className="header-container">
+        <h1 className="title">SplitWise</h1>
+        <a href={"#"} className="sign-in">
+          Sign in
+          <img className="arrow" src={arrow} />
+        </a>
+      </div>
+
       <div className="bg-container">
         <div className="bg-element bg-top-left"></div>
         <div className="bg-element bg-top-center"></div>
