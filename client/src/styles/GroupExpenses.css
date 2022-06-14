@@ -1,14 +1,45 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
+.expense-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.expense-container::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 3px;
+}
+
+.expense-container {
+  overflow: auto;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.ge-button {
+  cursor: pointer;
+  width: 140px;
+  height: 47px;
+  border-radius: 8px;
+  border: none;
+  background-color: #3dc970;
+  color: white;
+  font-size: 17px;
+  font-family: "Poppins", sans-serif;
+}
+
 .group-expenses-container {
   display: grid;
-  grid-template-rows: [image] 70px [title] 45px [balance] 50px;
+  grid-template-rows: [image] 70px [title] 45px [balance] 50px [main] auto [buttons] 100px;
   box-shadow: 0 70px 100px -20px rgb(50 50 93 / 25%);
   border-radius: 8px;
   margin: 50px auto 0 auto;
   position: relative;
   width: 400px;
-  height: 500px;
+  height: 550px;
   background: linear-gradient(to top, #f6f9fc 70%, #ffffff 30%);
 }
 
