@@ -8,8 +8,7 @@ function addGroupExpense(
   title,
   amount,
   lender,
-  borrowers,
-  groupId
+  borrowers
 ) {
   return new Promise((resolve, reject) => {
     const expense = {
@@ -19,7 +18,6 @@ function addGroupExpense(
       amount,
       lender,
       borrowers,
-      groupId,
     };
     const url = `${baseUrl}/expenses`;
     const options = {
