@@ -2,6 +2,7 @@ import React from "react";
 import arrow from "../assets/arrow.svg";
 import "../styles/App.css";
 import GroupExpenses from "../components/GroupExpenses";
+import GroupUsers from "../components/GroupUsers";
 
 // Temporary group to display component data
 let group = {
@@ -38,7 +39,10 @@ function App() {
         <div className="bg-element bg-right"></div>
       </div>
 
-      <GroupExpenses value={group}></GroupExpenses>
+      <div className="main-content-container">
+        <GroupExpenses value={group}></GroupExpenses>
+        <GroupUsers value={group}></GroupUsers>
+      </div>
     </div>
   );
 }

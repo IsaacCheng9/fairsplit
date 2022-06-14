@@ -1,0 +1,21 @@
+.users-container {
+  width: 100px;
+  height: 100px;
+  box-shadow: 0 70px 100px -20px rgb(50 50 93 / 25%);
+  border-radius: 8px;
+  width: 400px;
+  height: 550px;
+  background: linear-gradient(to top, #f6f9fc 70%, #ffffff 30%);
+}
+
+.users-title {
+  margin: 0px auto 0px auto;
+  font-family: "Poppins", sans-serif;
+  color: #39444e;
+}
+
+.users-container {
+  display: grid;
+  align-items: center;
+  grid-template-rows: [title] 165px [content] auto;
+}

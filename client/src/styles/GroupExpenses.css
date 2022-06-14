@@ -36,7 +36,6 @@
   grid-template-rows: [image] 70px [title] 45px [balance] 50px [main] auto [buttons] 100px;
   box-shadow: 0 70px 100px -20px rgb(50 50 93 / 25%);
   border-radius: 8px;
-  margin: 50px auto 0 auto;
   position: relative;
   width: 400px;
   height: 550px;
