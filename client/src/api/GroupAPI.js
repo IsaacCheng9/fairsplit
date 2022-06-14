@@ -1,15 +1,26 @@
-function addUserToGroup(userId) {
+function addUserToGroup(userId, firstName, lastName, groupId) {
   return new Promise((resolve, reject) => {
-    const url = `${baseUrl}/groups/${userId}`;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const user = {
+      id: userId,
+      firstName: firstName,
+      lastName: lastName,
     };
-    fetch(url, options)
-      .then((response) => response.json())
-      .then((data) => resolve(data))
-      .catch((error) => reject(error));
+    const group = {
+      id: groupId,
+    };
+    const userGroup = {
+      user: user,
+      group: group,
+    };
+    const userGroupId = uuid();
+    const userGroupRef = firebase.database().ref(`userGroups/${userGroupId}`);
+    userGroupRef
+      .set(userGroup)
+      .then(() => {
+        resolve(userGroupId);
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 }
