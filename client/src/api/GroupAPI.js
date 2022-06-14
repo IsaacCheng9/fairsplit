@@ -1,4 +1,4 @@
-/** 
+/**
  * Adds a user to a group so that expenses can be shared.
  * @param {String} userId The unique identifier of the user to add to the group.
  * @param {String} firstName The first name of the user.
