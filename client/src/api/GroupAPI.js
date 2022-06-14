@@ -1,11 +1,24 @@
-function addGroupExpense(datetime, author, title, amount, payees, groupId) {
+/**
+ * Creates an expense that is associated to borrowers who owe money to the
+ * lender.
+ */
+function addGroupExpense(
+  creationDatetime,
+  author,
+  title,
+  amount,
+  lender,
+  borrowers,
+  groupId
+) {
   return new Promise((resolve, reject) => {
     const expense = {
-      datetime,
+      creationDatetime,
       author,
       title,
       amount,
-      payees,
+      lender,
+      borrowers,
       groupId,
     };
     const url = `${baseUrl}/expenses`;
