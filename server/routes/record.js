@@ -6,8 +6,8 @@ const dbo = require("../db/conn");
 // Converts the ID from string to ObjectId for the _id.
 const ObjectId = require("mongodb").ObjectId;
 
-// Gets a list of all the records.
-recordRoutes.route("/record").get(function (_, response) {
+// Gets a list of all the users.
+recordRoutes.route("/users").get(function (_, response) {
   let dbConnect = dbo.getDb("users");
   dbConnect
     .collection("records")
@@ -18,8 +18,8 @@ recordRoutes.route("/record").get(function (_, response) {
     });
 });
 
-// Gets a single record by ID.
-recordRoutes.route("/record/:id").get(function (request, response) {
+// Gets a user by ID.
+recordRoutes.route("/user/:id").get(function (request, response) {
   let dbConnect = dbo.getDb();
   let myQuery = { _id: ObjectId(request.params.id) };
   dbConnect.collection("records").findOne(myQuery, function (err, result) {
@@ -28,8 +28,8 @@ recordRoutes.route("/record/:id").get(function (request, response) {
   });
 });
 
-// Creates a new record.
-recordRoutes.route("/record/add").post(function (request, response) {
+// Creates a new user.
+recordRoutes.route("/user/add").post(function (request, response) {
   let dbConnect = dbo.getDb();
   let myObj = {
     firstName: request.body.firstName,
@@ -41,8 +41,8 @@ recordRoutes.route("/record/add").post(function (request, response) {
   });
 });
 
-// Updates a record by ID.
-recordRoutes.route("/update/:id").post(function (request, response) {
+// Updates a user by ID.
+recordRoutes.route("/user/update/:id").post(function (request, response) {
   let dbConnect = dbo.getDb();
   let myQuery = { _id: ObjectId(request.params.id) };
   let newValues = {
@@ -59,13 +59,13 @@ recordRoutes.route("/update/:id").post(function (request, response) {
     });
 });
 
-// Deletes a record by ID.
-recordRoutes.route("/delete/:id").delete(function (request, response) {
+// Deletes a user by ID.
+recordRoutes.route("/user/delete/:id").delete(function (request, response) {
   let dbConnect = dbo.getDb();
   let myQuery = { _id: ObjectId(request.params.id) };
   dbConnect.collection("records").deleteOne(myQuery, function (err, result) {
     if (err) throw err;
-    console.log("One document deleted.");
+    console.log("One user deleted.");
     response.json(result);
   });
 });
