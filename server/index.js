@@ -1,11 +1,25 @@
 const express = require("express");
-const PORT = process.env.PORT || 3001;
 const app = express();
+const cors = require("cors");
+require("dotenv").config({ path: "./config.env" });
+const PORT = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(express.json());
+app.use(require("./routes/record"));
+// Gets the driver connection.
+const dbo = require("./db/conn");
 
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+  // Sets up a database connection when the server starts.
+  dbo.connectToServer(function (err) {
+    if (err) {
+      console.error(err);
+    }
+  });
+  console.log(`Server is running on ${PORT}`);
 });
