@@ -40,4 +40,3 @@ recordRoutes.route("/record/add").post(function (request, response) {
     response.json(result);
   });
 });
-
