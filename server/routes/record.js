@@ -40,3 +40,21 @@ recordRoutes.route("/record/add").post(function (request, response) {
     response.json(result);
   });
 });
+
+// Updates a record by ID.
+recordRoutes.route("/update/:id").post(function (request, response) {
+  let dbConnect = dbo.getDb();
+  let myQuery = { _id: ObjectId(request.params.id) };
+  let newValues = {
+    $set: {
+      firstName: request.body.firstName,
+      lastName: request.body.lastName,
+    },
+  };
+  dbConnect
+    .collection("records")
+    .updateOne(myQuery, newValues, function (err, result) {
+      if (err) throw err;
+      response.json(result);
+    });
+});
