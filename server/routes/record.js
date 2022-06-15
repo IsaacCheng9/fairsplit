@@ -58,3 +58,16 @@ recordRoutes.route("/update/:id").post(function (request, response) {
       response.json(result);
     });
 });
+
+// Deletes a record by ID.
+recordRoutes.route("/delete/:id").delete(function (request, response) {
+  let dbConnect = dbo.getDb();
+  let myQuery = { _id: ObjectId(request.params.id) };
+  dbConnect.collection("records").deleteOne(myQuery, function (err, result) {
+    if (err) throw err;
+    console.log("One document deleted.");
+    response.json(result);
+  });
+});
+
+module.exports = recordRoutes;
