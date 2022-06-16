@@ -23,7 +23,7 @@ Include the following information when submitting a pull request:
   - Where needed, add explanations about what the changes will effect and why
     they were made.
 - Related issues
-  - Using the `This fixes {link to issue}` syntax will automatically close the
+  - Using the `Fixes {link to issue}` syntax will automatically close the
     issue once merged.
 
 ## Merge Strategy
@@ -44,5 +44,8 @@ After pushing to the repository, the workflow in GitHub Actions consists of:
 
 ## Code Conventions
 
-We follow the [Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html),
-as this is the most commonly used in the JavaScript community.
+We follow the Google style guides, as these are most commonly used in the web
+development community:
+
+- [JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html)
+- [HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html)
