@@ -1,6 +1,6 @@
 import React from "react";
 import arrow from "../assets/arrow.svg";
-import "../styles/App.css";
+import "../styles/app.css";
 import GroupExpenses from "./group_expenses";
 import GroupUsers from "./group_users";
 

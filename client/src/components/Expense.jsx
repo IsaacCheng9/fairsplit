@@ -1,6 +1,6 @@
 import React from "react";
-import "../styles/Expense.css";
-import smallArrow from "../assets/smallArrow.svg";
+import "../styles/expense.css";
+import smallArrow from "../assets/small_arrow.svg";
 
 function Expense(props) {
   return (

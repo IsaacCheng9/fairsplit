@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/GroupExpenses.css";
+import "../styles/group_expenses.css";
 import Expense from "./expense";
 
 function GroupExpenses(props) {
