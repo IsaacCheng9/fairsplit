@@ -29,6 +29,7 @@ function App() {
           <img className="arrow" src={arrow} />
         </a>
       </div>
+
       <div className="bg-container">
         <div className="bg-element bg-top-left"></div>
         <div className="bg-element bg-top-center"></div>
@@ -37,6 +38,7 @@ function App() {
         <div className="bg-element bg-center"></div>
         <div className="bg-element bg-right"></div>
       </div>
+
       <div className="main-content-container">
         <GroupExpenses value={group}></GroupExpenses>
         <GroupUsers value={group}></GroupUsers>
