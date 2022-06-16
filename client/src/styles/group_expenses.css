@@ -2,6 +2,7 @@
 
 .expense-container::-webkit-scrollbar {
   width: 6px;
+  overflow: overlay;
 }
 
 .expense-container::-webkit-scrollbar-thumb {
@@ -10,7 +11,7 @@
 }
 
 .expense-container {
-  overflow: auto;
+  overflow: overlay;
 }
 
 .button-container {

@@ -1,8 +1,8 @@
 import React from "react";
 import arrow from "../assets/arrow.svg";
 import "../styles/App.css";
-import GroupExpenses from "../components/GroupExpenses";
-import GroupUsers from "../components/GroupUsers";
+import GroupExpenses from "./group_expenses";
+import GroupUsers from "./group_users";
 
 // Temporary group to display component data
 let group = {

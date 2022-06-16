@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/GroupExpenses.css";
-import Expense from "../components/Expense";
+import Expense from "./expense";
 
 function GroupExpenses(props) {
   // Reactive array of expenses
