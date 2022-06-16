@@ -14,8 +14,8 @@ function GroupExpenses(props) {
         id: expenses.length,
         date: "25th May",
         title: "Peanut Butter",
-        payer: "Isaac",
-        payee: "George",
+        borrower: "Isaac",
+        lender: "George",
         price: 3,
       },
     ];
