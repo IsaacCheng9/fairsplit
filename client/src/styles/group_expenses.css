@@ -34,7 +34,8 @@
 
 .group-expenses-container {
   display: grid;
-  grid-template-rows: [image] 70px [title] 45px [balance] 50px [main] auto [buttons] 100px;
+  align-items: center;
+  grid-template-rows: [title] 100px [balance] 35px [main] auto [buttons] 100px;
   box-shadow: 0 70px 100px -20px rgb(50 50 93 / 25%);
   border-radius: 8px;
   position: relative;
@@ -51,19 +52,13 @@
 
 .balance {
   font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  color: #39444e;
+  margin: 0 auto 0 auto;
 }
 
 .group-name {
-  margin: 0px auto 0px auto;
+  margin: 50px auto 0px auto;
   font-family: "Poppins", sans-serif;
   color: #39444e;
-}
-
-.group-image {
-  margin: 15px auto 0px auto;
-  width: 50px;
-  height: 50px;
-  background: #ffffff;
-  box-shadow: 0 2px 4px 0px rgb(50 50 93 / 50%);
-  border-radius: 8px;
 }

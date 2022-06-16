@@ -24,9 +24,8 @@ function GroupExpenses(props) {
 
   return (
     <div className="group-expenses-container">
-      <div className="group-image">{props.value.image}</div>
       <h1 className="group-name">{props.value.name}</h1>
-      <h2 className="balance group-name">
+      <h2 className="balance">
         Outstanding balance:&nbsp;
         <span className="balance-value">
           {props.value.currency}&nbsp;
