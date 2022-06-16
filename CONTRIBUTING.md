@@ -41,3 +41,8 @@ After pushing to the repository, the workflow in GitHub Actions consists of:
 - Running code formatting with _Prettier_
   - This ensures good readability and a consistent style across the codebase to
     reduce diffs for code reviews.
+
+## Code Conventions
+
+We follow the [Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html),
+as this is the most commonly used in the JavaScript community.
