@@ -10,9 +10,11 @@ app.get("/users", async (request, response) => {
 
   try {
     response.send(users);
-  } catch (error) {{
-    response.status(500).send(error);
-  }}
+  } catch (error) {
+    {
+      response.status(500).send(error);
+    }
+  }
 });
 
 /*
