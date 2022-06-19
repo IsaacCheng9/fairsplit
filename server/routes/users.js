@@ -1,11 +1,21 @@
 const express = require("express");
+const userModel = require("../models/user");
+const app = express();
 
-// Defines our routes and takes control of requests.
-const userRoutes = express.Router();
-const dbo = require("../db/conn");
 // Converts the ID from string to ObjectId for the _id.
 const objectId = require("mongodb").ObjectId;
 
+app.get("/users", async (request, response) => {
+  const users = await userModel.find({});
+
+  try {
+    response.send(users);
+  } catch (error) {{
+    response.status(500).send(error);
+  }}
+});
+
+/*
 // Gets a list of all the users.
 userRoutes.route("/users").get(function (_, response) {
   let dbConnect = dbo.getDb("users");
@@ -69,5 +79,6 @@ userRoutes.route("/user/delete/:id").delete(function (request, response) {
     response.json(result);
   });
 });
+*/
 
-module.exports = userRoutes;
+module.exports = app;
