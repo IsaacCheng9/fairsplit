@@ -11,10 +11,21 @@ function GroupUsers(props) {
     console.log(response);
   }
 
+  async function getUserById(id) {
+    let response = await fetch(apiUrl + `/user/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      }
+    });
+    console.log(response);
+  }
+
   // Use hook to test getUsers()
   useEffect(() => {
     getUsers();
-  })
+    getUserById(1);
+  }, [])
 
   return (
     <div className="users-container">
