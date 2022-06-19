@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 const app = express();
 app.use(express.json());
+app.use(router);
 
 // IMPORTANT: Replace this value with the actual password locally.
 const password = "<password>";
@@ -24,7 +25,7 @@ db.once("open", function () {
   console.log("Connected successfully.");
 });
 
-app.use(router);
+// Sets up the port to listen on.
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`Server is running at port ${port}.`);
