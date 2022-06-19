@@ -5,9 +5,9 @@ const mongoose = require("mongoose");
 const app = express();
 app.use(express.json());
 
-// Remember to replace <password> with the actual credential locally.
-let devUrl =
-  "mongodb+srv://admin:<password>@fairsplit.fjvgxmg.mongodb.net/?retryWrites=true&w=majority";
+// Remember to replace this value with the actual password locally.
+const password = "<password>";
+let devUrl = `mongodb+srv://admin:${password}@fairsplit.fjvgxmg.mongodb.net/?retryWrites=true&w=majority`;
 var mongoDB = process.env.MONGODB_URI || devUrl;
 // Sets up the Mongoose connection.
 mongoose.connect(mongoDB, {
