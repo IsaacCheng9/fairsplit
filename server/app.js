@@ -1,5 +1,5 @@
 const express = require("express");
-const Router = require("./routes");
+const router = require("./routes");
 const mongoose = require("mongoose");
 
 const app = express();
@@ -22,4 +22,10 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 // Displays a success message when the connection is successfully made.
 db.once("open", function () {
   console.log("Connected successfully.");
+});
+
+app.use(router);
+const port = process.env.PORT || 3001;
+app.listen(port, () => {
+  console.log(`Server is running at port ${port}.`);
 });
