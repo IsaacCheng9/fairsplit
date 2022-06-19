@@ -15,3 +15,5 @@ app.get("/expenses", async (_, response) => {
     response.status(500).send(error);
   }
 });
+
+module.exports = app;
