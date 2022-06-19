@@ -16,4 +16,15 @@ app.get("/expenses", async (_, response) => {
   }
 });
 
+// Gets an expense by ID.
+app.get("/expenses/:id", async (request, response) => {
+  const expenses = await expenseModel.findById(request.params.id);
+
+  try {
+    response.json(expenses);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 module.exports = app;
