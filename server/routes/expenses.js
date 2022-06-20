@@ -27,6 +27,21 @@ app.get("/expenses/:id", async (request, response) => {
   }
 });
 
+// Updates an expense by ID.
+app.put("/expenses/update/:id", async (request, response) => {
+  const expenses = await expenseModel.findByIdAndUpdate(request.params.id, {
+    title: request.body.title,
+    lender: request.body.lender,
+    borrowers: request.body.borrowers,
+  });
+
+  try {
+    response.json(expenses);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 // Deletes an expense by ID.
 app.post("/expenses/delete/:id", async (request, response) => {
   const expenses = await expenseModel.findByIdAndDelete(request.params.id);
