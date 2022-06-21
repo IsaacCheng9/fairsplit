@@ -57,7 +57,7 @@ app.post("/expenses/add", async (request, response) => {
 // });
 
 // Deletes an expense by ID.
-// app.post("/expenses/delete/:id", async (request, response) => {
+// app.delete("/expenses/delete/:id", async (request, response) => {
 //   const expenses = await expenseModel.findByIdAndDelete(request.params.id);
 
 //   try {
