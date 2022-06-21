@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema({
     max: [30, "Last name must have fewer than 30 characters."],
     required: true,
   },
+  creationDatetime: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = User = mongoose.model("user", userSchema);
