@@ -19,7 +19,7 @@ function GroupUsers(props) {
   // Use hook to test getUsers()
   useEffect(() => {
     getUsers();
-    getUserById(1);
+    getUserById("62b1edee24f619f5f5066f37");
   }, [])
 
   return (
