@@ -8,7 +8,7 @@ app.get("/users", async (_, response) => {
   const users = await userModel.find({});
 
   try {
-    response.send(users);
+    response.json(users);
   } catch (error) {
     {
       response.status(500).send(error);
@@ -22,7 +22,7 @@ app.get("/users/:id", async (request, response) => {
   const user = await userModel.findById(myQuery);
 
   try {
-    response.send(user);
+    response.json(user);
   } catch (error) {
     response.status(500).send(error);
   }
