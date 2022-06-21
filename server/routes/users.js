@@ -26,8 +26,6 @@ app.get("/users/:id", async (request, response) => {
   }
 });
 
-// app.get("/users/:id", async (_, response) => {});
-
 // Creates a new user.
 app.post("/users/add", async (request, response) => {
   const user = await userModel.create({
