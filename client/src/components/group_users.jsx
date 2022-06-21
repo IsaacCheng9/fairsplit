@@ -12,12 +12,7 @@ function GroupUsers(props) {
   }
 
   async function getUserById(id) {
-    let response = await fetch(apiUrl + `/user/${id}`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      }
-    });
+    let response = await fetch(apiUrl + `/user/${id}`);
     console.log(response);
   }
 
