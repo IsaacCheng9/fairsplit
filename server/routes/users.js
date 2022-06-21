@@ -19,7 +19,7 @@ app.get("/users", async (_, response) => {
 // app.get("/users/:id", async (_, response) => {});
 
 // Creates a new user.
-app.post("/user/add", async (request, response) => {
+app.post("/users/add", async (request, response) => {
   const user = await userModel.create({
     firstName: request.body.firstName,
     lastName: request.body.lastName,
