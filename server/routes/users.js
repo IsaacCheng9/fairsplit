@@ -2,7 +2,8 @@ const express = require("express");
 const userModel = require("../models/user");
 const app = express();
 
-app.get("/users", async (request, response) => {
+// Gets a list of all the users.
+app.get("/users", async (_, response) => {
   const users = await userModel.find({});
 
   try {
@@ -15,10 +16,6 @@ app.get("/users", async (request, response) => {
 });
 
 /*
-// Gets a list of all the users.
-userRoutes.route("/users").get(function (_, response) {
-});
-
 // Gets a user by ID.
 userRoutes.route("/user/:id").get(function (request, response) {
 });
