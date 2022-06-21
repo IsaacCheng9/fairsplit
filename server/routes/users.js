@@ -17,11 +17,11 @@ app.get("/users", async (_, response) => {
 
 // Gets a user by ID.
 app.get("/user/:id", async (request, response) => {
-  let myQuery = request.params.id = new mongoose.Types.ObjectId;
+  let myQuery = (request.params.id = new mongoose.Types.ObjectId());
   const user = await userModel.findById(myQuery);
 
   try {
-    response.send(user); 
+    response.send(user);
   } catch (error) {
     response.status(500).send(error);
   }
