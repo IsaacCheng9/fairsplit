@@ -1,7 +1,7 @@
 const express = require("express");
 const userModel = require("../models/user");
 const app = express();
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // Gets a list of all the users.
 app.get("/users", async (_, response) => {
