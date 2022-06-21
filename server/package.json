@@ -7,13 +7,25 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "contributors": [
+    {
+      "name": "Isaac Cheng",
+      "url": "https://github.com/IsaacCheng9"
+    },
+    {
+      "name": "George Kombostiotis",
+      "url": "https://github.com/gkSideProjects"
+    }
+  ],
   "license": "ISC",
   "dependencies": {
     "async": "^3.2.4",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "mongodb": "^4.7.0",
-    "mongoose": "^6.4.0"
+    "mongoose": "^6.3.8",
+    "validation": "^0.0.1"
   }
 }

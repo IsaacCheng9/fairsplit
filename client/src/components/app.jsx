@@ -12,18 +12,10 @@ let group = {
 };
 
 function App() {
-  const [data, setData] = React.useState(null);
-
-  React.useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-  }, []);
-
   return (
     <div className="App">
       <div className="header-container">
-        <h1 className="title">SplitWise</h1>
+        <h1 className="title">FairSplit</h1>
         <a href={"#"} className="sign-in">
           Sign in
           <img className="arrow" src={arrow} />
