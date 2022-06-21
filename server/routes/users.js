@@ -1,7 +1,6 @@
 const express = require("express");
 const userModel = require("../models/user");
 const app = express();
-const mongoose = require("mongoose");
 
 // Gets a list of all the users.
 app.get("/users", async (_, response) => {
@@ -18,8 +17,7 @@ app.get("/users", async (_, response) => {
 
 // Gets a user by ID.
 app.get("/users/:id", async (request, response) => {
-  let myQuery = request.params.id;
-  const user = await userModel.findById(myQuery);
+  const user = await userModel.findById(request.params.id);
 
   try {
     response.json(user);
