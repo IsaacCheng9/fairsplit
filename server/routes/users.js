@@ -24,7 +24,7 @@ app.post("/user/add", async (request, response) => {
     firstName: request.body.firstName,
     lastName: request.body.lastName,
   });
-  
+
   try {
     response.json(expense);
   } catch (error) {
