@@ -27,6 +27,23 @@ app.get("/expenses/:id", async (request, response) => {
   }
 });
 
+// Adds an expense.
+app.post("/expenses/add", async (request, response) => {
+  const expense = await expenseModel.create({
+    title: request.body.title,
+    author: request.body.author,
+    creationDateTime: Date.now(),
+    lender: request.body.lender,
+    borrowers: request.body.borrowers,
+  });
+
+  try {
+    response.json(expense);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 // Updates an expense by ID.
 app.put("/expenses/update/:id", async (request, response) => {
   const expenses = await expenseModel.findByIdAndUpdate(request.params.id, {
