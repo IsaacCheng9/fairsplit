@@ -2,9 +2,6 @@ const express = require("express");
 const userModel = require("../models/user");
 const app = express();
 
-// Converts the ID from string to ObjectId for the _id.
-const objectId = require("mongodb").ObjectId;
-
 app.get("/users", async (request, response) => {
   const users = await userModel.find({});
 
