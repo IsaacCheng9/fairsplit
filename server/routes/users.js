@@ -17,8 +17,7 @@ app.get("/users", async (_, response) => {
 
 // Gets a user by ID.
 app.get("/users/:id", async (request, response) => {
-  let myQuery = request.params.id;
-  const user = await userModel.findById(myQuery);
+  const user = await userModel.findById(request.params.id);
 
   try {
     response.json(user);
