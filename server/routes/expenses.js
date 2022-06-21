@@ -32,7 +32,6 @@ app.post("/expenses/add", async (request, response) => {
   const expense = await expenseModel.create({
     title: request.body.title,
     author: request.body.author,
-    creationDateTime: Date.now(),
     lender: request.body.lender,
     borrowers: request.body.borrowers,
   });
