@@ -1,12 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
+
 const cors = require("cors");
 const usersRouter = require("./routes/users.js");
+const expensesRouter = require("./routes/expenses.js");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(usersRouter);
+app.use(expensesRouter);
 
 // IMPORTANT: Replace this value with the actual password locally.
 const password = "<password>";
