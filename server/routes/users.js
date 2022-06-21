@@ -20,13 +20,13 @@ app.get("/users", async (_, response) => {
 
 // Creates a new user.
 app.post("/user/add", async (request, response) => {
-  await userModel.create({
+  const user = await userModel.create({
     firstName: request.body.firstName,
     lastName: request.body.lastName,
   });
 
   try {
-    response.json(expense);
+    response.json(user);
   } catch (error) {
     response.status(500).send(error);
   }
