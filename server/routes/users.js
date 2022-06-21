@@ -15,13 +15,16 @@ app.get("/users", async (_, response) => {
   }
 });
 
+// Gets a user by ID.
+// app.get("/users/:id", async (_, response) => {});
+
 // Creates a new user.
 app.post("/user/add", async (request, response) => {
   const user = await userModel.create({
     firstName: request.body.firstName,
     lastName: request.body.lastName,
   });
-
+  
   try {
     response.json(expense);
   } catch (error) {
@@ -29,19 +32,10 @@ app.post("/user/add", async (request, response) => {
   }
 });
 
-/*
-// Gets a user by ID.
-userRoutes.route("/user/:id").get(function (request, response) {
-});
-
-
 // Updates a user by ID.
-userRoutes.route("/user/update/:id").post(function (request, response) {
-});
+// app.put("/users/update/:id", async (request, response) => {});
 
 // Deletes a user by ID.
-userRoutes.route("/user/delete/:id").delete(function (request, response) {
-});
-*/
+// app.delete("/users/delete/:id", async (request, response) => {});
 
 module.exports = app;
