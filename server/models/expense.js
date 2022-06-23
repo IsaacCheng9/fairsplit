@@ -8,6 +8,7 @@ const expenseSchema = new mongoose.Schema({
   },
   author: {
     type: String,
+    lowercase: true,
     required: true,
   },
   creationDatetime: {
@@ -16,6 +17,7 @@ const expenseSchema = new mongoose.Schema({
   },
   lender: {
     type: String,
+    lowercase: true,
     required: true,
   },
   borrowers: {
