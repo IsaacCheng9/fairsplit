@@ -41,8 +41,11 @@ app.post("/debts/add", async (request, response) => {
   }
 });
 
-// Updates a debt by ID.
-// app.put("/debts/update/:id", async (request, response) => {});
+// Increases the amount of debt by ID to represent the user borrowing money.
+// app.put("/debts/increase/:id", async (request, response) => {});
+
+// Decreases the amount of debt by ID to represent the user paying their debt.
+// app.put("/debts/decrease/:id", async (request, response) => {});
 
 // Deletes a debt by ID.
 // app.delete("/debts/delete/:id", async (request, response) => {});
