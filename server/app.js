@@ -7,9 +7,11 @@ const expensesRouter = require("./routes/expenses.js");
 
 const app = express();
 app.use(express.json());
-app.use(cors({
-  origin: "http://localhost:3000",
-}));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 app.use(usersRouter);
 app.use(expensesRouter);
 
