@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import "../styles/group_users.css";
+import User from "./user";
 
 function GroupUsers(props) {
   // API URL
   let apiUrl = "http://localhost:3001";
+
+  let users = props.value.users;
 
   async function getUsers() {
     let response = await fetch(apiUrl + "/users");
@@ -23,9 +26,11 @@ function GroupUsers(props) {
   }, [])
 
   return (
-    <div className="users-container">
-      <h1 className="users-title">Group Members</h1>
-      <div className="users"></div>
+    <div className="group-members-container">
+      <h1 className="group-members-title">Group Members</h1>
+      <div className="users-container">
+        {users.map((user) => (<User value={user} key={user.username}></User>))}
+      </div>
     </div>
   );
 }
