@@ -61,6 +61,7 @@ function Add_user(props) {
     <div className="add-user-container">
       <div className={picClass}></div>
       <input
+        value={inputValue}
         onChange={handleChange}
         ref={inputRef}
         className={inputClass}
