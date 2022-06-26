@@ -17,8 +17,7 @@ function Add_user(props) {
     setInputValue(event.target.value);
     const inputLen = event.target.value.length;
 
-    /* If the input isn't empty add the class to reflect a valid input
-      else revert back to the class that displays an invalid input */
+    // Alter styling based on state of input by adding/removing classes
     if (inputLen > 0) {
       setTransitionClass(transitionClass.replace("invalid", "valid"));
       setCrossClass("");
@@ -30,19 +29,32 @@ function Add_user(props) {
 
   // Handle dynamic styling when the user wants to add a user
   function addTransformClass() {
-    // Add classes that will animate the add user button
-    setTransitionClass(
-      transitionClass +
-        " add-user-plus-clicked add-user-plus-invalid x-rotate y-rotate"
-    );
+    // Removes classes when user is added or the user cancels the action
+    if (transitionClass.includes("valid")) {
+      if (transitionClass.includes("-valid")) {
+        // Pushes new user to parent component
+        props.onClick(inputValue);
+        setInputValue("");
+      }
+      setInputClass("add-user-input");
+      setTransitionClass("add-user-plus");
+      setCrossClass("add-user-plus");
+      setPicClass("add-user-pic");
+    } else {
+      // Add classes that will animate the add user button
+      setTransitionClass(
+        transitionClass +
+          " add-user-plus-clicked add-user-plus-invalid x-rotate y-rotate"
+      );
 
-    // Add class that will animate the cross SVG icon on the add user button
-    setCrossClass("cross-rotate");
-    // Add classes that will fade in the profile picture and input
-    setPicClass(picClass + " add-user-pic-clicked");
-    setInputClass(inputClass + " add-user-input-clicked");
-    // Add focus to the input element
-    inputRef.current.focus();
+      // Add class that will animate the cross SVG icon on the add user button
+      setCrossClass("cross-rotate");
+      // Add classes that will fade in the profile picture and input
+      setPicClass(picClass + " add-user-pic-clicked");
+      setInputClass(inputClass + " add-user-input-clicked");
+      // Add focus to the input element
+      inputRef.current.focus();
+    }
   }
 
   return (
