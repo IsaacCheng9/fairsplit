@@ -2,6 +2,16 @@ import React from "react";
 import "../styles/add_user.css";
 
 function Add_user(props) {
+  // Reactive variables to store element classes, allowing for dynamic styling
+  let [transitionClass, setTransitionClass] = useState("add-user-plus");
+  let [crossClass, setCrossClass] = useState("add-user-plus");
+  let [picClass, setPicClass] = useState("add-user-pic");
+  let [inputClass, setInputClass] = useState("add-user-input");
+  let [inputValue, setInputValue] = useState("");
+
+  // Create reference to input element to add focus when rendered
+  let inputRef = createRef();
+
   return (
     <div className="add-user-container">
       <div className="add-user-pic"></div>
