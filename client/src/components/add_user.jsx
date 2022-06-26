@@ -28,6 +28,23 @@ function Add_user(props) {
     }
   }
 
+  // Handle dynamic styling when the user wants to add a user
+  function addTransformClass() {
+    // Add classes that will animate the add user button
+    setTransitionClass(
+      transitionClass +
+        " add-user-plus-clicked add-user-plus-invalid x-rotate y-rotate"
+    );
+
+    // Add class that will animate the cross SVG icon on the add user button
+    setCrossClass("cross-rotate");
+    // Add classes that will fade in the profile picture and input
+    setPicClass(picClass + " add-user-pic-clicked");
+    setInputClass(inputClass + " add-user-input-clicked");
+    // Add focus to the input element
+    inputRef.current.focus();
+  }
+
   return (
     <div className="add-user-container">
       <div className={picClass}></div>
@@ -37,7 +54,7 @@ function Add_user(props) {
         className={inputClass}
         type="text"
       ></input>
-      <div className={transitionClass}>
+      <div className={transitionClass} onClick={addTransformClass}>
         <svg
           width="30"
           height="30"
