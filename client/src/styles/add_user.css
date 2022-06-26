@@ -1,0 +1,47 @@
+.add-user-container {
+  height: 50px;
+  display: grid;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  margin: 0 auto 0 auto;
+  grid-template-columns: [image] 50px [dot] auto [other] 50px;
+  align-items: center;
+}
+
+.add-user-pic {
+  background-color: lightgrey;
+  width: 35px;
+  height: 35px;
+  align-self: center;
+  justify-self: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.add-user-plus {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: lightgrey;
+  justify-self: center;
+  transition: all 0.7s ease;
+  grid-column-start: 2;
+  grid-row-start: 1;
+  z-index: 3;
+}
+
+.add-user-input {
+  padding-left: 10px;
+  font-size: 20px;
+  font-family: "Poppins";
+  background-color: white;
+  width: 200px;
+  height: 65%;
+  margin: 0 0 0 10px;
+  border-radius: 8px;
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  grid-column-start: 2;
+  grid-row-start: 1;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
