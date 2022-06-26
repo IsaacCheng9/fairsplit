@@ -12,10 +12,31 @@ function Add_user(props) {
   // Create reference to input element to add focus when rendered
   let inputRef = createRef();
 
+  function handleChange(event) {
+    // Update the state with the new value
+    setInputValue(event.target.value);
+    const inputLen = event.target.value.length;
+
+    /* If the input isn't empty add the class to reflect a valid input
+      else revert back to the class that displays an invalid input */
+    if (inputLen > 0) {
+      setTransitionClass(transitionClass.replace("invalid", "valid"));
+      setCrossClass("");
+    } else if (!inputLen && transitionClass.includes("valid")) {
+      setTransitionClass(transitionClass.replace("valid", "invalid"));
+      setCrossClass("cross-rotate");
+    }
+  }
+
   return (
     <div className="add-user-container">
       <div className={picClass}></div>
-      <input ref={inputRef} className={inputClass} type="text"></input>
+      <input
+        onChange={handleChange}
+        ref={inputRef}
+        className={inputClass}
+        type="text"
+      ></input>
       <div className={transitionClass}>
         <svg
           width="30"
