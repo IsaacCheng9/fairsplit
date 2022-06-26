@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, createRef } from "react";
 import "../styles/add_user.css";
 
 function Add_user(props) {
@@ -14,9 +14,9 @@ function Add_user(props) {
 
   return (
     <div className="add-user-container">
-      <div className="add-user-pic"></div>
-      <input className="add-user-input" type="text"></input>
-      <div class="add-user-plus">
+      <div className={picClass}></div>
+      <input ref={inputRef} className={inputClass} type="text"></input>
+      <div className={transitionClass}>
         <svg
           width="30"
           height="30"
@@ -25,7 +25,7 @@ function Add_user(props) {
           xmlns="http://www.w3.org/2000/svg"
         >
           <g id="Frame 1">
-            <g id="cross">
+            <g id="cross" className={crossClass}>
               <line
                 id="y-line"
                 x1="50.5"
