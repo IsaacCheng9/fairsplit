@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/group_expenses.css";
 import Expense from "./expense";
+import AddExpense from "./add_expense";
 
 function GroupExpenses(props) {
   // Reactive array of expenses
@@ -36,6 +37,7 @@ function GroupExpenses(props) {
         {expenses.map((expense) => (
           <Expense value={expense} key={expense.id.toString()}></Expense>
         ))}
+        <AddExpense></AddExpense>
       </div>
       <div className="button-container">
         <button className="ge-button">Settle Up</button>
