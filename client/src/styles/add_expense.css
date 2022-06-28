@@ -6,7 +6,7 @@
   justify-self: center;
 }
 
-.add-expense-plus-shrink {
+.add-expense-plus-expand {
   opacity: 0;
 }
 
@@ -16,6 +16,7 @@
   width: 90%;
   margin: 0 auto 0 auto;
   align-items: center;
+  transition: all 0.7s ease-in-out;
 }
 
 .add-expense-container-shrink {

@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/add_expense.css";
 
 function AddExpense(props) {
+  // Reactive variables for dynamic styling
+  let [containerClass, setContainerClass] = useState("add-expense-container add-expense-container-shrink");
+  let [plusClass, setPlusClass] = useState("add-expense-plus");
+
+  // Expands add-expense container to make room for input fields
+  function expandContainer() {
+    setContainerClass("add-expense-container add-expense-container-expand")
+    setPlusClass("add-expense-plus add-expense-plus-expand")
+  }
+
   return (
-    <div className="add-expense-container">
-      <div className="add-expense-plus">
+    <div className={containerClass}>
+      <div className={plusClass} onClick={expandContainer}>
         <svg
           width="30"
           height="30"
