@@ -13,6 +13,7 @@ function AddExpense(props) {
   function expandContainer() {
     if (overflowClass.includes("expand")) {
       setOverflowClass("overflow-container");
+      setContainerClass("add-expense-container");
     } else {
       setContainerClass("add-expense-container add-expense-container-expand");
       setFirstClass("add-expense-title add-expense-title-expand");
