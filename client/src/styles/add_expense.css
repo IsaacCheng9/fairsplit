@@ -6,26 +6,44 @@
   justify-self: center;
 }
 
-.add-expense-plus-expand {
-  opacity: 0;
+.overflow-container {
+  font-size: 20px;
+  display: grid;
+  grid-template-columns: [name] 100px [input] auto;
+  grid-template-rows: [title] auto [Author] auto [Lender] auto [Borrower] auto;
+  overflow: hidden;
+  height: 0;
+  transition: all 0.7s ease-in-out;
+  width: 90%;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto 0 auto;
+  font-family: "Poppins";
 }
 
+.overflow-container-expand {
+  height: 200px;
+} 
+
 .add-expense-container {
+  overflow: hidden;
   display: grid;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   width: 90%;
   margin: 0 auto 0 auto;
   align-items: center;
-  transition: all 0.7s ease-in-out;
-}
-
-.add-expense-container-shrink {
   grid-template-columns: [dot] auto ;
+  grid-template-rows: [dot] 50px;
   height: 50px;
 }
 
-.add-expense-container-expand {
-  grid-template-columns: [name] 200px [input] auto;
-  grid-template-rows: [title] auto [Author] auto [Lender] auto [Borrower] auto;
-  height: 200px;
+.overflow-container input {
+  grid-column-start: 2;
+  padding-left: 10px;
+  font-size: 20px;
+  background-color: white;
+  width: 200px;
+  border-radius: 5px;
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  font-family: "Poppins";
 }
