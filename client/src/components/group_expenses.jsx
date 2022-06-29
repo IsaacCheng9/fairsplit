@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createRef } from "react";
 import "../styles/group_expenses.css";
 import Expense from "./expense";
 import AddExpense from "./add_expense";
@@ -6,6 +6,14 @@ import AddExpense from "./add_expense";
 function GroupExpenses(props) {
   // Reactive array of expenses
   let [expenses, setExpenses] = useState([]);
+  let containerRef = createRef();
+
+  // Scroll to bottom of container to see new expense form
+  function scrollToBottom() {
+    setTimeout(() => {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }, 680);
+  }
 
   // Add temporary expense data to array of expenses
   function addExpense() {
@@ -33,11 +41,15 @@ function GroupExpenses(props) {
           {props.value.balance}
         </span>
       </h2>
-      <div className="expense-container">
+      <div className="expense-container" ref={containerRef}>
         {expenses.map((expense) => (
           <Expense value={expense} key={expense.id.toString()}></Expense>
         ))}
-        <AddExpense></AddExpense>
+        <AddExpense
+          onClick={() => {
+            scrollToBottom();
+          }}
+        ></AddExpense>
       </div>
       <div className="button-container">
         <button className="ge-button">Settle Up</button>

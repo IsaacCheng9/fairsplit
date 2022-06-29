@@ -12,6 +12,7 @@
 
 .expense-container {
   overflow: overlay;
+  scroll-behavior: smooth;
 }
 
 .button-container {
