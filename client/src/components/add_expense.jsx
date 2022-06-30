@@ -8,13 +8,16 @@ function AddExpense(props) {
   let [fristClass, setFirstClass] = useState("add-expense-title");
   let [secondClass, setSecondClass] = useState("title-input");
   let [overflowClass, setOverflowClass] = useState("overflow-container");
+  let [crossRotateClass, setCrossRotateClass] = useState("");
 
   // Expands add-expense container to make room for input fields
   function expandContainer() {
     if (overflowClass.includes("expand")) {
       setOverflowClass("overflow-container");
       setContainerClass("add-expense-container");
+      setCrossRotateClass("");
     } else {
+      setCrossRotateClass("cross-rotate");
       setContainerClass("add-expense-container add-expense-container-expand");
       setFirstClass("add-expense-title add-expense-title-expand");
       setSecondClass("title-input title-input-expand");
@@ -45,7 +48,7 @@ function AddExpense(props) {
             xmlns="http://www.w3.org/2000/svg"
           >
             <g id="Frame 1">
-              <g id="cross">
+              <g id="cross" className={crossRotateClass}>
                 <line
                   id="y-line"
                   x1="50.5"
