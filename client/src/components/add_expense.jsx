@@ -4,9 +4,6 @@ import "../styles/add_expense.css";
 function AddExpense(props) {
   // Reactive variables for dynamic styling
   let [containerClass, setContainerClass] = useState("add-expense-container");
-  let [plusClass, setPlusClass] = useState("add-expense-plus");
-  let [fristClass, setFirstClass] = useState("add-expense-title");
-  let [secondClass, setSecondClass] = useState("title-input");
   let [overflowClass, setOverflowClass] = useState("overflow-container");
   let [crossRotateClass, setCrossRotateClass] = useState("");
 
@@ -19,8 +16,6 @@ function AddExpense(props) {
     } else {
       setCrossRotateClass("cross-rotate");
       setContainerClass("add-expense-container add-expense-container-expand");
-      setFirstClass("add-expense-title add-expense-title-expand");
-      setSecondClass("title-input title-input-expand");
       setOverflowClass("overflow-container overflow-container-expand");
       props.onClick();
     }
@@ -29,8 +24,8 @@ function AddExpense(props) {
   return (
     <div>
       <div className={overflowClass}>
-        <heading className={fristClass}>Title</heading>
-        <input className={secondClass}></input>
+        <heading className="add-expense-title">Title</heading>
+        <input className="title-input"></input>
         <heading className="add-expense-author">Author</heading>
         <input className="author-input"></input>
         <heading className="add-expense-lender">Lender</heading>
@@ -39,7 +34,7 @@ function AddExpense(props) {
         <input className="borrower-input"></input>
       </div>
       <div className={containerClass}>
-        <div className={plusClass} onClick={expandContainer}>
+        <div className="add-expense-plus" onClick={expandContainer}>
           <svg
             width="30"
             height="30"
