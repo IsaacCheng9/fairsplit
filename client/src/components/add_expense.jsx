@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createRef } from "react";
 import "../styles/add_expense.css";
 
 function AddExpense(props) {
@@ -6,6 +6,32 @@ function AddExpense(props) {
   let [containerClass, setContainerClass] = useState("add-expense-container");
   let [overflowClass, setOverflowClass] = useState("overflow-container");
   let [crossRotateClass, setCrossRotateClass] = useState("");
+
+  // Refs for dynamic styling
+  let [titleRef, authorRef, lenderRef, borrowerRef] = [
+    createRef(),
+    createRef(),
+    createRef(),
+    createRef(),
+  ];
+
+  // Validates inputs to determine whether or not button should be enabled
+  function inputValidation() {
+    // Check if all inputs are filled
+    if (
+      titleRef.current.value.length > 0 &&
+      authorRef.current.value.length > 0 &&
+      lenderRef.current.value.length > 0 &&
+      borrowerRef.current.value.length > 0
+    ) {
+      console.log(titleRef.current.value.length);
+      // If all inputs are filled, enable button
+      props.onClick(true);
+    } else {
+      // If not, disable button
+      props.onClick(false);
+    }
+  }
 
   // Expands add-expense container to make room for input fields
   function expandContainer() {
@@ -25,13 +51,29 @@ function AddExpense(props) {
     <div>
       <div className={overflowClass}>
         <heading className="add-expense-title">Title</heading>
-        <input className="title-input"></input>
+        <input
+          onChange={inputValidation}
+          ref={titleRef}
+          className="title-input"
+        ></input>
         <heading className="add-expense-author">Author</heading>
-        <input className="author-input"></input>
+        <input
+          onChange={inputValidation}
+          ref={authorRef}
+          className="author-input"
+        ></input>
         <heading className="add-expense-lender">Lender</heading>
-        <input className="lender-input"></input>
+        <input
+          onChange={inputValidation}
+          ref={lenderRef}
+          className="lender-input"
+        ></input>
         <heading className="add-expense-borrower">Borrower</heading>
-        <input className="borrower-input"></input>
+        <input
+          onChange={inputValidation}
+          ref={borrowerRef}
+          className="borrower-input"
+        ></input>
       </div>
       <div className={containerClass}>
         <div className="add-expense-plus" onClick={expandContainer}>
