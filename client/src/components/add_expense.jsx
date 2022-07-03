@@ -56,6 +56,7 @@ function AddExpense(props) {
       <div className={overflowClass}>
         <header className="add-expense-title">Title</header>
         <input
+          maxLength="50"
           onChange={inputValidation}
           ref={titleRef}
           className="title-input"
