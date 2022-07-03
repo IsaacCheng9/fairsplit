@@ -1,4 +1,4 @@
-import React, { useState, createRef } from "react";
+import React, { useState, createRef, useEffect } from "react";
 import "../styles/group_expenses.css";
 import Expense from "./expense";
 import AddExpense from "./add_expense";
@@ -6,7 +6,24 @@ import AddExpense from "./add_expense";
 function GroupExpenses(props) {
   // Reactive array of expenses
   let [expenses, setExpenses] = useState([]);
+  let [buttonStyle, setButtonStyle] = useState("ge-button add-expense-btn");
   let containerRef = createRef();
+  let addExpenseBtnRef = createRef();
+
+  // Button activator
+  function buttonState(valid) {
+    if (valid) {
+      setButtonStyle("ge-button");
+      addExpenseBtnRef.current.disabled = false;
+    } else {
+      setButtonStyle("ge-button add-expense-btn");
+      addExpenseBtnRef.current.disabled = true;
+    }
+  }
+
+  useEffect(() => {
+    addExpenseBtnRef.current.disabled = true;
+  }, []);
 
   // Scroll to bottom of container to see new expense form
   function scrollToBottom() {
@@ -46,14 +63,22 @@ function GroupExpenses(props) {
           <Expense value={expense} key={expense.id.toString()}></Expense>
         ))}
         <AddExpense
-          onClick={() => {
-            scrollToBottom();
+          onClick={(selection) => {
+            if (selection != undefined) {
+              buttonState(selection);
+            } else {
+              scrollToBottom();
+            }
           }}
         ></AddExpense>
       </div>
       <div className="button-container">
         <button className="ge-button">Settle Up</button>
-        <button className="ge-button" onClick={addExpense}>
+        <button
+          ref={addExpenseBtnRef}
+          className={buttonStyle}
+          onClick={addExpense}
+        >
           Add Expense
         </button>
       </div>
