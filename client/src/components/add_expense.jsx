@@ -24,7 +24,6 @@ function AddExpense(props) {
       lenderRef.current.value.length > 0 &&
       borrowerRef.current.value.length > 0
     ) {
-      console.log(titleRef.current.value.length);
       // If all inputs are filled, enable button
       props.onClick(true);
     } else {
