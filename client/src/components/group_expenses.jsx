@@ -9,11 +9,13 @@ function GroupExpenses(props) {
   let [buttonStyle, setButtonStyle] = useState("ge-button add-expense-btn");
   let containerRef = createRef();
   let addExpenseBtnRef = createRef();
+  let tempExpense = useState({});
 
   // Button activator
-  function buttonState(valid) {
+  function buttonState(valid, expense) {
     if (valid) {
       setButtonStyle("ge-button");
+      tempExpense = expense;
       addExpenseBtnRef.current.disabled = false;
     } else {
       setButtonStyle("ge-button add-expense-btn");
@@ -23,7 +25,7 @@ function GroupExpenses(props) {
 
   useEffect(() => {
     addExpenseBtnRef.current.disabled = true;
-  }, []);
+  });
 
   // Scroll to bottom of container to see new expense form
   function scrollToBottom() {
@@ -32,20 +34,28 @@ function GroupExpenses(props) {
     }, 680);
   }
 
-  // Add temporary expense data to array of expenses
-  function addExpense() {
-    const updatedExpenses = [
-      ...expenses,
-      {
-        id: expenses.length,
-        date: "25th May",
-        title: "Peanut Butter",
-        borrower: "Isaac",
-        lender: "George",
-        price: 3,
+  // Add expense data to db
+  async function addExpense() {
+    // Call route to add expense to db
+    let validExpense = await fetch("http://localhost:3000/expenses/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    ];
-    setExpenses(updatedExpenses);
+      body: JSON.stringify(tempExpense),
+    });
+
+    let response = await validExpense.json();
+
+    if (response.valid) {
+      // Add expense to array of expenses
+      setExpenses([...expenses, response.expense]);
+      // Clear form
+      tempExpense = {};
+    } else {
+      // Display error message
+      console.error(response.error);
+    }
   }
 
   return (
@@ -60,12 +70,12 @@ function GroupExpenses(props) {
       </h2>
       <div className="expense-container" ref={containerRef}>
         {expenses.map((expense) => (
-          <Expense value={expense} key={expense.id.toString()}></Expense>
+          <Expense value={expense} key={expense.creationDatetime}></Expense>
         ))}
         <AddExpense
-          onClick={(selection) => {
-            if (selection != undefined) {
-              buttonState(selection);
+          onClick={(selection, expense) => {
+            if (selection !== undefined) {
+              buttonState(selection, expense);
             } else {
               scrollToBottom();
             }
@@ -77,7 +87,9 @@ function GroupExpenses(props) {
         <button
           ref={addExpenseBtnRef}
           className={buttonStyle}
-          onClick={addExpense}
+          onClick={() => {
+            addExpense();
+          }}
         >
           Add Expense
         </button>
