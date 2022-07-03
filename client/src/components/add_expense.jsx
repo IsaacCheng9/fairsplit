@@ -1,4 +1,4 @@
-import React, { useState, createRef } from "react";
+import React, { useState, createRef, useEffect } from "react";
 import "../styles/add_expense.css";
 
 function AddExpense(props) {
@@ -36,6 +36,28 @@ function AddExpense(props) {
       props.onClick(false);
     }
   }
+
+  // Clears form
+  function clearInputs() {
+    titleRef.current.value = "";
+    authorRef.current.value = "";
+    lenderRef.current.value = "";
+    borrowerRef.current.value = "";
+  }
+
+  // Toggles visibility of form
+  useEffect(() => {
+    if (props.reset) {
+      clearInputs();
+      props.onReset(false);
+
+      setTimeout(() => {
+        setOverflowClass("overflow-container");
+        setContainerClass("add-expense-container");
+        setCrossRotateClass("");
+      }, 300);
+    }
+  });
 
   // Expands add-expense container to make room for input fields
   function expandContainer() {
