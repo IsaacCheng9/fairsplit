@@ -9,7 +9,8 @@ function GroupExpenses(props) {
   let [buttonStyle, setButtonStyle] = useState("ge-button add-expense-btn");
   let containerRef = createRef();
   let addExpenseBtnRef = createRef();
-  let tempExpense = useState({});
+  let [clearForm, setClearForm] = useState(false);
+  let tempExpense = {};
 
   // Button activator
   function buttonState(valid, expense) {
@@ -47,11 +48,11 @@ function GroupExpenses(props) {
 
     let response = await validExpense.json();
 
-    if (response.valid) {
+    if (validExpense.ok) {
       // Add expense to array of expenses
-      setExpenses([...expenses, response.expense]);
+      setExpenses([...expenses, response]);
       // Clear form
-      tempExpense = {};
+      setClearForm(true);
     } else {
       // Display error message
       console.error(response.error);
@@ -79,6 +80,10 @@ function GroupExpenses(props) {
             } else {
               scrollToBottom();
             }
+          }}
+          reset={clearForm}
+          onReset={(reset) => {
+            setClearForm(reset);
           }}
         ></AddExpense>
       </div>
