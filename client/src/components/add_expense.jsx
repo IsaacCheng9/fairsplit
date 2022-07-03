@@ -49,25 +49,25 @@ function AddExpense(props) {
   return (
     <div>
       <div className={overflowClass}>
-        <heading className="add-expense-title">Title</heading>
+        <header className="add-expense-title">Title</header>
         <input
           onChange={inputValidation}
           ref={titleRef}
           className="title-input"
         ></input>
-        <heading className="add-expense-author">Author</heading>
+        <header className="add-expense-author">Author</header>
         <input
           onChange={inputValidation}
           ref={authorRef}
           className="author-input"
         ></input>
-        <heading className="add-expense-lender">Lender</heading>
+        <header className="add-expense-lender">Lender</header>
         <input
           onChange={inputValidation}
           ref={lenderRef}
           className="lender-input"
         ></input>
-        <heading className="add-expense-borrower">Borrower</heading>
+        <header className="add-expense-borrower">Borrower</header>
         <input
           onChange={inputValidation}
           ref={borrowerRef}
