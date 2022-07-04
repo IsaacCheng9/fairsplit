@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
+require('dotenv').config()
 const cors = require("cors");
 const usersRouter = require("./routes/users.js");
 const expensesRouter = require("./routes/expenses.js");
@@ -11,8 +11,8 @@ app.use(cors());
 app.use(usersRouter);
 app.use(expensesRouter);
 
-// IMPORTANT: Replace this value with the actual password locally.
-const password = "<password>";
+// IMPORTANT: Create .env file with password
+const password = process.env.PASSWORD;
 let devUrl = `mongodb+srv://admin:${password}@fairsplit.fjvgxmg.mongodb.net/?retryWrites=true&w=majority`;
 var mongoDB = process.env.MONGODB_URI || devUrl;
 // Sets up the Mongoose connection.
