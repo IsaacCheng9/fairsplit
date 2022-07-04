@@ -10,13 +10,13 @@ function GroupExpenses(props) {
   let containerRef = createRef();
   let addExpenseBtnRef = createRef();
   let [clearForm, setClearForm] = useState(false);
-  let tempExpense = {};
+  let [tempExpense, setTempExpense] = useState({});
 
   // Button activator
   function buttonState(valid, expense) {
     if (valid) {
       setButtonStyle("ge-button");
-      tempExpense = expense;
+      setTempExpense(expense);
       addExpenseBtnRef.current.disabled = false;
     } else {
       setButtonStyle("ge-button add-expense-btn");
@@ -25,7 +25,9 @@ function GroupExpenses(props) {
   }
 
   useEffect(() => {
-    addExpenseBtnRef.current.disabled = true;
+    if (clearForm) {
+      addExpenseBtnRef.current.disabled = true;
+    }
   });
 
   // Scroll to bottom of container to see new expense form
@@ -36,23 +38,26 @@ function GroupExpenses(props) {
   }
 
   // Add expense data to db
-  async function addExpense() {
+  async function addExpense(expense) {
     // Call route to add expense to db
     let validExpense = await fetch("http://localhost:3000/expenses/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(tempExpense),
+      body: JSON.stringify(expense),
     });
 
     let response = await validExpense.json();
+    console.log(response);
 
     if (validExpense.ok) {
       // Add expense to array of expenses
       setExpenses([...expenses, response]);
       // Clear form
       setClearForm(true);
+      // Grey out button
+      setButtonStyle("ge-button add-expense-btn");
     } else {
       // Display error message
       console.error(response.error);
@@ -93,7 +98,7 @@ function GroupExpenses(props) {
           ref={addExpenseBtnRef}
           className={buttonStyle}
           onClick={() => {
-            addExpense();
+            addExpense(tempExpense);
           }}
         >
           Add Expense
