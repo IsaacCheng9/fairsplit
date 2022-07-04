@@ -10,7 +10,7 @@ function GroupUsers(props) {
   let users = props.value.users;
   let [addedUsers, setAddedUsers] = useState(users);
 
-  function addUser(user) {
+  function addUserToGroup(user) {
     const newUser = { username: user, indebted: false, balance: 0 };
     setAddedUsers([...addedUsers, newUser]);
   }
@@ -40,7 +40,7 @@ function GroupUsers(props) {
         ))}
         <AddUser
           onClick={(user) => {
-            addUser(user);
+            addUserToGroup(user);
           }}
         ></AddUser>
       </div>
