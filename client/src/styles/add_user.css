@@ -1,0 +1,85 @@
+:root {
+  --balance-red: rgb(201, 61, 61, 0.65);
+  --balance-green: rgb(61, 201, 112, 0.65);
+}
+
+.add-user-container {
+  height: 50px;
+  display: grid;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  margin: 0 auto 20px auto;
+  grid-template-columns: [image] 50px [dot] auto [other] 50px;
+  align-items: center;
+}
+
+.add-user-input {
+  padding-left: 10px;
+  font-size: 20px;
+  font-family: "Poppins";
+  background-color: white;
+  width: 200px;
+  height: 65%;
+  margin: 0 0 0 10px;
+  border-radius: 8px;
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  grid-column-start: 2;
+  grid-row-start: 1;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.add-user-input-clicked {
+  opacity: 1;
+}
+
+.add-user-pic {
+  background-color: lightgrey;
+  width: 35px;
+  height: 35px;
+  align-self: center;
+  justify-self: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.add-user-pic-clicked {
+  opacity: 100;
+}
+
+.add-user-plus {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: lightgrey;
+  justify-self: center;
+  transition: all 0.7s ease;
+  grid-column-start: 2;
+  grid-row-start: 1;
+  z-index: 3;
+}
+
+.add-user-plus-clicked {
+  transform: translateX(155px);
+}
+
+.add-user-plus-invalid {
+  background-color: var(--balance-red);
+}
+
+.add-user-plus-valid {
+  background-color: var(--balance-green);
+}
+
+#cross {
+  transition: all 1s ease;
+  transform-origin: center;
+}
+
+.cross-rotate {
+  transform: rotate(45deg);
+}
+
+input:focus {
+  border: 1px solid #39444e;
+}
