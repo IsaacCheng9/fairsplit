@@ -9,9 +9,7 @@ app.get("/debts", async (_, response) => {
   try {
     response.json(debt);
   } catch (error) {
-    {
-      response.status(500).send(error);
-    }
+    response.status(500).send(error);
   }
 });
 
