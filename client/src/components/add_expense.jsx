@@ -8,7 +8,8 @@ function AddExpense(props) {
   let [crossRotateClass, setCrossRotateClass] = useState("");
 
   // Refs for dynamic styling
-  let [titleRef, authorRef, lenderRef, borrowerRef] = [
+  let [titleRef, authorRef, lenderRef, borrowerRef, amountRef] = [
+    createRef(),
     createRef(),
     createRef(),
     createRef(),
@@ -22,7 +23,9 @@ function AddExpense(props) {
       titleRef.current.value.length > 0 &&
       authorRef.current.value.length > 0 &&
       lenderRef.current.value.length > 0 &&
-      borrowerRef.current.value.length > 0
+      borrowerRef.current.value.length > 0 &&
+      amountRef.current.value.length > 0 &&
+      amountRef.current.value > 0
     ) {
       // If all inputs are filled, enable button
       props.onClick(true, {
@@ -30,6 +33,7 @@ function AddExpense(props) {
         author: authorRef.current.value,
         lender: lenderRef.current.value,
         borrowers: borrowerRef.current.value,
+        amount: amountRef.current.value,
       });
     } else {
       // If not, disable button
@@ -43,6 +47,7 @@ function AddExpense(props) {
     authorRef.current.value = "";
     lenderRef.current.value = "";
     borrowerRef.current.value = "";
+    amountRef.current.value = "";
   }
 
   // Toggles visibility of form
@@ -100,6 +105,12 @@ function AddExpense(props) {
           onChange={inputValidation}
           ref={borrowerRef}
           className="borrower-input"
+        ></input>
+        <header className="add-expense-amount">Amount</header>
+        <input
+          onChange={inputValidation}
+          ref={amountRef}
+          className="amount-input"
         ></input>
       </div>
       <div className={containerClass}>
