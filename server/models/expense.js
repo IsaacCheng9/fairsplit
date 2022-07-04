@@ -24,6 +24,12 @@ const expenseSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
+  amount: {
+    type: Number,
+    required: true,
+    min: [0, "Amount must be greater than £0."],
+    max: [1000000, "Amount must be less than £1000000."],
+  },
 });
 
 module.exports = mongoose.model("expense", expenseSchema);

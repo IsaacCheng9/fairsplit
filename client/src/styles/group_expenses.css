@@ -12,6 +12,7 @@
 
 .expense-container {
   overflow: overlay;
+  scroll-behavior: smooth;
 }
 
 .button-container {
@@ -30,6 +31,10 @@
   color: white;
   font-size: 17px;
   font-family: "Poppins", sans-serif;
+}
+
+.add-expense-btn {
+  background-color: lightgrey;
 }
 
 .group-expenses-container {
