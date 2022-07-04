@@ -9,6 +9,12 @@ let group = {
   name: "4 Portal Road",
   balance: 24,
   currency: "£",
+  users: [
+    { username: 'Jim', indebted: true , balance: 2 },
+    { username: 'Bob', indebted: false, balance: 4 },
+    { username: 'Joe', indebted: false, balance: 7 },
+    { username: 'Jane', indebted: false, balance: 3 }
+  ],
 };
 
 function App() {
