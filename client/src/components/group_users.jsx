@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import "../styles/group_users.css";
 import User from "./user";
-import Add_User from "./add_user";
+import AddUser from "./add_user";
 
 function GroupUsers(props) {
   // API URL
@@ -38,11 +38,11 @@ function GroupUsers(props) {
         {addedUsers.map((user) => (
           <User value={user} key={user.username}></User>
         ))}
-        <Add_User
+        <AddUser
           onClick={(user) => {
             addUser(user);
           }}
-        ></Add_User>
+        ></AddUser>
       </div>
     </div>
   );

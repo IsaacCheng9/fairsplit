@@ -1,7 +1,7 @@
 import React, { useState, createRef } from "react";
 import "../styles/add_user.css";
 
-function Add_user(props) {
+function AddUser(props) {
   // Reactive variables to store element classes, allowing for dynamic styling
   let [transitionClass, setTransitionClass] = useState("add-user-plus");
   let [crossClass, setCrossClass] = useState("add-user-plus");
@@ -103,4 +103,4 @@ function Add_user(props) {
   );
 }
 
-export default Add_user;
+export default AddUser;
