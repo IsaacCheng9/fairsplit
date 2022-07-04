@@ -17,4 +17,4 @@ const debtSchema = new mongoose.Schema({
   },
 });
 
-module.exports = User = mongoose.model("debt", debtSchema);
+module.exports = mongoose.model("debt", debtSchema);

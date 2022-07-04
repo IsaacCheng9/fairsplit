@@ -26,4 +26,4 @@ const expenseSchema = new mongoose.Schema({
   },
 });
 
-module.exports = User = mongoose.model("expense", expenseSchema);
+module.exports = mongoose.model("expense", expenseSchema);
