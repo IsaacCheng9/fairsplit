@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import "../styles/group_users.css";
+import User from "./user";
+import AddUser from "./add_user";
 
 function GroupUsers(props) {
   // API URL
   let apiUrl = "http://localhost:3001";
+  let users = props.value.users;
+  let [addedUsers, setAddedUsers] = useState(users);
+
+  function addUserToGroup(user) {
+    const newUser = { username: user, indebted: false, balance: 0 };
+    setAddedUsers([...addedUsers, newUser]);
+  }
 
   async function getUsers() {
     let response = await fetch(apiUrl + "/users");
@@ -20,12 +29,21 @@ function GroupUsers(props) {
   useEffect(() => {
     getUsers();
     getUserById("62b1edee24f619f5f5066f37");
-  }, [])
+  }, []);
 
   return (
-    <div className="users-container">
-      <h1 className="users-title">Group Members</h1>
-      <div className="users"></div>
+    <div className="group-members-container">
+      <h1 className="group-members-title">Group Members</h1>
+      <div className="users-container">
+        {addedUsers.map((user) => (
+          <User value={user} key={user.username}></User>
+        ))}
+        <AddUser
+          onClick={(user) => {
+            addUserToGroup(user);
+          }}
+        ></AddUser>
+      </div>
     </div>
   );
 }
