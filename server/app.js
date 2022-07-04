@@ -16,7 +16,7 @@ app.use(usersRouter);
 app.use(expensesRouter);
 
 // IMPORTANT: Create .env file with password
-const password = process.env.PASSWORD;
+const password = process.env.PASSWORD || "changePasswordHere";
 let devUrl = `mongodb+srv://admin:${password}@fairsplit.fjvgxmg.mongodb.net/?retryWrites=true&w=majority`;
 var mongoDB = process.env.MONGODB_URI || devUrl;
 // Sets up the Mongoose connection.
