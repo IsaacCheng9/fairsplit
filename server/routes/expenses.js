@@ -32,6 +32,7 @@ app.post("/expenses/add", async (request, response) => {
     author: request.body.author,
     lender: request.body.lender,
     borrowers: request.body.borrowers,
+    amount: request.body.amount,
   });
 
   try {
