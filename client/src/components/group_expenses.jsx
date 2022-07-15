@@ -74,6 +74,17 @@ function GroupExpenses(props) {
           {props.value.balance}
         </span>
       </h2>
+      <ul className="user-summaries">
+        {props.value.users.map((user) => (
+          <li key={user.username}>
+            {user.username}&nbsp;
+            <span>
+              {props.value.currency}
+              {user.balance}&nbsp;
+            </span>
+          </li>
+        ))}
+      </ul>
       <div className="expense-container" ref={containerRef}>
         {expenses.map((expense) => (
           <Expense value={expense} key={expense.creationDatetime}></Expense>
