@@ -37,9 +37,47 @@
   background-color: lightgrey;
 }
 
+.user-summaries-container {
+  overflow: overlay;
+  margin: 0 50px;
+}
+
+.user-summaries-container::-webkit-scrollbar {
+  width: 6px;
+  overflow: overlay;
+  height: 5px;
+}
+
+.user-summaries-container::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 3px;
+}
+
+.user-summaries-container .user-summaries-overflow {
+  justify-content: start;
+}
+
+.user-summaries {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  font-family: "Poppins";
+  color: #39444e;
+  font-size: 12px;
+}
+
+.user-summaries h3 {
+  margin: 0;
+}
+
+.user-summaries li {
+  display: inline;
+}
+
 .group-expenses-container {
   display: grid;
-  grid-template-rows: [title] 100px [balance] 65px [main] auto [buttons] 100px;
+  grid-template-rows: [title] 85px [balance] 30px [userBalances] 50px [main] auto [buttons] 100px;
+  grid-template-columns: 400px;
   box-shadow: 0 70px 100px -20px rgb(50 50 93 / 25%);
   border-radius: 8px;
   position: relative;
@@ -58,11 +96,12 @@
   font-size: 15px;
   font-family: "Poppins", sans-serif;
   color: #39444e;
-  margin: 0 auto 0 auto;
+  margin: auto auto;
 }
 
 .group-name {
-  margin: 50px auto 0px auto;
+  padding-top: 40px;
+  margin: auto auto;
   font-family: "Poppins", sans-serif;
   color: #39444e;
 }
