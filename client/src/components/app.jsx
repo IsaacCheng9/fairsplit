@@ -7,15 +7,28 @@ import GroupUsers from "./group_users";
 // Temporary group to display component data
 let group = {
   name: "4 Portal Road",
-  balance: 24,
+  balance: 0,
   currency: "£",
   users: [
-    { username: 'Jim', indebted: true , balance: 2 },
-    { username: 'Bob', indebted: false, balance: 4 },
-    { username: 'Joe', indebted: false, balance: 7 },
-    { username: 'Jane', indebted: false, balance: 3 }
+    { username: "Jim", indebted: true, balance: 14 },
+    { username: "Bob", indebted: false, balance: 4 },
+    { username: "Joe", indebted: false, balance: 7 },
+    { username: "Jane", indebted: false, balance: 3 },
   ],
 };
+
+// Calculate total balance of group
+group["balance"] = calculateTotalBalance();
+
+function calculateTotalBalance() {
+  let totalBalance = 0;
+  group.users.forEach((user) => {
+    if (user.indebted) {
+      totalBalance -= user.balance;
+    }
+  });
+  return totalBalance;
+}
 
 function App() {
   return (

@@ -79,7 +79,7 @@ function GroupExpenses(props) {
         Outstanding balance:&nbsp;
         <span
           className={
-            props.value.balance > 0
+            props.value.balance < 0
               ? "balance-value user-balance-red"
               : "balance-value user-balance-green"
           }
