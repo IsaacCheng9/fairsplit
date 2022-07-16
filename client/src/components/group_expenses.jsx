@@ -77,7 +77,13 @@ function GroupExpenses(props) {
       <h1 className="group-name">{props.value.name}</h1>
       <h2 className="balance">
         Outstanding balance:&nbsp;
-        <span className="balance-value">
+        <span
+          className={
+            props.value.balance > 0
+              ? "balance-value user-balance-red"
+              : "balance-value user-balance-green"
+          }
+        >
           {props.value.currency}&nbsp;
           {props.value.balance}
         </span>
@@ -88,7 +94,13 @@ function GroupExpenses(props) {
             <li key={user.username}>
               <h3>
                 {user.username}&nbsp;
-                <span className="balance-value">
+                <span
+                  className={
+                    user.indebted
+                      ? "balance-value user-balance-red"
+                      : "balance-value user-balance-green"
+                  }
+                >
                   {props.value.currency}
                   {user.balance}
                 </span>
