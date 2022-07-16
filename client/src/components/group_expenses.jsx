@@ -11,6 +11,7 @@ function GroupExpenses(props) {
   let addExpenseBtnRef = createRef();
   let [clearForm, setClearForm] = useState(false);
   let [tempExpense, setTempExpense] = useState({});
+  let [userSummariesClass, setUserSummariesClass] = useState("user-summaries");
 
   // Button activator
   function buttonState(valid, expense) {
@@ -27,6 +28,13 @@ function GroupExpenses(props) {
   useEffect(() => {
     if (clearForm) {
       addExpenseBtnRef.current.disabled = true;
+    }
+
+    // Change alignment of user summaries based on overflow of users
+    if (props.value.users.length > 4) {
+      setUserSummariesClass("user-summaries user-summaries-overflow");
+    } else {
+      setUserSummariesClass("user-summaries");
     }
   });
 
@@ -74,17 +82,22 @@ function GroupExpenses(props) {
           {props.value.balance}
         </span>
       </h2>
-      <ul className="user-summaries">
-        {props.value.users.map((user) => (
-          <li key={user.username}>
-            {user.username}&nbsp;
-            <span>
-              {props.value.currency}
-              {user.balance}&nbsp;
-            </span>
-          </li>
-        ))}
-      </ul>
+      <section className="user-summaries-container">
+        <ul className={userSummariesClass}>
+          {props.value.users.map((user) => (
+            <li key={user.username}>
+              <h3>
+                {user.username}&nbsp;
+                <span className="balance-value">
+                  {props.value.currency}
+                  {user.balance}
+                </span>
+                &nbsp;
+              </h3>
+            </li>
+          ))}
+        </ul>
+      </section>
       <div className="expense-container" ref={containerRef}>
         {expenses.map((expense) => (
           <Expense value={expense} key={expense.creationDatetime}></Expense>
