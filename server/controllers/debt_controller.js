@@ -22,8 +22,8 @@ exports.getDebtById = async (request, response) => {
   }
 };
 
-// Creates a new debt between two users.
-exports.createNewDebt = async (request, response) => {
+// Adds a debt between two users.
+exports.addDebt = async (request, response) => {
   // Check whether the debt exists between two users so that we can either
   // create a new debt, or update an existing debt.
   const debtExists = await debtModel.exists({
@@ -49,6 +49,7 @@ exports.createNewDebt = async (request, response) => {
       response.status(500).send(error);
     }
   } else {
+    // Create a new debt between the two users.
     const debt = await debtModel.create({
       from: request.body.from,
       to: request.body.to,
