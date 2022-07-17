@@ -44,7 +44,7 @@ exports.createNewDebt = async (request, response) => {
     );
 
     try {
-      response.status(200).send("Debt updated successfully.");
+      response.send("Debt updated successfully.");
     } catch (error) {
       response.status(500).send(error);
     }
