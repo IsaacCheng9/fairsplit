@@ -3,7 +3,7 @@ const debtController = require("../controllers/debt_controller");
 const app = express();
 
 // Gets a list of all debts.
-app.get("/debts", debtController.getAllDebts);
+app.get("/debts", debtController.getDebts);
 
 // Gets a debt by ID.
 app.get("/debts/:id", debtController.getDebtById);

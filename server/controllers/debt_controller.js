@@ -1,7 +1,7 @@
 const debtModel = require("../models/debt");
 
 // Gets a list of all debts.
-exports.getAllDebts = async (request, response) => {
+exports.getDebts = async (request, response) => {
   const debt = await debtModel.find({});
 
   try {
