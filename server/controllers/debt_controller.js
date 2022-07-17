@@ -42,6 +42,12 @@ exports.createNewDebt = async (request, response) => {
         $inc: { amount: request.body.amount },
       }
     );
+
+    try {
+      response.status(200).send("Debt updated successfully.");
+    } catch (error) {
+      response.status(500).send(error);
+    }
   } else {
     const debt = await debtModel.create({
       from: request.body.from,
