@@ -2,6 +2,7 @@ import React, { useState, createRef, useEffect } from "react";
 import "../styles/group_expenses.css";
 import Expense from "./expense";
 import AddExpense from "./add_expense";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 function GroupExpenses(props) {
   // Reactive array of expenses
@@ -90,24 +91,31 @@ function GroupExpenses(props) {
       </h2>
       <section className="user-summaries-container">
         <ul className={userSummariesClass}>
-          {props.value.users.map((user) => (
-            <li key={user.username}>
-              <h3>
-                {user.username}&nbsp;
-                <span
-                  className={
-                    user.indebted
-                      ? "balance-value user-balance-red"
-                      : "balance-value user-balance-green"
-                  }
-                >
-                  {props.value.currency}
-                  {user.balance}
-                </span>
-                &nbsp;
-              </h3>
-            </li>
-          ))}
+          <TransitionGroup component={null}>
+            {props.value.users.map((user) => (
+              <CSSTransition
+                timeout={0}
+                classNames="summaries-transform-in"
+                key={user.username}
+              >
+                <li key={user.username}>
+                  <h3>
+                    {user.username}
+                    <span
+                      className={
+                        user.indebted
+                          ? "balance-value user-balance-red"
+                          : "balance-value user-balance-green"
+                      }
+                    >
+                      {props.value.currency}
+                      {user.balance}
+                    </span>
+                  </h3>
+                </li>
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
         </ul>
       </section>
       <div className="expense-container" ref={containerRef}>
