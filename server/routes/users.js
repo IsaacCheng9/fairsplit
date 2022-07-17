@@ -1,50 +1,20 @@
 const express = require("express");
-const userModel = require("../models/user");
+const userController = require("../controllers/user_controller");
 const app = express();
 
 // Gets a list of all the users.
-app.get("/users", async (_, response) => {
-  const users = await userModel.find({});
-
-  try {
-    response.json(users);
-  } catch (error) {
-    {
-      response.status(500).send(error);
-    }
-  }
-});
+app.get("/users", userController.getUsers);
 
 // Gets a user by ID.
-app.get("/users/:id", async (request, response) => {
-  const user = await userModel.findById(request.params.id);
-
-  try {
-    response.json(user);
-  } catch (error) {
-    response.status(500).send(error);
-  }
-});
+app.get("/users/:id", userController.getUserById);
 
 // Creates a new user.
-app.post("/users/add", async (request, response) => {
-  const user = await userModel.create({
-    username: request.body.username,
-    firstName: request.body.firstName,
-    lastName: request.body.lastName,
-  });
-
-  try {
-    response.json(user);
-  } catch (error) {
-    response.status(500).send(error);
-  }
-});
+app.post("/users/add", userController.addUser);
 
 // Updates a user by ID.
-// app.put("/users/update/:id", async (request, response) => {});
+// app.put("/users/update/:id", userController.updateUser);
 
 // Deletes a user by ID.
-// app.delete("/users/delete/:id", async (request, response) => {});
+// app.delete("/users/delete/:id", userController.deleteUser);
 
 module.exports = app;
