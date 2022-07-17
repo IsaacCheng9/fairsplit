@@ -4,6 +4,7 @@ require("dotenv").config();
 const cors = require("cors");
 const usersRouter = require("./routes/users.js");
 const expensesRouter = require("./routes/expenses.js");
+const debtsRouter = require("./routes/debts.js");
 
 const app = express();
 app.use(express.json());
@@ -14,6 +15,7 @@ app.use(
 );
 app.use(usersRouter);
 app.use(expensesRouter);
+app.use(debtsRouter);
 
 // IMPORTANT: Create .env file with password
 const password = process.env.PASSWORD || "changePasswordHere";
