@@ -13,6 +13,7 @@
 }
 
 .user-container {
+  transition: all 1s ease;
   font-family: "Poppins";
   display: grid;
   align-items: center;

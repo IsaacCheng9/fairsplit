@@ -2,6 +2,7 @@ import React, { useState, createRef, useEffect } from "react";
 import "../styles/group_expenses.css";
 import Expense from "./expense";
 import AddExpense from "./add_expense";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 function GroupExpenses(props) {
   // Reactive array of expenses
@@ -11,6 +12,7 @@ function GroupExpenses(props) {
   let addExpenseBtnRef = createRef();
   let [clearForm, setClearForm] = useState(false);
   let [tempExpense, setTempExpense] = useState({});
+  let [userSummariesClass, setUserSummariesClass] = useState("user-summaries");
 
   // Button activator
   function buttonState(valid, expense) {
@@ -27,6 +29,13 @@ function GroupExpenses(props) {
   useEffect(() => {
     if (clearForm) {
       addExpenseBtnRef.current.disabled = true;
+    }
+
+    // Change alignment of user summaries based on overflow of users
+    if (props.value.users.length > 4) {
+      setUserSummariesClass("user-summaries user-summaries-overflow");
+    } else {
+      setUserSummariesClass("user-summaries");
     }
   });
 
@@ -69,11 +78,46 @@ function GroupExpenses(props) {
       <h1 className="group-name">{props.value.name}</h1>
       <h2 className="balance">
         Outstanding balance:&nbsp;
-        <span className="balance-value">
+        <span
+          className={
+            props.value.balance < 0
+              ? "balance-value user-balance-red"
+              : "balance-value user-balance-green"
+          }
+        >
           {props.value.currency}&nbsp;
           {props.value.balance}
         </span>
       </h2>
+      <section className="user-summaries-container">
+        <ul className={userSummariesClass}>
+          <TransitionGroup component={null}>
+            {props.value.users.map((user) => (
+              <CSSTransition
+                timeout={0}
+                classNames="summaries-transform-in"
+                key={user.username}
+              >
+                <li key={user.username}>
+                  <h3>
+                    {user.username}
+                    <span
+                      className={
+                        user.indebted
+                          ? "balance-value user-balance-red"
+                          : "balance-value user-balance-green"
+                      }
+                    >
+                      {props.value.currency}
+                      {user.balance}
+                    </span>
+                  </h3>
+                </li>
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
+        </ul>
+      </section>
       <div className="expense-container" ref={containerRef}>
         {expenses.map((expense) => (
           <Expense value={expense} key={expense.creationDatetime}></Expense>
