@@ -63,5 +63,3 @@ exports.addDebt = async (request, response) => {
     }
   }
 };
-
-exports.addDebt = async (request, response) => {};
