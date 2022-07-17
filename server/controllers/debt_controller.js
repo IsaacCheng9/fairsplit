@@ -1,4 +1,4 @@
-var debtModel = require("../models/debt");
+const debtModel = require("../models/debt");
 
 // Gets a list of all debts.
 exports.getAllDebts = async (request, response) => {

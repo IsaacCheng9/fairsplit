@@ -1,4 +1,4 @@
-var expenseModel = require("../models/expense");
+const expenseModel = require("../models/expense");
 
 // Adds an expense.
 exports.addExpense = async (request, response) => {
