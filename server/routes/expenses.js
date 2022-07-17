@@ -1,6 +1,5 @@
 const express = require("express");
-const expenseModel = require("../models/expense");
-
+const expenseController = require("../controllers/expense_controller");
 const app = express();
 
 // Gets all expenses in the group.
@@ -26,21 +25,7 @@ const app = express();
 // });
 
 // Adds an expense.
-app.post("/expenses/add", async (request, response) => {
-  const expense = await expenseModel.create({
-    title: request.body.title,
-    author: request.body.author,
-    lender: request.body.lender,
-    borrowers: request.body.borrowers,
-    amount: request.body.amount,
-  });
-
-  try {
-    response.json(expense);
-  } catch (error) {
-    response.status(500).send(error);
-  }
-});
+app.post("/expenses/add", expenseController.addExpense);
 
 // Updates an expense by ID.
 // app.put("/expenses/update/:id", async (request, response) => {
