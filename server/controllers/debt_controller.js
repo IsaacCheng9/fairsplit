@@ -107,10 +107,8 @@ exports.settleDebt = async (request, response) => {
       response.status(500).send(error);
     }
   } else {
-    try {
-      response.send("You cannot settle more than the amount of the debt.");
-    } catch (error) {
-      response.status(500).send(error);
-    }
+    response
+      .status(400)
+      .send("You cannot settle more than the amount of the debt.");
   }
 };
