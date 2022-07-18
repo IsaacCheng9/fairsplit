@@ -1,10 +1,10 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import arrow from "../assets/arrow.svg";
 import "../styles/app.css";
 import GroupExpenses from "./group_expenses";
 import GroupUsers from "./group_users";
+import UserSwitching from "./user_switching";
 
 function App() {
   const apiUrl = "http://localhost:3001";
@@ -66,10 +66,7 @@ function App() {
     <div className="App">
       <div className="header-container">
         <h1 className="title">FairSplit</h1>
-        <a href={"#"} className="sign-in">
-          Sign in
-          <img className="arrow" src={arrow} />
-        </a>
+        <UserSwitching value={group}></UserSwitching>
       </div>
 
       <div className="bg-container">
