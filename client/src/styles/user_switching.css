@@ -1,0 +1,14 @@
+.user-switching-container {
+  align-self: center;
+  margin-right: 15%;
+}
+
+select {
+  border-radius: 16px;
+  font-size: 16px;
+  font-family: "poppins";
+  padding: 0 10px 0 10px;
+  height: 35px;
+  font-weight: bold;
+  outline: 0;
+}

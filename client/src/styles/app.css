@@ -28,7 +28,7 @@
   justify-content: center;
   align-items: center;
   display: inline-flex;
-  margin: auto 210px auto auto;
+  margin: auto 210px auto 0;
   width: 110px;
   height: 35px;
   border-radius: 16px;
