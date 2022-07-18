@@ -12,6 +12,6 @@ app.get("/debts/:id", debtController.getDebtById);
 app.post("/debts/add", debtController.addDebt);
 
 // Settles a debt between two users.
-app.delete("/debts/settle", debtController.settleDebt);
+app.post("/debts/settle", debtController.settleDebt);
 
 module.exports = app;
