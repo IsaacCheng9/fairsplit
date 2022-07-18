@@ -73,7 +73,9 @@ exports.settleDebt = async (request, response) => {
     to: request.body.from,
   });
 
-  if (existingDebt && existingDebt.amount > request.body.amount) {
+  if (request.body.amount <= 0) {
+    response.status(400).send("Amount must be greater than £0.");
+  } else if (existingDebt && existingDebt.amount > request.body.amount) {
     // If the existing debt is greater than the amount to be settled, then
     // reduce the debt.
     await debtModel.findOneAndUpdate(
