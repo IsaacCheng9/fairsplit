@@ -63,3 +63,52 @@ exports.addDebt = async (request, response) => {
     }
   }
 };
+
+// Settles a debt by ID.
+exports.settleDebt = async (request, response) => {
+  // Search for a debt by swapping the from and to fields, as a settlement is
+  // effectively a reverse debt.
+  const existingDebt = await debtModel.findOne({
+    from: request.body.to,
+    to: request.body.from,
+  });
+
+  if (existingDebt && existingDebt.amount > request.body.amount) {
+    // If the existing debt is greater than the amount to be settled, then
+    // reduce the debt.
+    await debtModel.findOneAndUpdate(
+      {
+        from: request.body.to,
+        to: request.body.from,
+      },
+      {
+        $inc: { amount: -request.body.amount },
+      }
+    );
+
+    try {
+      response.send("Debt partially settled and reduced successfully.");
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  } else if (existingDebt && existingDebt.amount === request.body.amount) {
+    // If the existing debt is equal to the amount to be settled, then delete
+    // the debt.
+    await debtModel.findOneAndDelete({
+      from: request.body.to,
+      to: request.body.from,
+    });
+
+    try {
+      response.send("Debt fully settled and deleted successfully.");
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  } else {
+    try {
+      response.send("You cannot settle more than the amount of the debt.");
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  }
+};
