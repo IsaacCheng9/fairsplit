@@ -9,11 +9,15 @@ function GroupUsers(props) {
   // API URL
   let apiUrl = "http://localhost:3001";
   let users = props.value.users;
-  let [addedUsers, setAddedUsers] = useState(users);
 
   function addUserToGroup(user) {
-    const newUser = { username: user, indebted: false, balance: 0 };
-    setAddedUsers([...addedUsers, newUser]);
+    const newUser = {
+      username: user,
+      firstName: "Cosmo",
+      lastName: "Kramer",
+      indebted: false,
+      balance: 0,
+    };
     props.onClick(newUser);
   }
 
@@ -38,7 +42,7 @@ function GroupUsers(props) {
       <h1 className="group-members-title">Group Members</h1>
       <div className="users-container">
         <TransitionGroup component={null}>
-          {addedUsers.map((user) => (
+          {users.map((user) => (
             <CSSTransition
               timeout={50}
               classNames="transform-in"

@@ -46,10 +46,20 @@ function App() {
     return totalBalance;
   }
 
-  function updateGroup(user) {
-    let newGroup = { ...group };
-    newGroup.users.push(user);
-    setGroup(newGroup);
+  async function updateGroup(user) {
+    // Add user to db
+    let response = await fetch(`${apiUrl}/users/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
+    setGroup({
+      ...group,
+      users: [...group.users, user],
+    });
   }
 
   return (
