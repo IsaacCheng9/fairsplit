@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import arrow from "../assets/arrow.svg";
 import "../styles/app.css";
@@ -6,18 +7,31 @@ import GroupExpenses from "./group_expenses";
 import GroupUsers from "./group_users";
 
 function App() {
-  // Temporary group to display component data
+  const apiUrl = "http://localhost:3001";
+
+  // Load all users into group
   let [group, setGroup] = useState({
     name: "4 Portal Road",
     balance: 0,
     currency: "£",
-    users: [
-      { username: "Jim", indebted: true, balance: 14 },
-      { username: "Bob", indebted: false, balance: 4 },
-      { username: "Joe", indebted: false, balance: 7 },
-      { username: "Jane", indebted: false, balance: 3 },
-    ],
+    users: [],
   });
+
+  async function getAllUsers() {
+    const response = await fetch(`${apiUrl}/users`);
+    const data = await response.json();
+    return data;
+  }
+
+  // Load all users into group
+  useEffect(() => {
+    getAllUsers().then((data) => {
+      setGroup({
+        ...group,
+        users: data,
+      });
+    });
+  }, []);
 
   // Calculate total balance of group
   group["balance"] = calculateTotalBalance();
