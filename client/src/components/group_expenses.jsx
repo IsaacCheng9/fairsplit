@@ -6,7 +6,8 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 function GroupExpenses(props) {
   // Reactive array of expenses
-  let [expenses, setExpenses] = useState([]);
+  let expenses = props.value.expenses;
+
   let [buttonStyle, setButtonStyle] = useState("ge-button add-expense-btn");
   let containerRef = createRef();
   let addExpenseBtnRef = createRef();
@@ -62,7 +63,7 @@ function GroupExpenses(props) {
 
     if (validExpense.ok) {
       // Add expense to array of expenses
-      setExpenses([...expenses, response]);
+      // setExpenses([...expenses, response]);
       // Clear form
       setClearForm(true);
       // Grey out button

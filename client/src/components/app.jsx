@@ -9,28 +9,43 @@ import UserSwitching from "./user_switching";
 function App() {
   const apiUrl = "http://localhost:3001";
 
-  // Load all users into group
+  // Use this as global group
   let [group, setGroup] = useState({
     name: "4 Portal Road",
     balance: 0,
     currency: "£",
     users: [],
+    expenses: [],
   });
 
+  // Gets all expenses from db
+  async function getAllExpenses() {
+    const response = await fetch(`${apiUrl}/expenses`);
+    const data = await response.json();
+    return data;
+  }
+
+  // Gets all users from db
   async function getAllUsers() {
     const response = await fetch(`${apiUrl}/users`);
     const data = await response.json();
     return data;
   }
 
-  // Load all users into group
-  useEffect(() => {
-    getAllUsers().then((data) => {
-      setGroup({
-        ...group,
-        users: data,
-      });
+  // Updates global group with data from db
+  async function loadDataIntoGroup() {
+    const expenses = await getAllExpenses();
+    const users = await getAllUsers();
+    setGroup({
+      ...group,
+      expenses: expenses,
+      users: users,
     });
+  }
+
+  // Load all users and expenses into group
+  useEffect(() => {
+    loadDataIntoGroup();
   }, []);
 
   // Calculate total balance of group
