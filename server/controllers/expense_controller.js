@@ -16,3 +16,16 @@ exports.addExpense = async (request, response) => {
     response.status(500).send(error);
   }
 };
+
+// Get all expenses.
+exports.getExpenses = async (_, response) => {
+  const expenses = await expenseModel.find({});
+
+  try {
+    response.json(expenses);
+  } catch (error) {
+    {
+      response.status(500).send(error);
+    }
+  }
+};
