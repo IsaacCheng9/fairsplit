@@ -19,10 +19,8 @@ function AddUser(props) {
 
     // Alter styling based on state of input by adding/removing classes
     if (inputLen > 0) {
-      setTransitionClass(transitionClass.replace("invalid", "valid"));
       setCrossClass("");
-    } else if (!inputLen && transitionClass.includes("valid")) {
-      setTransitionClass(transitionClass.replace("valid", "invalid"));
+    } else if (!inputLen) {
       setCrossClass("cross-rotate");
     }
   }
@@ -30,8 +28,8 @@ function AddUser(props) {
   // Handle dynamic styling when the user wants to add a user
   function addTransformClass() {
     // Removes classes when user is added or the user cancels the action
-    if (transitionClass.includes("valid")) {
-      if (transitionClass.includes("-valid")) {
+    if (transitionClass.includes("clicked")) {
+      if (inputValue.length > 0) {
         // Pushes new user to parent component
         props.onClick(inputValue);
         setInputValue("");
@@ -43,8 +41,7 @@ function AddUser(props) {
     } else {
       // Add classes that will animate the add user button
       setTransitionClass(
-        transitionClass +
-          " add-user-plus-clicked add-user-plus-invalid x-rotate y-rotate"
+        transitionClass + " add-user-plus-clicked x-rotate y-rotate"
       );
 
       // Add class that will animate the cross SVG icon on the add user button
