@@ -1,4 +1,5 @@
 const debtModel = require("../models/debt");
+const helpers = require("./helpers/index");
 
 // Gets a list of all debts.
 exports.getDebts = async (_, response) => {
@@ -29,34 +30,26 @@ exports.addDebt = async (request, response) => {
     to: request.body.to,
   });
 
-  if (debtExists) {
-    // Update an existing debt.
-    try {
-      await debtModel.findOneAndUpdate(
-        {
-          from: request.body.from,
-          to: request.body.to,
-        },
-        {
-          $inc: { amount: request.body.amount },
-        }
+  try {
+    if (debtExists) {
+      // Update the debt between the lender and borrower.
+      helpers.updateDebt(
+        request.body.from,
+        request.body.to,
+        request.body.amount
       );
       response.send("Debt updated successfully.");
-    } catch (error) {
-      response.status(500).send(error);
+    } else {
+      // Create a new debt between the lender and borrower.
+      helpers.createDebt(
+        request.body.from,
+        request.body.to,
+        request.body.amount
+      );
+      response.send("Debt created successfully.");
     }
-  } else {
-    // Create a new debt between the two users.
-    try {
-      const debt = await debtModel.create({
-        from: request.body.from,
-        to: request.body.to,
-        amount: request.body.amount,
-      });
-      response.json(debt);
-    } catch (error) {
-      response.status(500).send(error);
-    }
+  } catch (error) {
+    response.status(500).send(error);
   }
 };
 
