@@ -1,7 +1,7 @@
 const debtModel = require("../../models/debt");
 
 // Create a new debt between the two users.
-exports.createDebt = function (from, to, amount) {
+exports.createDebt = async function (from, to, amount) {
   debtModel.create({
     from: from,
     to: to,
