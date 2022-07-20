@@ -10,8 +10,8 @@ exports.createDebt = function (from, to, amount) {
 };
 
 // Update an existing debt.
-exports.updateDebt = function (from, to, amount) {
-  debtModel.findOneAndUpdate(
+exports.updateDebt = async function (from, to, amount) {
+  await debtModel.findOneAndUpdate(
     {
       from: from,
       to: to,
