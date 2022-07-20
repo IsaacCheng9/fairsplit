@@ -14,28 +14,22 @@ exports.addExpense = async (request, response) => {
       amount: request.body.amount,
     });
 
-    // TODO: Loop through so that it works for all borrowers instead of just one.
-    // Check whether the debt exists between two users so that we can either
-    // create a new debt, or update an existing debt.
-    const debtExists = await debtModel.exists({
-      from: request.body.borrowers[0],
-      to: request.body.lender,
-    });
+    // Loop through each borrower and create/update debts accordingly.
+    for (borrower of request.body.borrowers) {
+      // Check whether the debt exists between two users so that we can either
+      // create a new debt, or update an existing debt.
+      const debtExists = await debtModel.exists({
+        from: borrower,
+        to: request.body.lender,
+      });
 
-    if (debtExists) {
-      // Update the debt between the lender and borrower.
-      helpers.updateDebt(
-        request.body.borrowers[0],
-        request.body.lender,
-        request.body.amount
-      );
-    } else {
-      // Create a new debt between the lender and borrower.
-      helpers.createDebt(
-        request.body.borrowers[0],
-        request.body.lender,
-        request.body.amount
-      );
+      if (debtExists) {
+        // Update the debt between the lender and borrower.
+        helpers.updateDebt(borrower, request.body.lender, request.body.amount);
+      } else {
+        // Create a new debt between the lender and borrower.
+        helpers.createDebt(borrower, request.body.lender, request.body.amount);
+      }
     }
 
     response.json(expense);
