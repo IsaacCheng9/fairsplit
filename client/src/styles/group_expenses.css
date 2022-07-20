@@ -25,7 +25,7 @@
 }
 
 .expense-container {
-  overflow: overlay;
+  overflow: auto;
   scroll-behavior: smooth;
 }
 
