@@ -14,6 +14,10 @@ exports.addExpense = async (request, response) => {
       amount: request.body.amount,
     });
 
+    // TODO: Add support for an unequal split of the expense between borrowers.
+    // Split the expense between the borrowers – assume an equal split for now.
+    sharedExpense = request.body.amount / request.body.borrowers.length;
+
     // Loop through each borrower and create/update debts accordingly.
     for (borrower of request.body.borrowers) {
       // Check whether the debt exists between two users so that we can either
@@ -25,10 +29,10 @@ exports.addExpense = async (request, response) => {
 
       if (debtExists) {
         // Update the debt between the lender and borrower.
-        helpers.updateDebt(borrower, request.body.lender, request.body.amount);
+        helpers.updateDebt(borrower, request.body.lender, sharedExpense);
       } else {
         // Create a new debt between the lender and borrower.
-        helpers.createDebt(borrower, request.body.lender, request.body.amount);
+        helpers.createDebt(borrower, request.body.lender, sharedExpense);
       }
     }
 
