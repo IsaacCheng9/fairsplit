@@ -22,7 +22,6 @@ exports.addExpense = async (request, response) => {
       to: request.body.lender,
     });
 
-    // TODO: Fix this – it currently does nothing when a debt already exists.
     if (debtExists) {
       // Update the debt between the lender and borrower.
       helpers.updateDebt(
