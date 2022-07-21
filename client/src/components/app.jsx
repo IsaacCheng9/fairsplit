@@ -9,6 +9,12 @@ import UserSwitching from "./user_switching";
 function App() {
   const apiUrl = "http://localhost:3001";
 
+  // Active user
+  const [activeUser, setActiveUser] = useState();
+
+  // Debts
+  const [debts, setDebts] = useState();
+
   // Use this as global group
   let [group, setGroup] = useState({
     name: "4 Portal Road",
@@ -17,6 +23,14 @@ function App() {
     users: [],
     expenses: [],
   });
+
+  // Gets all debt from db
+  async function getAllDebt() {
+    let response = await fetch(`${apiUrl}/debts`);
+    let data = await response.json();
+    console.log(data);
+    return data;
+  }
 
   // Gets all expenses from db
   async function getAllExpenses() {
@@ -34,8 +48,11 @@ function App() {
 
   // Updates global group with data from db
   async function loadDataIntoGroup() {
+    const debt = await getAllDebt();
     const expenses = await getAllExpenses();
     const users = await getAllUsers();
+    setDebts(debt);
+    setActiveUser(users[0].username);
     setGroup({
       ...group,
       expenses: expenses,
