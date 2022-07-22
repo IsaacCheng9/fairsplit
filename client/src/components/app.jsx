@@ -9,8 +9,8 @@ import UserSwitching from "./user_switching";
 function App() {
   const apiUrl = "http://localhost:3001";
 
-  // Active user
-  const [activeUser, setActiveUser] = useState();
+  // All users excluding active user
+  let [filteredUsers, setFilteredUsers] = useState([]);
 
   // Debts
   const [debts, setDebts] = useState();
@@ -21,6 +21,7 @@ function App() {
     balance: 0,
     currency: "£",
     users: [],
+    activeUser: "",
     expenses: [],
   });
 
@@ -28,7 +29,6 @@ function App() {
   async function getAllDebt() {
     let response = await fetch(`${apiUrl}/debts`);
     let data = await response.json();
-    console.log(data);
     return data;
   }
 
@@ -46,17 +46,34 @@ function App() {
     return data;
   }
 
+  function changeActiveUser(username, index) {
+    setGroup({
+      ...group,
+      activeUser: username,
+    });
+    filterUsers(index);
+  }
+
+  // Update users to exclude active user
+  function filterUsers(index) {
+    let user = group.users.filter((user) => {
+      return user.username === group.activeUser;
+    });
+    filteredUsers.splice(index, 1, user[0]);
+  }
+
   // Updates global group with data from db
   async function loadDataIntoGroup() {
     const debt = await getAllDebt();
     const expenses = await getAllExpenses();
     const users = await getAllUsers();
+    setFilteredUsers(users.slice(1));
     setDebts(debt);
-    setActiveUser(users[0].username);
     setGroup({
       ...group,
       expenses: expenses,
       users: users,
+      activeUser: users[0].username,
     });
   }
 
@@ -98,7 +115,11 @@ function App() {
     <div className="App">
       <div className="header-container">
         <h1 className="title">FairSplit</h1>
-        <UserSwitching value={group}></UserSwitching>
+        <UserSwitching
+          users={group.users}
+          onClick={changeActiveUser}
+          value={filteredUsers}
+        ></UserSwitching>
       </div>
 
       <div className="bg-container">
@@ -111,8 +132,15 @@ function App() {
       </div>
 
       <div className="main-content-container">
-        <GroupExpenses value={group}></GroupExpenses>
-        <GroupUsers value={group} onClick={updateGroup}></GroupUsers>
+        <GroupExpenses
+          filteredUsers={filteredUsers}
+          value={group}
+        ></GroupExpenses>
+        <GroupUsers
+          filteredUsers={filteredUsers}
+          value={group}
+          onClick={updateGroup}
+        ></GroupUsers>
       </div>
     </div>
   );
