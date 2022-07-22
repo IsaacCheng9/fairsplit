@@ -1,21 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
-.item-enter {
+.summaries-enter {
   opacity: 0;
   transform: translateX(30px);
 }
 
-.item-enter-active {
+.summaries-enter-active {
   opacity: 1;
   transform: translateX(0px);
   transition: all 0.5s ease;
 }
 
-.item-exit-active {
+.summaries-exit-active {
   transition: all 0.5s ease;
 }
 
-.item-exit {
+.summaries-exit {
   opacity: 0;
   transform: translateX(10px);
 }
