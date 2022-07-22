@@ -46,7 +46,7 @@ function GroupUsers(props) {
             <CSSTransition
               exit={false}
               timeout={50}
-              classNames="transform-in"
+              classNames="summaries"
               key={user.username}
             >
               <User value={user} key={user.username}></User>

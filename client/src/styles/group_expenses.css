@@ -2,7 +2,7 @@
 
 .summaries-enter {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateX(-30px);
 }
 
 .summaries-enter-active {
