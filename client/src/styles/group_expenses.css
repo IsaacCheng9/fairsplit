@@ -76,7 +76,6 @@
 
 .user-summaries {
   min-width: max-content;
-  overflow: overlay;
   padding: 0;
   display: flex;
   justify-content: center;
