@@ -42,8 +42,9 @@ function GroupUsers(props) {
       <h1 className="group-members-title">Group Members</h1>
       <div className="users-container">
         <TransitionGroup component={null}>
-          {users.map((user) => (
+          {props.filteredUsers.map((user) => (
             <CSSTransition
+              exit={false}
               timeout={50}
               classNames="transform-in"
               key={user.username}
