@@ -109,6 +109,8 @@ function App() {
       ...group,
       users: [...group.users, user],
     });
+
+    setFilteredUsers([...filteredUsers, user]);
   }
 
   return (
