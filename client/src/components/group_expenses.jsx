@@ -93,11 +93,12 @@ function GroupExpenses(props) {
       <section className="user-summaries-container">
         <ul className={userSummariesClass}>
           <TransitionGroup component={null}>
-            {props.value.users.map((user) => (
+            {props.filteredUsers.map((user) => (
               <CSSTransition
-                timeout={0}
-                classNames="summaries-transform-in"
+                timeout={500}
+                classNames="summaries"
                 key={user.username}
+                exit={false}
               >
                 <li key={user.username}>
                   <h3>

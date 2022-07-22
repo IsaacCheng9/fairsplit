@@ -1,15 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
-.summaries-transform-in-enter {
-  transform: translateX(-10px);
+.item-enter {
+  opacity: 0;
+  transform: translateX(30px);
 }
 
-.summaries-transform-in-enter-active,
-.summaries-transform-in-leave-active {
-  transition: 1s all ease;
+.item-enter-active {
+  opacity: 1;
+  transform: translateX(0px);
+  transition: all 0.5s ease;
 }
 
-.summaries-transform-in-leave {
+.item-exit-active {
+  transition: all 0.5s ease;
+}
+
+.item-exit {
   opacity: 0;
   transform: translateX(10px);
 }
@@ -55,7 +61,6 @@
   overflow: overlay;
   margin: 0 50px;
   scroll-behavior: smooth;
-  transition: all 1s ease;
 }
 
 .user-summaries-container::-webkit-scrollbar {
@@ -87,7 +92,6 @@
 
 .user-summaries li {
   display: inline;
-  transition: all 1s ease;
 }
 
 .group-expenses-container {
