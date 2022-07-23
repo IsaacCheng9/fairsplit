@@ -10,16 +10,18 @@ function App() {
   const apiUrl = "http://localhost:3001";
 
   // All users excluding active user
-  let [filteredUsers, setFilteredUsers] = useState([]);
+  let [usersMinusActive, setUsersMinusActive] = useState({
+    users: [],
+    debts: [],
+  });
 
   // Debts
-  const [debts, setDebts] = useState();
+  const [userDebts, setUserDebts] = useState([]);
 
   // Use this as global group
   let [group, setGroup] = useState({
     name: "4 Portal Road",
     balance: 0,
-    currency: "£",
     users: [],
     activeUser: "",
     expenses: [],
@@ -30,6 +32,27 @@ function App() {
     let response = await fetch(`${apiUrl}/debts`);
     let data = await response.json();
     return data;
+  }
+
+  // Update Debts when expense is added
+  function updateDebts(debt) {
+    userDebts.push(debt);
+    setActiveUserDebt();
+  }
+
+  function setActiveUserDebt() {
+    setUsersMinusActive({
+      ...usersMinusActive,
+      debts: [],
+    });
+    for (let i = 0; i < userDebts.length; i++) {
+      if (userDebts[i].to === group.activeUser) {
+        setUsersMinusActive({
+          ...usersMinusActive,
+          debts: { [userDebts[i].from]: userDebts[i] },
+        });
+      }
+    }
   }
 
   // Gets all expenses from db
@@ -46,12 +69,10 @@ function App() {
     return data;
   }
 
-  function changeActiveUser(username, index) {
-    setGroup({
-      ...group,
-      activeUser: username,
-    });
-    filterUsers(index);
+  function changeActiveUser(username, selectedUserIndex) {
+    filterUsers(selectedUserIndex);
+    group.activeUser = username;
+    setActiveUserDebt();
   }
 
   // Update users to exclude active user
@@ -59,7 +80,8 @@ function App() {
     let user = group.users.filter((user) => {
       return user.username === group.activeUser;
     });
-    filteredUsers.splice(index, 1, user[0]);
+
+    usersMinusActive.users.splice(index, 1, user[0]);
   }
 
   // Updates global group with data from db
@@ -67,8 +89,9 @@ function App() {
     const debt = await getAllDebt();
     const expenses = await getAllExpenses();
     const users = await getAllUsers();
-    setFilteredUsers(users.slice(1));
-    setDebts(debt);
+    setUserDebts(debt);
+    setActiveUserDebt();
+    setUsersMinusActive({ ...filterUsers, users: users.slice(1) });
     setGroup({
       ...group,
       expenses: expenses,
@@ -110,7 +133,7 @@ function App() {
       users: [...group.users, user],
     });
 
-    setFilteredUsers([...filteredUsers, user]);
+    setUsersMinusActive([...usersMinusActive, user]);
   }
 
   return (
@@ -120,7 +143,7 @@ function App() {
         <UserSwitching
           users={group.users}
           onClick={changeActiveUser}
-          value={filteredUsers}
+          usersMinusActive={usersMinusActive}
         ></UserSwitching>
       </div>
 
@@ -135,11 +158,12 @@ function App() {
 
       <div className="main-content-container">
         <GroupExpenses
-          filteredUsers={filteredUsers}
-          value={group}
+          usersMinusActive={usersMinusActive}
+          group={group}
+          onClick={updateDebts}
         ></GroupExpenses>
         <GroupUsers
-          filteredUsers={filteredUsers}
+          usersMinusActive={usersMinusActive}
           value={group}
           onClick={updateGroup}
         ></GroupUsers>
