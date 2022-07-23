@@ -42,7 +42,7 @@ function GroupUsers(props) {
       <h1 className="group-members-title">Group Members</h1>
       <div className="users-container">
         <TransitionGroup component={null}>
-          {props.filteredUsers.map((user) => (
+          {props.usersMinusActive.users.map((user) => (
             <CSSTransition
               exit={false}
               timeout={50}
