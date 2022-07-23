@@ -20,6 +20,7 @@ function App() {
     usersMinusActive: {
       users: [],
       debts: [],
+      outstandingBalance: 0,
     },
   });
 
@@ -42,15 +43,17 @@ function App() {
       debts: [],
     };
 
+    let totalDebt = 0;
     for (let i = 0; i < group.debts.length; i++) {
       if (group.debts[i].to === group.activeUser) {
+        totalDebt += group.debts[i].amount;
         group.usersMinusActive = {
           ...group.usersMinusActive,
           debts: { [group.debts[i].from]: group.debts[i] },
         };
       }
     }
-
+    group.usersMinusActive.outstandingBalance = totalDebt;
     setGroup({ ...group });
   }
 

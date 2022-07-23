@@ -113,12 +113,12 @@ function GroupExpenses(props) {
         Outstanding balance:&nbsp;
         <span
           className={
-            props.group.balance < 0
+            props.group.usersMinusActive.outstandingBalance > 0
               ? "balance-value user-balance-red"
               : "balance-value user-balance-green"
           }
         >
-          {"£" + props.group.balance}
+          {"£" + props.group.usersMinusActive.outstandingBalance}
         </span>
       </h2>
       <section className="user-summaries-container">
