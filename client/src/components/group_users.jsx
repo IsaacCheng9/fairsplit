@@ -48,7 +48,11 @@ function GroupUsers(props) {
               classNames="summaries"
               key={user.username}
             >
-              <User value={user} key={user.username}></User>
+              <User
+                group={props.group.usersMinusActive}
+                user={user}
+                key={user.username}
+              ></User>
             </CSSTransition>
           ))}
           <CSSTransition key={"add-user"} timeout={50}>
