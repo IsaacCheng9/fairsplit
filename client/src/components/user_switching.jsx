@@ -1,5 +1,5 @@
 import React from "react";
-import user_switching from "../styles/user_switching.css";
+import "../styles/user_switching.css";
 import { createRef } from "react";
 
 function UserSwitching(props) {
@@ -7,11 +7,16 @@ function UserSwitching(props) {
   let selectRef = createRef();
 
   function handleChange() {
-    let index = props.value.filter((user) => {
+    // Get the selected user
+    let selectedUser = props.usersMinusActive.users.filter((user) => {
       return user.username === selectRef.current.value;
     });
 
-    props.onClick(selectRef.current.value, props.value.indexOf(index[0]));
+    // Send selected user index and username to parent component
+    props.onClick(
+      selectRef.current.value,
+      props.usersMinusActive.users.indexOf(selectedUser[0])
+    );
   }
 
   return (
