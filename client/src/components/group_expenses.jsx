@@ -7,7 +7,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 function GroupExpenses(props) {
   // Array of expenses & debts
   let expenses = props.group.expenses;
-  let debts = props.usersMinusActive.debts;
+  let debts = props.group.usersMinusActive.debts;
 
   // Refs for transitions
   let containerRef = createRef();
@@ -124,7 +124,7 @@ function GroupExpenses(props) {
       <section className="user-summaries-container">
         <ul className={userSummariesClass}>
           <TransitionGroup component={null}>
-            {props.usersMinusActive.users.map((user) => (
+            {props.group.usersMinusActive.users.map((user) => (
               <CSSTransition
                 timeout={500}
                 classNames="summaries"

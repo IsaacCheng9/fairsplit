@@ -8,7 +8,6 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 function GroupUsers(props) {
   // API URL
   let apiUrl = "http://localhost:3001";
-  let users = props.value.users;
 
   function addUserToGroup(user) {
     const newUser = {
@@ -42,7 +41,7 @@ function GroupUsers(props) {
       <h1 className="group-members-title">Group Members</h1>
       <div className="users-container">
         <TransitionGroup component={null}>
-          {props.usersMinusActive.users.map((user) => (
+          {props.group.usersMinusActive.users.map((user) => (
             <CSSTransition
               exit={false}
               timeout={50}

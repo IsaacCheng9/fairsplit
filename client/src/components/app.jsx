@@ -9,15 +9,6 @@ import UserSwitching from "./user_switching";
 function App() {
   const apiUrl = "http://localhost:3001";
 
-  // All users excluding active user
-  let [usersMinusActive, setUsersMinusActive] = useState({
-    users: [],
-    debts: [],
-  });
-
-  // Debts
-  const [userDebts, setUserDebts] = useState([]);
-
   // Use this as global group
   let [group, setGroup] = useState({
     name: "4 Portal Road",
@@ -25,6 +16,11 @@ function App() {
     users: [],
     activeUser: "",
     expenses: [],
+    debts: [],
+    usersMinusActive: {
+      users: [],
+      debts: [],
+    },
   });
 
   // Gets all debt from db
@@ -36,23 +32,26 @@ function App() {
 
   // Update Debts when expense is added
   function updateDebts(debt) {
-    userDebts.push(debt);
+    group.debts.push(debt);
     setActiveUserDebt();
   }
 
   function setActiveUserDebt() {
-    setUsersMinusActive({
-      ...usersMinusActive,
+    group.usersMinusActive = {
+      ...group.usersMinusActive,
       debts: [],
-    });
-    for (let i = 0; i < userDebts.length; i++) {
-      if (userDebts[i].to === group.activeUser) {
-        setUsersMinusActive({
-          ...usersMinusActive,
-          debts: { [userDebts[i].from]: userDebts[i] },
-        });
+    };
+
+    for (let i = 0; i < group.debts.length; i++) {
+      if (group.debts[i].to === group.activeUser) {
+        group.usersMinusActive = {
+          ...group.usersMinusActive,
+          debts: { [group.debts[i].from]: group.debts[i] },
+        };
       }
     }
+
+    setGroup({ ...group });
   }
 
   // Gets all expenses from db
@@ -81,7 +80,7 @@ function App() {
       return user.username === group.activeUser;
     });
 
-    usersMinusActive.users.splice(index, 1, user[0]);
+    group.usersMinusActive.users.splice(index, 1, user[0]);
   }
 
   // Updates global group with data from db
@@ -89,15 +88,17 @@ function App() {
     const debt = await getAllDebt();
     const expenses = await getAllExpenses();
     const users = await getAllUsers();
-    setUserDebts(debt);
-    setActiveUserDebt();
-    setUsersMinusActive({ ...filterUsers, users: users.slice(1) });
-    setGroup({
+    group = {
       ...group,
       expenses: expenses,
       users: users,
       activeUser: users[0].username,
-    });
+      debts: debt,
+      usersMinusActive: {
+        users: users.slice(1),
+      },
+    };
+    setActiveUserDebt();
   }
 
   // Load all users and expenses into group
@@ -131,20 +132,17 @@ function App() {
     setGroup({
       ...group,
       users: [...group.users, user],
+      usersMinusActive: {
+        users: [...group.usersMinusActive.users, user],
+      },
     });
-
-    setUsersMinusActive([...usersMinusActive, user]);
   }
 
   return (
     <div className="App">
       <div className="header-container">
         <h1 className="title">FairSplit</h1>
-        <UserSwitching
-          users={group.users}
-          onClick={changeActiveUser}
-          usersMinusActive={usersMinusActive}
-        ></UserSwitching>
+        <UserSwitching group={group} onClick={changeActiveUser}></UserSwitching>
       </div>
 
       <div className="bg-container">
@@ -157,16 +155,8 @@ function App() {
       </div>
 
       <div className="main-content-container">
-        <GroupExpenses
-          usersMinusActive={usersMinusActive}
-          group={group}
-          onClick={updateDebts}
-        ></GroupExpenses>
-        <GroupUsers
-          usersMinusActive={usersMinusActive}
-          value={group}
-          onClick={updateGroup}
-        ></GroupUsers>
+        <GroupExpenses group={group} onClick={updateDebts}></GroupExpenses>
+        <GroupUsers group={group} onClick={updateGroup}></GroupUsers>
       </div>
     </div>
   );
