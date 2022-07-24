@@ -59,7 +59,7 @@ exports.addDebt = async (request, response) => {
   // debt. Otherwise, proceed to add the new debt.
   if (debtAmount === 0) {
     response.send(
-      `The new debt was used to cancel out a reverse debt, so a new debt from
+      `The new debt was used to cancel out a reverse debt, so a new debt from\
       '${request.body.from}' to '${request.body.to}' was not added.`
     );
   } else {
@@ -74,11 +74,17 @@ exports.addDebt = async (request, response) => {
       if (debtExists) {
         // Update the debt between the lender and borrower.
         helpers.updateDebt(request.body.from, request.body.to, debtAmount);
-        response.send("Debt updated successfully.");
+        response.send(
+          `Debt from '${request.body.from}' to '${request.body.to}' was updated\
+          successfully.`
+        );
       } else {
         // Create a new debt between the lender and borrower.
         helpers.createDebt(request.body.from, request.body.to, debtAmount);
-        response.send("Debt created successfully.");
+        response.send(
+          `Debt from '${request.body.from}' to '${request.body.to}' was created\
+          successfully.`
+        );
       }
     } catch (error) {
       response.status(500).send(error);
@@ -110,7 +116,10 @@ exports.settleDebt = async (request, response) => {
           $inc: { amount: -request.body.amount },
         }
       );
-      response.send("Debt partially settled and reduced successfully.");
+      response.send(
+        `Debt from '${request.body.from}' to '${request.body.to}' partially\
+        settled and reduced successfully.`
+      );
     } catch (error) {
       response.status(500).send(error);
     }
@@ -122,7 +131,10 @@ exports.settleDebt = async (request, response) => {
         from: request.body.to,
         to: request.body.from,
       });
-      response.send("Debt fully settled and deleted successfully.");
+      response.send(
+        `Debt from '${request.body.from}' to '${request.body.to}' fully\
+        settled and deleted successfully.`
+      );
     } catch (error) {
       response.status(500).send(error);
     }
