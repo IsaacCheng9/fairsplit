@@ -126,35 +126,6 @@ function GroupExpenses(props) {
           {"£" + props.group.usersMinusActive.outstandingBalance}
         </span>
       </h2>
-      <section className="user-summaries-container">
-        <ul className={userSummariesClass}>
-          <TransitionGroup component={null}>
-            {props.group.usersMinusActive.users.map((user) => (
-              <CSSTransition
-                timeout={500}
-                classNames="summaries"
-                key={user.username}
-                exit={false}
-              >
-                <li key={user.username}>
-                  <h3>
-                    {user.username}
-                    <span
-                      className={
-                        checkIndebtedness(user)[1]
-                          ? "balance-value user-balance-green"
-                          : "balance-value user-balance-red"
-                      }
-                    >
-                      {"£" + checkIndebtedness(user)[0]}
-                    </span>
-                  </h3>
-                </li>
-              </CSSTransition>
-            ))}
-          </TransitionGroup>
-        </ul>
-      </section>
       <div className="expense-container" ref={containerRef}>
         {expenses.map((expense) => (
           <Expense value={expense} key={expense.creationDatetime}></Expense>

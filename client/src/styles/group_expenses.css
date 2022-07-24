@@ -95,7 +95,7 @@
 
 .group-expenses-container {
   display: grid;
-  grid-template-rows: [title] 85px [balance] 30px [userBalances] 50px [main] auto [buttons] 100px;
+  grid-template-rows: [title] 110px [balance] 55px [main] auto [buttons] 80px;
   grid-template-columns: 400px;
   box-shadow: 0 70px 100px -20px rgb(50 50 93 / 25%);
   border-radius: 8px;
@@ -120,10 +120,11 @@ span {
 }
 
 .balance {
-  font-size: 15px;
+  font-size: 18px;
   font-family: "Poppins", sans-serif;
   color: #39444e;
-  margin: auto auto;
+  margin: 0;
+  justify-self: center;
 }
 
 .group-name {
