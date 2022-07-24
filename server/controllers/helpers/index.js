@@ -59,7 +59,7 @@ exports.addDebt = async function (from, to, amount) {
   // If the reverse debt has cancelled out the new debt, then don't add a new
   // debt. Otherwise, proceed to add the new debt.
   if (debtAmount === 0) {
-    return `The new debt was used to cancel out a reverse debt, so a new debt \
+    return `The new debt was used to cancel out a reverse debt, so a new debt\
     from '${from}' to '${to}' was not added.`;
   } else {
     // Check whether the debt exists between two users so that we can either
