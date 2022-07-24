@@ -8,12 +8,15 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 function GroupUsers(props) {
   // API URL
   let apiUrl = "http://localhost:3001";
-  let users = props.value.users;
-  let [addedUsers, setAddedUsers] = useState(users);
 
   function addUserToGroup(user) {
-    const newUser = { username: user, indebted: false, balance: 0 };
-    setAddedUsers([...addedUsers, newUser]);
+    const newUser = {
+      username: user,
+      firstName: "Cosmo",
+      lastName: "Kramer",
+      indebted: false,
+      balance: 0,
+    };
     props.onClick(newUser);
   }
 
@@ -38,13 +41,18 @@ function GroupUsers(props) {
       <h1 className="group-members-title">Group Members</h1>
       <div className="users-container">
         <TransitionGroup component={null}>
-          {addedUsers.map((user) => (
+          {props.group.usersMinusActive.users.map((user) => (
             <CSSTransition
+              exit={false}
               timeout={50}
-              classNames="transform-in"
+              classNames="summaries"
               key={user.username}
             >
-              <User value={user} key={user.username}></User>
+              <User
+                group={props.group.usersMinusActive}
+                user={user}
+                key={user.username}
+              ></User>
             </CSSTransition>
           ))}
           <CSSTransition key={"add-user"} timeout={50}>

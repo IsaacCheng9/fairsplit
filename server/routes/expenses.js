@@ -3,7 +3,7 @@ const expenseController = require("../controllers/expense_controller");
 const app = express();
 
 // Gets all expenses in the group.
-// app.get("/expenses", expenseController.getExpenses);
+app.get("/expenses", expenseController.getExpenses);
 
 // Adds an expense.
 app.post("/expenses/add", expenseController.addExpense);

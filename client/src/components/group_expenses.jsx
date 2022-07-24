@@ -5,11 +5,16 @@ import AddExpense from "./add_expense";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 function GroupExpenses(props) {
-  // Reactive array of expenses
-  let [expenses, setExpenses] = useState([]);
-  let [buttonStyle, setButtonStyle] = useState("ge-button add-expense-btn");
+  // Array of expenses & debts
+  let expenses = props.group.expenses;
+  let debts = props.group.usersMinusActive.debts;
+
+  // Refs for transitions
   let containerRef = createRef();
   let addExpenseBtnRef = createRef();
+
+  // Reactive states for adding styles
+  let [buttonStyle, setButtonStyle] = useState("ge-button add-expense-btn");
   let [clearForm, setClearForm] = useState(false);
   let [tempExpense, setTempExpense] = useState({});
   let [userSummariesClass, setUserSummariesClass] = useState("user-summaries");
@@ -32,7 +37,7 @@ function GroupExpenses(props) {
     }
 
     // Change alignment of user summaries based on overflow of users
-    if (props.value.users.length > 4) {
+    if (props.group.users.length > 4) {
       setUserSummariesClass("user-summaries user-summaries-overflow");
     } else {
       setUserSummariesClass("user-summaries");
@@ -58,11 +63,30 @@ function GroupExpenses(props) {
     });
 
     let response = await validExpense.json();
-    console.log(response);
 
     if (validExpense.ok) {
+      // Create debt object
+      let debt = {
+        from: expense.lender,
+        to: expense.borrowers,
+        amount: expense.amount,
+      };
+
+      // Call route to add debt to db
+      let validDebt = await fetch("http://localhost:3000/debts/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(debt),
+      });
+      let debtResponse = await validDebt.json();
+
+      // Send debt to parent component to update state
+      props.onClick(debtResponse);
+
       // Add expense to array of expenses
-      setExpenses([...expenses, response]);
+      expenses.push(response);
       // Clear form
       setClearForm(true);
       // Grey out button
@@ -73,51 +97,42 @@ function GroupExpenses(props) {
     }
   }
 
+  // Check indebtedness of each user
+  function checkIndebtedness(user) {
+    let debt = true;
+
+    if (debts !== undefined && debts[user.username] !== undefined) {
+      if (debts[user.username].to !== user.username) {
+        debt = false;
+      }
+      return [debts[user.username].amount, debt];
+    } else {
+      return [0, debt];
+    }
+  }
+
   return (
     <div className="group-expenses-container">
-      <h1 className="group-name">{props.value.name}</h1>
+      <h1 className="group-name">{props.group.name}</h1>
       <h2 className="balance">
-        Outstanding balance:&nbsp;
+        {props.group.usersMinusActive.outstandingBalance > 0
+          ? "You owe: "
+          : "You are owed: "}
         <span
           className={
-            props.value.balance < 0
+            props.group.usersMinusActive.outstandingBalance > 0
               ? "balance-value user-balance-red"
               : "balance-value user-balance-green"
           }
         >
-          {props.value.currency}&nbsp;
-          {props.value.balance}
+          {props.group.usersMinusActive.outstandingBalance < 0
+            ? "£" +
+              String(props.group.usersMinusActive.outstandingBalance).substring(
+                1
+              )
+            : "£" + props.group.usersMinusActive.outstandingBalance}
         </span>
       </h2>
-      <section className="user-summaries-container">
-        <ul className={userSummariesClass}>
-          <TransitionGroup component={null}>
-            {props.value.users.map((user) => (
-              <CSSTransition
-                timeout={0}
-                classNames="summaries-transform-in"
-                key={user.username}
-              >
-                <li key={user.username}>
-                  <h3>
-                    {user.username}
-                    <span
-                      className={
-                        user.indebted
-                          ? "balance-value user-balance-red"
-                          : "balance-value user-balance-green"
-                      }
-                    >
-                      {props.value.currency}
-                      {user.balance}
-                    </span>
-                  </h3>
-                </li>
-              </CSSTransition>
-            ))}
-          </TransitionGroup>
-        </ul>
-      </section>
       <div className="expense-container" ref={containerRef}>
         {expenses.map((expense) => (
           <Expense value={expense} key={expense.creationDatetime}></Expense>

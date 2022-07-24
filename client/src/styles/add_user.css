@@ -63,14 +63,6 @@
   transform: translateX(155px);
 }
 
-.add-user-plus-invalid {
-  background-color: var(--balance-red);
-}
-
-.add-user-plus-valid {
-  background-color: var(--balance-green);
-}
-
 #cross {
   transition: all 1s ease;
   transform-origin: center;

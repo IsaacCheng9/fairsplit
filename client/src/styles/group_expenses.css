@@ -1,15 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
-.summaries-transform-in-enter {
-  transform: translateX(-10px);
+.summaries-enter {
+  opacity: 0;
+  transform: translateX(-30px);
 }
 
-.summaries-transform-in-enter-active,
-.summaries-transform-in-leave-active {
-  transition: 1s all ease;
+.summaries-enter-active {
+  opacity: 1;
+  transform: translateX(0px);
+  transition: all 0.5s ease;
 }
 
-.summaries-transform-in-leave {
+.summaries-exit-active {
+  transition: all 0.5s ease;
+}
+
+.summaries-exit {
   opacity: 0;
   transform: translateX(10px);
 }
@@ -25,7 +31,7 @@
 }
 
 .expense-container {
-  overflow: overlay;
+  overflow: auto;
   scroll-behavior: smooth;
 }
 
@@ -55,7 +61,6 @@
   overflow: overlay;
   margin: 0 50px;
   scroll-behavior: smooth;
-  transition: all 1s ease;
 }
 
 .user-summaries-container::-webkit-scrollbar {
@@ -71,7 +76,6 @@
 
 .user-summaries {
   min-width: max-content;
-  overflow: overlay;
   padding: 0;
   display: flex;
   justify-content: center;
@@ -87,12 +91,11 @@
 
 .user-summaries li {
   display: inline;
-  transition: all 1s ease;
 }
 
 .group-expenses-container {
   display: grid;
-  grid-template-rows: [title] 85px [balance] 30px [userBalances] 50px [main] auto [buttons] 100px;
+  grid-template-rows: [title] 110px [balance] 55px [main] auto [buttons] 80px;
   grid-template-columns: 400px;
   box-shadow: 0 70px 100px -20px rgb(50 50 93 / 25%);
   border-radius: 8px;
@@ -117,10 +120,11 @@ span {
 }
 
 .balance {
-  font-size: 15px;
+  font-size: 18px;
   font-family: "Poppins", sans-serif;
   color: #39444e;
-  margin: auto auto;
+  margin: 0;
+  justify-self: center;
 }
 
 .group-name {
