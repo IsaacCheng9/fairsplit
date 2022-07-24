@@ -5,10 +5,15 @@ function User(props) {
   // Check indebtedness of each user
   function checkIndebtedness(user) {
     let debts = props.group.debts;
+    let debt = false;
+
     if (debts !== undefined && debts[user.username] !== undefined) {
-      return debts[user.username].amount;
+      if (debts[user.username].from == user.username) {
+        debt = true;
+      }
+      return [debts[user.username].amount, debt];
     } else {
-      return 0;
+      return [0];
     }
   }
 
@@ -18,12 +23,12 @@ function User(props) {
       <div className="user-username">{props.user.username}</div>
       <div
         className={
-          checkIndebtedness(props.user)
+          checkIndebtedness(props.user)[1]
             ? "user-balance user-balance-red"
             : "user-balance user-balance-green"
         }
       >
-        {"£" + checkIndebtedness(props.user)}
+        {"£" + checkIndebtedness(props.user)[0]}
       </div>
     </div>
   );

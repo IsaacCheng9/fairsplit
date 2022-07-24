@@ -47,10 +47,10 @@ function App() {
     for (let i = 0; i < group.debts.length; i++) {
       if (group.debts[i].to === group.activeUser) {
         totalDebt += group.debts[i].amount;
-        group.usersMinusActive = {
-          ...group.usersMinusActive,
-          debts: { [group.debts[i].from]: group.debts[i] },
-        };
+        group.usersMinusActive.debts[group.debts[i].from] = group.debts[i];
+      } else if (group.debts[i].from === group.activeUser) {
+        totalDebt -= group.debts[i].amount;
+        group.usersMinusActive.debts[group.debts[i].to] = group.debts[i];
       }
     }
     group.usersMinusActive.outstandingBalance = totalDebt;

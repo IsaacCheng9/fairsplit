@@ -99,10 +99,15 @@ function GroupExpenses(props) {
 
   // Check indebtedness of each user
   function checkIndebtedness(user) {
+    let debt = true;
+
     if (debts !== undefined && debts[user.username] !== undefined) {
-      return debts[user.username].amount;
+      if (debts[user.username].to !== user.username) {
+        debt = false;
+      }
+      return [debts[user.username].amount, debt];
     } else {
-      return 0;
+      return [0, debt];
     }
   }
 
@@ -136,12 +141,12 @@ function GroupExpenses(props) {
                     {user.username}
                     <span
                       className={
-                        checkIndebtedness(user) === 0
+                        checkIndebtedness(user)[1]
                           ? "balance-value user-balance-green"
                           : "balance-value user-balance-red"
                       }
                     >
-                      {"£" + checkIndebtedness(user)}
+                      {"£" + checkIndebtedness(user)[0]}
                     </span>
                   </h3>
                 </li>
