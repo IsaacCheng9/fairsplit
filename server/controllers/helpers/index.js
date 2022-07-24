@@ -23,7 +23,7 @@ exports.updateDebt = async function (from, to, amount) {
 };
 
 // Add a debt, including processing of the reverse debt.
-exports.addDebt = async function (from, to, amount) {
+exports.processNewDebt = async function (from, to, amount) {
   // Check whether the debt exists the other way around, as this new debt may
   // cancel out the reverse debt.
   const reverseDebt = await debtModel.findOne({
