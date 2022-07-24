@@ -3,22 +3,14 @@ const helpers = require("./helpers/index");
 
 // Get a list of all debts.
 exports.getDebts = async (_, response) => {
-  try {
-    const debt = await debtModel.find({});
-    response.json(debt);
-  } catch (error) {
-    response.status(500).send(error);
-  }
+  const debt = await debtModel.find({});
+  response.json(debt);
 };
 
 // Get a debt by ID.
 exports.getDebtById = async (request, response) => {
-  try {
-    const debt = await debtModel.findById(request.params.id);
-    response.json(debt);
-  } catch (error) {
-    response.status(500).send(error);
-  }
+  const debt = await debtModel.findById(request.params.id);
+  response.json(debt);
 };
 
 // Add a debt between two users.
@@ -45,38 +37,30 @@ exports.settleDebt = async (request, response) => {
   } else if (existingDebt && existingDebt.amount > request.body.amount) {
     // If the existing debt is greater than the amount to be settled, then
     // reduce the debt.
-    try {
-      await debtModel.findOneAndUpdate(
-        {
-          from: request.body.to,
-          to: request.body.from,
-        },
-        {
-          $inc: { amount: -request.body.amount },
-        }
-      );
-      response.send(
-        `Debt from '${request.body.from}' to '${request.body.to}' partially\
-        settled and reduced successfully.`
-      );
-    } catch (error) {
-      response.status(500).send(error);
-    }
-  } else if (existingDebt && existingDebt.amount === request.body.amount) {
-    try {
-      // If the existing debt is equal to the amount to be settled, then delete
-      // the debt.
-      await debtModel.findOneAndDelete({
+    await debtModel.findOneAndUpdate(
+      {
         from: request.body.to,
         to: request.body.from,
-      });
-      response.send(
-        `Debt from '${request.body.from}' to '${request.body.to}' fully\
+      },
+      {
+        $inc: { amount: -request.body.amount },
+      }
+    );
+    response.send(
+      `Debt from '${request.body.from}' to '${request.body.to}' partially\
+        settled and reduced successfully.`
+    );
+  } else if (existingDebt && existingDebt.amount === request.body.amount) {
+    // If the existing debt is equal to the amount to be settled, then delete
+    // the debt.
+    await debtModel.findOneAndDelete({
+      from: request.body.to,
+      to: request.body.from,
+    });
+    response.send(
+      `Debt from '${request.body.from}' to '${request.body.to}' fully\
         settled and deleted successfully.`
-      );
-    } catch (error) {
-      response.status(500).send(error);
-    }
+    );
   } else {
     response
       .status(400)

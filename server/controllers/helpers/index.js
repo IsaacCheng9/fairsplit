@@ -69,18 +69,14 @@ exports.processNewDebt = async function (from, to, amount) {
       to: to,
     });
 
-    try {
-      if (debtExists) {
-        // Update the debt between the lender and borrower.
-        helpers.updateDebt(from, to, debtAmount);
-        return `Debt from '${from}' to '${to}' was updated successfully.`;
-      } else {
-        // Create a new debt between the lender and borrower.
-        helpers.createDebt(from, to, debtAmount);
-        return `Debt from '${from}' to '${to}' was created successfully.`;
-      }
-    } catch (error) {
-      return error;
+    if (debtExists) {
+      // Update the debt between the lender and borrower.
+      helpers.updateDebt(from, to, debtAmount);
+      return `Debt from '${from}' to '${to}' was updated successfully.`;
+    } else {
+      // Create a new debt between the lender and borrower.
+      helpers.createDebt(from, to, debtAmount);
+      return `Debt from '${from}' to '${to}' was created successfully.`;
     }
   }
 };
