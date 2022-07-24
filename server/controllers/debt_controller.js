@@ -1,7 +1,7 @@
 const debtModel = require("../models/debt");
 const helpers = require("./helpers/index");
 
-// Gets a list of all debts.
+// Get a list of all debts.
 exports.getDebts = async (_, response) => {
   try {
     const debt = await debtModel.find({});
@@ -11,7 +11,7 @@ exports.getDebts = async (_, response) => {
   }
 };
 
-// Gets a debt by ID.
+// Get a debt by ID.
 exports.getDebtById = async (request, response) => {
   try {
     const debt = await debtModel.findById(request.params.id);
@@ -21,7 +21,7 @@ exports.getDebtById = async (request, response) => {
   }
 };
 
-// Adds a debt between two users.
+// Add a debt between two users.
 exports.addDebt = async (request, response) => {
   // Check whether the debt exists the other way around, as this new debt may
   // cancel out the reverse debt.
@@ -92,7 +92,7 @@ exports.addDebt = async (request, response) => {
   }
 };
 
-// Settles a debt by ID.
+// Settle a debt by ID.
 exports.settleDebt = async (request, response) => {
   // Search for a debt by swapping the from and to fields, as a settlement is
   // effectively a reverse debt.
