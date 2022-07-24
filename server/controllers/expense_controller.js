@@ -49,8 +49,6 @@ exports.getExpenses = async (_, response) => {
   try {
     response.json(expenses);
   } catch (error) {
-    {
-      response.status(500).send(error);
-    }
+    response.status(500).send(error);
   }
 };
