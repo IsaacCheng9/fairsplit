@@ -8,7 +8,7 @@ function User(props) {
     let debt = false;
 
     if (debts !== undefined && debts[user.username] !== undefined) {
-      if (debts[user.username].from == user.username) {
+      if (debts[user.username].from === user.username) {
         debt = true;
       }
       return [debts[user.username].amount, debt];
