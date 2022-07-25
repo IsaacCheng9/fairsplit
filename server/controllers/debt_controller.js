@@ -20,7 +20,8 @@ exports.addDebt = async (request, response) => {
     request.body.to,
     request.body.amount
   );
-  response.send(message);
+  // TODO: How can send the message from processNewDebt as the client response?
+  response.send("Debt added successfully.");
 };
 
 // Settle a debt by ID.
