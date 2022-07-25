@@ -15,13 +15,13 @@ exports.getDebtById = async (request, response) => {
 
 // Add a debt between two users.
 exports.addDebt = async (request, response) => {
-  message = helpers.processNewDebt(
+  let message = await helpers.processNewDebt(
     request.body.from,
     request.body.to,
     request.body.amount
   );
   // TODO: How can send the message from processNewDebt as the client response?
-  response.send("Debt added successfully.");
+  response.send(message);
 };
 
 // Settle a debt by ID.
