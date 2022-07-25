@@ -20,7 +20,6 @@ exports.addDebt = async (request, response) => {
     request.body.to,
     request.body.amount
   );
-  // TODO: How can send the message from processNewDebt as the client response?
   response.send(message);
 };
 
