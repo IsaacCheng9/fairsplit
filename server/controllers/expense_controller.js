@@ -19,7 +19,7 @@ exports.addExpense = async (request, response) => {
 
   // Loop through each borrower and create/update debts accordingly.
   for (borrower of request.body.borrowers) {
-    helpers.processNewDebt(borrower, request.body.lender, sharedExpense);
+    await helpers.processNewDebt(borrower, request.body.lender, sharedExpense);
   }
 
   response.json(expense);
