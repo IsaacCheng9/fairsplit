@@ -32,8 +32,11 @@ function App() {
   }
 
   // Update Debts when expense is added
-  function updateDebts(debt) {
-    group.debts.push(debt);
+  async function updateDebts() {
+    // Get Debts
+    let debtResponse = await fetch(`${apiUrl}/debts`);
+    const updatedDebt = await debtResponse.json();
+    group.debts = updatedDebt;
     setActiveUserDebt();
   }
 
@@ -53,7 +56,8 @@ function App() {
         group.usersMinusActive.debts[group.debts[i].to] = group.debts[i];
       }
     }
-    group.usersMinusActive.outstandingBalance = totalDebt;
+    group.usersMinusActive.outstandingBalance =
+      totalDebt % 1 ? totalDebt.toFixed(2) : totalDebt;
     setGroup({ ...group });
   }
 
