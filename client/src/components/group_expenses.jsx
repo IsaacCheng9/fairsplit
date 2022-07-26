@@ -65,36 +65,18 @@ function GroupExpenses(props) {
     let response = await validExpense.json();
 
     if (validExpense.ok) {
-      // Create debt object
-      let debt = {
-        from: expense.lender,
-        to: expense.borrowers,
-        amount: expense.amount,
-      };
-
-      // Call route to add debt to db
-      let validDebt = await fetch("http://localhost:3000/debts/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(debt),
-      });
-      let debtResponse = await validDebt.json();
-
-      // Send debt to parent component to update state
-      props.onClick(debtResponse);
-
+      // Tell parent component to get latest debts
+      props.onClick();
       // Add expense to array of expenses
       expenses.push(response);
-      // Clear form
-      setClearForm(true);
-      // Grey out button
-      setButtonStyle("ge-button add-expense-btn");
     } else {
       // Display error message
       console.error(response.error);
     }
+    // Clear form
+    setClearForm(true);
+    // Grey out button
+    setButtonStyle("ge-button add-expense-btn");
   }
 
   // Check indebtedness of each user
