@@ -32,7 +32,7 @@ function AddExpense(props) {
         title: titleRef.current.value,
         author: authorRef.current.value,
         lender: lenderRef.current.value,
-        borrowers: borrowerRef.current.value,
+        borrowers: [borrowerRef.current.value],
         amount: amountRef.current.value,
       });
     } else {
