@@ -21,7 +21,7 @@ const expenseSchema = new mongoose.Schema({
     required: true,
   },
   borrowers: {
-    type: [String, Number],
+    type: [[String, Number]],
     required: true,
   },
   amount: {
