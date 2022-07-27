@@ -8,7 +8,7 @@ function User(props) {
     let debt = false;
 
     if (debts !== undefined && debts[user.username] !== undefined) {
-      if (debts[user.username].from == user.username) {
+      if (debts[user.username].from === user.username) {
         debt = true;
       }
       return [debts[user.username].amount, debt];
@@ -21,14 +21,16 @@ function User(props) {
     <div className="user-container">
       <div className="user-pic"></div>
       <div className="user-username">{props.user.username}</div>
-      <div
-        className={
-          checkIndebtedness(props.user)[1]
-            ? "user-balance user-balance-red"
-            : "user-balance user-balance-green"
-        }
-      >
-        {"£" + checkIndebtedness(props.user)[0]}
+      <div className="user-balance-container">
+        <div
+          className={
+            checkIndebtedness(props.user)[1]
+              ? "balance-value user-balance-red"
+              : "balance-value user-balance-green"
+          }
+        >
+          {"£" + checkIndebtedness(props.user)[0]}
+        </div>
       </div>
     </div>
   );
