@@ -111,6 +111,7 @@ function App() {
   // Load all users and expenses into group
   useEffect(() => {
     loadDataIntoGroup();
+    // eslint-disable-next-line
   }, []);
 
   // Calculate total balance of group
@@ -128,7 +129,7 @@ function App() {
 
   async function updateGroup(user) {
     // Add user to db
-    let response = await fetch(`${apiUrl}/users/add`, {
+    await fetch(`${apiUrl}/users/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
