@@ -21,6 +21,7 @@ const expenseSchema = new mongoose.Schema({
     required: true,
   },
   borrowers: {
+    // Each element represents the borrower name and the amount they owe.
     type: [[String, Number]],
     required: true,
   },
