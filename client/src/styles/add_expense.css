@@ -10,7 +10,7 @@
   font-size: 20px;
   display: grid;
   grid-template-columns: [name] 100px [input] auto;
-  grid-template-rows: [title] auto [Author] auto [Lender] auto [Borrower] auto;
+  grid-template-rows: [title] auto [Lender] auto [Borrower] auto;
   overflow: hidden;
   height: 0;
   transition: all 0.7s ease-in-out;
@@ -21,7 +21,7 @@
 }
 
 .overflow-container-expand {
-  height: 200px;
+  height: 160px;
 }
 
 .add-expense-container {

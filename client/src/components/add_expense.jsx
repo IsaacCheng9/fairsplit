@@ -8,8 +8,7 @@ function AddExpense(props) {
   let [crossRotateClass, setCrossRotateClass] = useState("");
 
   // Refs for dynamic styling
-  let [titleRef, authorRef, lenderRef, borrowerRef, amountRef] = [
-    createRef(),
+  let [titleRef, lenderRef, borrowerRef, amountRef] = [
     createRef(),
     createRef(),
     createRef(),
@@ -21,7 +20,6 @@ function AddExpense(props) {
     // Check if all inputs are filled
     if (
       titleRef.current.value.length > 0 &&
-      authorRef.current.value.length > 0 &&
       lenderRef.current.value.length > 0 &&
       borrowerRef.current.value.length > 0 &&
       amountRef.current.value.length > 0 &&
@@ -30,7 +28,7 @@ function AddExpense(props) {
       // If all inputs are filled, enable button
       props.onClick(true, {
         title: titleRef.current.value,
-        author: authorRef.current.value,
+        author: props.author,
         lender: lenderRef.current.value,
         borrowers: [borrowerRef.current.value],
         amount: amountRef.current.value,
@@ -44,7 +42,6 @@ function AddExpense(props) {
   // Clears form
   function clearInputs() {
     titleRef.current.value = "";
-    authorRef.current.value = "";
     lenderRef.current.value = "";
     borrowerRef.current.value = "";
     amountRef.current.value = "";
@@ -87,12 +84,6 @@ function AddExpense(props) {
           onChange={inputValidation}
           ref={titleRef}
           className="title-input"
-        ></input>
-        <header className="add-expense-author">Author</header>
-        <input
-          onChange={inputValidation}
-          ref={authorRef}
-          className="author-input"
         ></input>
         <header className="add-expense-lender">Lender</header>
         <input
