@@ -34,13 +34,6 @@ function GroupExpenses(props) {
     }
   });
 
-  // Scroll to bottom of container to see new expense form
-  function scrollToBottom() {
-    setTimeout(() => {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }, 680);
-  }
-
   // Add expense data to db
   async function addExpense(expense) {
     // Call route to add expense to db
@@ -92,15 +85,10 @@ function GroupExpenses(props) {
         </span>
       </h2>
       <div className="expense-container" ref={containerRef}>
-        {expenses.map((expense) => (
-          <Expense value={expense} key={expense.creationDatetime}></Expense>
-        ))}
         <AddExpense
           onClick={(selection, expense) => {
             if (selection !== undefined) {
               buttonState(selection, expense);
-            } else {
-              scrollToBottom();
             }
           }}
           reset={clearForm}
@@ -109,6 +97,9 @@ function GroupExpenses(props) {
             setClearForm(reset);
           }}
         ></AddExpense>
+        {expenses.map((expense) => (
+          <Expense value={expense} key={expense.creationDatetime}></Expense>
+        ))}
       </div>
       <div className="button-container">
         <button className="ge-button">Settle Up</button>
