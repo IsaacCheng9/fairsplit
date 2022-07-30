@@ -30,8 +30,10 @@ function AddExpense(props) {
         title: titleRef.current.value,
         author: props.author,
         lender: lenderRef.current.value,
-        borrowers: [borrowerRef.current.value],
-        amount: amountRef.current.value,
+        borrowers: [
+          [borrowerRef.current.value, Number(amountRef.current.value)],
+        ],
+        amount: Number(amountRef.current.value),
       });
     } else {
       // If not, disable button
@@ -102,6 +104,7 @@ function AddExpense(props) {
           onChange={inputValidation}
           ref={amountRef}
           className="amount-input"
+          type="number"
         ></input>
       </div>
       <div className={containerClass}>
