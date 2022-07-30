@@ -104,6 +104,7 @@ function GroupExpenses(props) {
             }
           }}
           reset={clearForm}
+          author={props.group.activeUser}
           onReset={(reset) => {
             setClearForm(reset);
           }}
