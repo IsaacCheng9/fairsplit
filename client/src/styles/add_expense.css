@@ -6,17 +6,32 @@
   justify-self: center;
 }
 
+.borrower-cross {
+  width: 20px;
+  height: 20px;
+}
+
+.borrower-container .add-expense-plus {
+  align-self: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+}
+
+.borrower-container {
+  display: flex;
+  gap: 5px;
+}
+
 .overflow-container {
-  font-size: 20px;
   display: grid;
-  grid-template-columns: [name] 100px [input] auto;
-  grid-template-rows: [title] auto [Lender] auto [Borrower] auto;
+  grid-template-columns: [name] 105px [input] auto;
   overflow: hidden;
   height: 0;
   transition: all 0.7s ease-in-out;
-  width: 90%;
   align-items: center;
   justify-content: center;
+  padding: 5px 15px 0 15px;
   font-family: "Poppins";
 }
 
@@ -39,10 +54,18 @@
   padding-left: 10px;
   font-size: 20px;
   background-color: white;
-  width: 200px;
+  width: auto;
   border-radius: 5px;
   border: solid 1px rgba(0, 0, 0, 0.2);
   font-family: "Poppins";
+}
+
+.borrower-container .borrower-input {
+  width: 60%;
+}
+
+.borrower-container .borrower-split {
+  width: 20%;
 }
 
 #cross {
