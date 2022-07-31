@@ -1,5 +1,6 @@
 import React, { useState, createRef, useEffect } from "react";
 import "../styles/add_expense.css";
+import cross from "../assets/cross.svg";
 
 function AddExpense(props) {
   // Reactive variables for dynamic styling
@@ -87,25 +88,32 @@ function AddExpense(props) {
           ref={titleRef}
           className="title-input"
         ></input>
-        <header className="add-expense-lender">Lender</header>
-        <input
-          onChange={inputValidation}
-          ref={lenderRef}
-          className="lender-input"
-        ></input>
-        <header className="add-expense-borrower">Borrower</header>
-        <input
-          onChange={inputValidation}
-          ref={borrowerRef}
-          className="borrower-input"
-        ></input>
         <header className="add-expense-amount">Amount</header>
         <input
           onChange={inputValidation}
           ref={amountRef}
           className="amount-input"
           type="number"
+          min="0"
         ></input>
+        <header className="add-expense-lender">Lender</header>
+        <input
+          onChange={inputValidation}
+          ref={lenderRef}
+          className="lender-input"
+        ></input>
+        <header className="add-expense-borrower">Borrowers</header>
+        <div className="borrower-container">
+          <input
+            onChange={inputValidation}
+            ref={borrowerRef}
+            className="borrower-input"
+          ></input>
+          <input type="number" min="0" className="borrower-split"></input>
+          <div className="add-expense-plus">
+            <img className="borrower-cross" src={cross}></img>
+          </div>
+        </div>
       </div>
       <div className={containerClass}>
         <div className="add-expense-plus" onClick={expandContainer}>
