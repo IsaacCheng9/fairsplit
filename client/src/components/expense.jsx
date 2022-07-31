@@ -6,9 +6,9 @@ function Expense(props) {
   // Format borrowers with commas
   function renderBorrowers() {
     const borrowers = [];
-    props.value.borrowers.map((borrower) => {
+    for (const borrower of props.value.borrowers) {
       borrowers.push(borrower[0]);
-    });
+    }
 
     return borrowers.join(", ");
   }
