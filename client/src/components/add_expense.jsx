@@ -1,6 +1,8 @@
 import React, { useState, createRef, useEffect } from "react";
 import "../styles/add_expense.css";
 import cross from "../assets/cross.svg";
+import minus from "../assets/minus.svg";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 function AddExpense(props) {
   // Reactive variables for dynamic styling
@@ -15,6 +17,30 @@ function AddExpense(props) {
     createRef(),
     createRef(),
   ];
+
+  // Holds borrower state
+  let [borrowers, setBorrowers] = useState([]);
+
+  // Calculates height to transition to when borrower is added / removed
+  function calcHeight() {
+    if (
+      overflowClass.includes("overflow-container-expand") &&
+      borrowers.length > 0
+    ) {
+      let calc = borrowers.length * 2.5 + 11;
+      return calc + "em";
+    } else if (overflowClass.includes("overflow-container-expand")) {
+      return "11em";
+    } else {
+      return "0em";
+    }
+  }
+
+  // Renders another borrower input
+  function addBorrower() {
+    borrowers.push(Math.random());
+    setBorrowers([...borrowers]);
+  }
 
   // Validates inputs to determine whether or not button should be enabled
   function inputValidation() {
@@ -80,40 +106,93 @@ function AddExpense(props) {
 
   return (
     <div>
-      <div className={overflowClass}>
-        <header className="add-expense-title">Title</header>
-        <input
-          maxLength="50"
-          onChange={inputValidation}
-          ref={titleRef}
-          className="title-input"
-        ></input>
-        <header className="add-expense-amount">Amount</header>
-        <input
-          onChange={inputValidation}
-          ref={amountRef}
-          className="amount-input"
-          type="number"
-          min="0"
-        ></input>
-        <header className="add-expense-lender">Lender</header>
-        <input
-          onChange={inputValidation}
-          ref={lenderRef}
-          className="lender-input"
-        ></input>
-        <header className="add-expense-borrower">Borrowers</header>
-        <div className="borrower-container">
+      <div
+        style={{
+          maxHeight: calcHeight(),
+        }}
+        className={overflowClass}
+      >
+        <div className="input-container">
+          <header className="add-expense-title">Title</header>
+          <input
+            maxLength="50"
+            onChange={inputValidation}
+            ref={titleRef}
+            className="title-input"
+          ></input>
+        </div>
+        <div className="input-container">
+          <header className="add-expense-amount">Amount</header>
           <input
             onChange={inputValidation}
-            ref={borrowerRef}
-            className="borrower-input"
+            ref={amountRef}
+            className="amount-input"
+            type="number"
+            min="0"
           ></input>
-          <input type="number" min="0" className="borrower-split"></input>
-          <div className="add-expense-plus">
-            <img className="borrower-cross" src={cross}></img>
+        </div>
+        <div className="input-container">
+          <header className="add-expense-lender">Lender</header>
+          <input
+            onChange={inputValidation}
+            ref={lenderRef}
+            className="lender-input"
+          ></input>
+        </div>
+        <div className="input-container">
+          <header className="add-expense-borrower">Borrower</header>
+          <div className="borrower-container">
+            <input
+              onChange={inputValidation}
+              ref={borrowerRef}
+              className="borrower-input"
+            ></input>
+            <input type="number" min="0" className="borrower-split"></input>
+            <div className="add-expense-plus" onClick={addBorrower}>
+              <img alt="add-btn" className="borrower-cross" src={cross}></img>
+            </div>
           </div>
         </div>
+        <TransitionGroup component={null}>
+          {borrowers.map((borrower) => (
+            <CSSTransition
+              timeout={500}
+              unmountOnExit
+              classNames="borrowers"
+              key={borrower}
+            >
+              <div className="input-container">
+                <header key={borrower + 1}>Borrower</header>
+                <div key={borrower} className="borrower-container">
+                  <input
+                    onChange={inputValidation}
+                    ref={borrowerRef}
+                    className="borrower-input"
+                  ></input>
+                  <input
+                    type="number"
+                    min="0"
+                    className="borrower-split"
+                  ></input>
+                  <div
+                    className="add-expense-plus"
+                    onClick={() => {
+                      setBorrowers((borrowers) =>
+                        borrowers.filter((t) => t !== borrower)
+                      );
+                    }}
+                  >
+                    <img
+                      alt="minus-button"
+                      className="borrower-cross"
+                      src={minus}
+                    ></img>
+                  </div>
+                </div>
+              </div>
+            </CSSTransition>
+          ))}
+        </TransitionGroup>
       </div>
       <div className={containerClass}>
         <div className="add-expense-plus" onClick={expandContainer}>
