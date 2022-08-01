@@ -6,6 +6,10 @@
   justify-self: center;
 }
 
+.input-container header {
+  min-width: 100px;
+}
+
 .borrower-cross {
   width: 20px;
   height: 20px;
@@ -24,19 +28,19 @@
 }
 
 .overflow-container {
-  display: grid;
-  grid-template-columns: [name] 105px [input] auto;
+  max-height: 0;
+  transition: all 0.5s ease;
+  display: flex;
+  flex-flow: row wrap;
   overflow: hidden;
-  height: 0;
-  transition: all 0.7s ease-in-out;
   align-items: center;
   justify-content: center;
-  padding: 5px 15px 0 15px;
   font-family: "Poppins";
+  padding: 0 20px 0 20px;
 }
 
 .overflow-container-expand {
-  height: 160px;
+  padding: 15px 20px 0 20px;
 }
 
 .add-expense-container {
@@ -50,26 +54,25 @@
 }
 
 .overflow-container input {
-  grid-column-start: 2;
   padding-left: 10px;
   font-size: 20px;
   background-color: white;
-  width: auto;
   border-radius: 5px;
   border: solid 1px rgba(0, 0, 0, 0.2);
   font-family: "Poppins";
+  flex-grow: 1;
 }
 
 .borrower-container .borrower-input {
-  width: 60%;
+  width: 151px;
 }
 
 .borrower-container .borrower-split {
-  width: 20%;
+  width: 30%;
 }
 
 #cross {
-  transition: all 1s ease;
+  transition: all 0.5s ease;
   transform-origin: center;
 }
 
