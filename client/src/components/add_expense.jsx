@@ -66,7 +66,7 @@ function AddExpense(props) {
         splitAmount = [amountRef.current.value];
       }
     } else {
-      splitAmount = [""];
+      splitAmount.fill("");
     }
 
     // Re-render amounts to component
