@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, createRef } from "react";
 import "../styles/add_expense.css";
 import cross from "../assets/cross.svg";
 import minus from "../assets/minus.svg";
@@ -44,7 +44,7 @@ function AddExpense(props) {
   function addBorrower() {
     /* TODO - Array used to store borrowers for rendering new input, 
        atm storing random number for id - probably needs changing. */
-    borrowers.push([Math.random()]);
+    borrowers.push([Math.random(), createRef()]);
     splitAmount.push("");
     setBorrowers([...borrowers]);
     if (automaticSplit) calcSplit();
@@ -74,6 +74,24 @@ function AddExpense(props) {
     inputValidation();
   }
 
+  // Validates borrower inputs
+  function borrowersValidation() {
+    // Check borrower usernames are filled out
+    for (const borrower of borrowers) {
+      if (borrower[1].current.value.length < 1) {
+        return false;
+      }
+    }
+
+    // Check borrower split values are filled out
+    for (const amount of splitAmount) {
+      if (amount.length < 1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   // Validates inputs to determine whether or not button should be enabled
   function inputValidation() {
     // Check if all inputs are filled
@@ -82,7 +100,8 @@ function AddExpense(props) {
       lenderRef.current.value.length > 0 &&
       borrowerRef.current.value.length > 0 &&
       amountRef.current.value.length > 0 &&
-      amountRef.current.value > 0
+      amountRef.current.value > 0 &&
+      borrowersValidation()
     ) {
       // If all inputs are filled, enable button
       props.onClick(true, {
@@ -157,7 +176,7 @@ function AddExpense(props) {
           <header className="add-expense-amount">Amount</header>
           <input
             // Only calculate split if user hasn't changed values
-            onChange={automaticSplit ? calcSplit : () => {}}
+            onChange={automaticSplit ? calcSplit : inputValidation}
             ref={amountRef}
             className="amount-input"
             type="number"
@@ -189,6 +208,8 @@ function AddExpense(props) {
 
                 // Split not longer active as user has changed value
                 setAutomaticSplit(false);
+
+                inputValidation();
               }}
               type="number"
               min="0"
@@ -212,7 +233,7 @@ function AddExpense(props) {
                 <div key={borrower} className="borrower-container">
                   <input
                     onChange={inputValidation}
-                    ref={borrowerRef}
+                    ref={borrowers[i][1]}
                     className="borrower-input"
                   ></input>
                   <input
@@ -227,6 +248,8 @@ function AddExpense(props) {
 
                       // Split not longer active as user has changed value
                       setAutomaticSplit(false);
+
+                      inputValidation();
                     }}
                   ></input>
                   <div
