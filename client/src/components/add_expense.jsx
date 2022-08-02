@@ -1,4 +1,4 @@
-import React, { useState, createRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../styles/add_expense.css";
 import cross from "../assets/cross.svg";
 import minus from "../assets/minus.svg";
@@ -12,14 +12,18 @@ function AddExpense(props) {
 
   // Refs for dynamic styling
   let [titleRef, lenderRef, borrowerRef, amountRef] = [
-    createRef(),
-    createRef(),
-    createRef(),
-    createRef(),
+    useRef(),
+    useRef(),
+    useRef(),
+    useRef(),
   ];
 
   // Holds borrower state
   let [borrowers, setBorrowers] = useState([]);
+
+  // Hold state for split validity and amount
+  let [automaticSplit, setAutomaticSplit] = useState(true);
+  let [splitAmount, setSplitAmount] = useState([""]);
 
   // Calculates height to transition to when borrower is added / removed
   function calcHeight() {
@@ -38,8 +42,36 @@ function AddExpense(props) {
 
   // Renders another borrower input
   function addBorrower() {
-    borrowers.push(Math.random());
+    /* TODO - Array used to store borrowers for rendering new input, 
+       atm storing random number for id - probably needs changing. */
+    borrowers.push([Math.random()]);
+    splitAmount.push("");
     setBorrowers([...borrowers]);
+    if (automaticSplit) calcSplit();
+  }
+
+  // Calculate Split among borrowers
+  function calcSplit() {
+    // Calculate split if amount is valid and user hasn't changed split value
+    if (amountRef.current.value > 0) {
+      if (automaticSplit) {
+        let equalAmount = amountRef.current.value / (borrowers.length + 1);
+        if (equalAmount % 1 !== 0) {
+          // Gets value to 2 decimal points without rounding
+          equalAmount = Number(equalAmount).toFixed(3);
+          equalAmount = String(equalAmount).slice(0, equalAmount.length - 1);
+        }
+        splitAmount.fill(equalAmount);
+      } else {
+        splitAmount = [amountRef.current.value];
+      }
+    } else {
+      splitAmount = [""];
+    }
+
+    // Re-render amounts to component
+    setSplitAmount([...splitAmount]);
+    inputValidation();
   }
 
   // Validates inputs to determine whether or not button should be enabled
@@ -124,7 +156,8 @@ function AddExpense(props) {
         <div className="input-container">
           <header className="add-expense-amount">Amount</header>
           <input
-            onChange={inputValidation}
+            // Only calculate split if user hasn't changed values
+            onChange={automaticSplit ? calcSplit : () => {}}
             ref={amountRef}
             className="amount-input"
             type="number"
@@ -147,14 +180,27 @@ function AddExpense(props) {
               ref={borrowerRef}
               className="borrower-input"
             ></input>
-            <input type="number" min="0" className="borrower-split"></input>
+            <input
+              value={splitAmount[0] || ""}
+              onChange={(e) => {
+                // Change value to new input and re-render
+                splitAmount[0] = e.target.value;
+                setSplitAmount([...splitAmount]);
+
+                // Split not longer active as user has changed value
+                setAutomaticSplit(false);
+              }}
+              type="number"
+              min="0"
+              className="borrower-split"
+            ></input>
             <div className="add-expense-plus" onClick={addBorrower}>
               <img alt="add-btn" className="borrower-cross" src={cross}></img>
             </div>
           </div>
         </div>
         <TransitionGroup component={null}>
-          {borrowers.map((borrower) => (
+          {borrowers.map((borrower, i) => (
             <CSSTransition
               timeout={500}
               unmountOnExit
@@ -173,13 +219,30 @@ function AddExpense(props) {
                     type="number"
                     min="0"
                     className="borrower-split"
+                    value={splitAmount[i + 1] || ""}
+                    onChange={(e) => {
+                      // Change value to new input and re-render
+                      splitAmount[i + 1] = e.target.value;
+                      setSplitAmount([...splitAmount]);
+
+                      // Split not longer active as user has changed value
+                      setAutomaticSplit(false);
+                    }}
                   ></input>
                   <div
                     className="add-expense-plus"
                     onClick={() => {
-                      setBorrowers((borrowers) =>
-                        borrowers.filter((t) => t !== borrower)
-                      );
+                      // Remove borrower from list and re-render
+                      borrowers = borrowers.filter((t) => t !== borrower);
+                      setBorrowers(borrowers);
+
+                      // Remove reference to value
+                      splitAmount.splice(i + 1, 1);
+
+                      // Recalculate split once borrower removed
+                      if (automaticSplit && amountRef.current.value > 0) {
+                        calcSplit();
+                      }
                     }}
                   >
                     <img
