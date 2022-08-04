@@ -50,18 +50,33 @@ function AddExpense(props) {
     if (automaticSplit) calcSplit();
   }
 
+  // Adds remaining amount after split, starting with the first borrower
+  function addRemainder(remainder) {
+    for (let i = 0; i < remainder * 100; i++) {
+      let newAmount = Number(splitAmount[i]) + 0.01;
+      splitAmount[i] = newAmount.toFixed(2);
+    }
+  }
+
   // Calculate Split among borrowers
   function calcSplit() {
+    let amount = amountRef.current.value;
     // Calculate split if amount is valid and user hasn't changed split value
-    if (amountRef.current.value > 0) {
+    if (amount > 0) {
       if (automaticSplit) {
-        let equalAmount = amountRef.current.value / (borrowers.length + 1);
+        let equalAmount = amount / (borrowers.length + 1);
         if (equalAmount % 1 !== 0) {
           // Gets value to 2 decimal points without rounding
           equalAmount = Number(equalAmount).toFixed(3);
           equalAmount = String(equalAmount).slice(0, equalAmount.length - 1);
         }
         splitAmount.fill(equalAmount);
+
+        // If amount isn't divisible add remainder to borrowers
+        let leftOver = amount - equalAmount * (borrowers.length + 1);
+        if (leftOver > 0) {
+          addRemainder(leftOver.toFixed(2));
+        }
       } else {
         splitAmount = [amountRef.current.value];
       }

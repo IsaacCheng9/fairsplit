@@ -34,7 +34,6 @@
   flex-flow: row wrap;
   overflow: hidden;
   align-items: center;
-  justify-content: center;
   font-family: "Poppins";
   padding: 0 20px 0 20px;
 }
@@ -64,7 +63,7 @@
 }
 
 .borrower-container .borrower-input {
-  width: 130px;
+  width: 110px;
 }
 
 .borrower-container .borrower-split {
