@@ -24,6 +24,7 @@ function AddExpense(props) {
   // Hold state for split validity and amount
   let [automaticSplit, setAutomaticSplit] = useState(true);
   let [splitAmount, setSplitAmount] = useState([""]);
+  let firstAmount = useRef();
 
   // Calculates height to transition to when borrower is added / removed
   function calcHeight() {
@@ -47,6 +48,7 @@ function AddExpense(props) {
     borrowers.push([Math.random(), createRef()]);
     splitAmount.push("");
     setBorrowers([...borrowers]);
+    inputValidation();
     if (automaticSplit) calcSplit();
   }
 
@@ -93,7 +95,7 @@ function AddExpense(props) {
   function borrowersValidation() {
     // Check borrower usernames are filled out
     for (const borrower of borrowers) {
-      if (borrower[1].current.value.length < 1) {
+      if (!borrower[1].current || borrower[1].current.value.length < 1) {
         return false;
       }
     }
@@ -118,14 +120,19 @@ function AddExpense(props) {
       amountRef.current.value > 0 &&
       borrowersValidation()
     ) {
+      // Store usernames from refs to pass in expense object
+      let usernames = [
+        [borrowerRef.current.value, Number(firstAmount.current.value)],
+      ];
+      for (const [index, ref] of [...borrowers].entries()) {
+        usernames.push([ref[1].current.value, Number(splitAmount[index])]);
+      }
       // If all inputs are filled, enable button
       props.onClick(true, {
         title: titleRef.current.value,
         author: props.author,
         lender: lenderRef.current.value,
-        borrowers: [
-          [borrowerRef.current.value, Number(amountRef.current.value)],
-        ],
+        borrowers: [...usernames],
         amount: Number(amountRef.current.value),
       });
     } else {
@@ -215,6 +222,7 @@ function AddExpense(props) {
               className="borrower-input"
             ></input>
             <input
+              ref={firstAmount}
               value={splitAmount[0] || ""}
               onChange={(e) => {
                 // Change value to new input and re-render
@@ -241,14 +249,14 @@ function AddExpense(props) {
               timeout={500}
               unmountOnExit
               classNames="borrowers"
-              key={borrower}
+              key={borrower[0]}
             >
               <div className="input-container">
-                <header key={borrower + 1}>Borrower</header>
-                <div key={borrower} className="borrower-container">
+                <header key={borrower[0] + 1}>Borrower</header>
+                <div key={borrower[0]} className="borrower-container">
                   <input
                     onChange={inputValidation}
-                    ref={borrowers[i][1]}
+                    ref={borrower[1]}
                     className="borrower-input"
                   ></input>
                   <input
