@@ -97,7 +97,7 @@ function App() {
     const users = await getAllUsers();
     group = {
       ...group,
-      expenses: expenses,
+      expenses: expenses.reverse(),
       users: users,
       activeUser: users[0].username,
       debts: debt,

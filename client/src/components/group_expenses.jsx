@@ -51,7 +51,7 @@ function GroupExpenses(props) {
       // Tell parent component to get latest debts
       props.onClick();
       // Add expense to array of expenses
-      expenses.push(response);
+      expenses.unshift(response);
     } else {
       // Display error message
       console.error(response.error);
