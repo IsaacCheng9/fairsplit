@@ -147,6 +147,16 @@ function AddExpense(props) {
     lenderRef.current.value = "";
     borrowerRef.current.value = "";
     amountRef.current.value = "";
+    firstAmount.current.value = "";
+
+    for (const [index, borrower] of borrowers.entries()) {
+      borrower[1].current.value = "";
+      splitAmount[index] = "";
+    }
+
+    splitAmount[splitAmount.length - 1] = "";
+
+    setSplitAmount([...splitAmount]);
   }
 
   // Toggles visibility of form
