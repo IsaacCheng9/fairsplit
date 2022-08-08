@@ -205,7 +205,7 @@ function AddExpense(props) {
           ></input>
         </div>
         <div className="input-container">
-          <header className="add-expense-amount">Amount</header>
+          <header className="add-expense-amount">Amount (£)</header>
           <input
             // Only calculate split if user hasn't changed values
             onChange={automaticSplit ? calcSplit : inputValidation}
