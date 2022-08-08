@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 .expense {
+  transition: all 1s ease;
   font-family: "Poppins";
   display: grid;
   align-items: center;
@@ -54,5 +55,6 @@
 }
 
 .e-date {
+  font-size: small;
   justify-self: center;
 }

@@ -1,4 +1,5 @@
 import React, { useState, createRef, useEffect } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import "../styles/group_expenses.css";
 import Expense from "./expense";
 import AddExpense from "./add_expense";
@@ -97,9 +98,18 @@ function GroupExpenses(props) {
             setClearForm(reset);
           }}
         ></AddExpense>
-        {expenses.map((expense) => (
-          <Expense value={expense} key={expense.creationDatetime}></Expense>
-        ))}
+        <TransitionGroup component={null}>
+          {expenses.map((expense) => (
+            <CSSTransition
+              exit={false}
+              timeout={50}
+              classNames="summaries"
+              key={expense.creationDatetime}
+            >
+              <Expense value={expense} key={expense.creationDatetime}></Expense>
+            </CSSTransition>
+          ))}
+        </TransitionGroup>
       </div>
       <div className="button-container">
         <button className="ge-button">Settle Up</button>
