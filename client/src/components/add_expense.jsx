@@ -232,6 +232,7 @@ function AddExpense(props) {
               className="borrower-input"
             ></input>
             <input
+              placeholder="£"
               ref={firstAmount}
               value={splitAmount[0] || ""}
               onChange={(e) => {
@@ -270,6 +271,7 @@ function AddExpense(props) {
                     className="borrower-input"
                   ></input>
                   <input
+                    placeholder="£"
                     type="number"
                     min="0"
                     className="borrower-split"
