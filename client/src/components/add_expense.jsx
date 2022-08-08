@@ -125,7 +125,7 @@ function AddExpense(props) {
         [borrowerRef.current.value, Number(firstAmount.current.value)],
       ];
       for (const [index, ref] of [...borrowers].entries()) {
-        usernames.push([ref[1].current.value, Number(splitAmount[index])]);
+        usernames.push([ref[1].current.value, Number(splitAmount[index + 1])]);
       }
       // If all inputs are filled, enable button
       props.onClick(true, {
