@@ -1,5 +1,38 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
+.input-container {
+  align-items: center;
+  max-height: 40px;
+  display: flex;
+  flex-flow: row nowrap;
+  flex-grow: 1;
+}
+
+.input-container input {
+  margin-bottom: 5px;
+}
+
+.borrowers-enter {
+  opacity: 0;
+  max-height: 0em;
+}
+
+.borrowers-enter-active {
+  transition: max-height 500ms ease-out, opacity 300ms ease-out;
+  opacity: 1;
+  max-height: 2.5em;
+}
+
+.borrowers-exit {
+  opacity: 1;
+}
+
+.borrowers-exit-active {
+  opacity: 0;
+  transition: max-height 500ms ease-out, opacity 300ms ease-out;
+  max-height: 0;
+}
+
 .summaries-enter {
   opacity: 0;
   transform: translateX(-30px);

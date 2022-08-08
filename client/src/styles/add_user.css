@@ -63,11 +63,6 @@
   transform: translateX(155px);
 }
 
-#cross {
-  transition: all 1s ease;
-  transform-origin: center;
-}
-
 .cross-rotate {
   transform: rotate(45deg);
 }

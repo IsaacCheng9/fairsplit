@@ -1,4 +1,5 @@
 import React, { useState, createRef, useEffect } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import "../styles/group_expenses.css";
 import Expense from "./expense";
 import AddExpense from "./add_expense";
@@ -34,13 +35,6 @@ function GroupExpenses(props) {
     }
   });
 
-  // Scroll to bottom of container to see new expense form
-  function scrollToBottom() {
-    setTimeout(() => {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }, 680);
-  }
-
   // Add expense data to db
   async function addExpense(expense) {
     // Call route to add expense to db
@@ -58,7 +52,7 @@ function GroupExpenses(props) {
       // Tell parent component to get latest debts
       props.onClick();
       // Add expense to array of expenses
-      expenses.push(response);
+      expenses.unshift(response);
     } else {
       // Display error message
       console.error(response.error);
@@ -92,22 +86,30 @@ function GroupExpenses(props) {
         </span>
       </h2>
       <div className="expense-container" ref={containerRef}>
-        {expenses.map((expense) => (
-          <Expense value={expense} key={expense.creationDatetime}></Expense>
-        ))}
         <AddExpense
           onClick={(selection, expense) => {
             if (selection !== undefined) {
               buttonState(selection, expense);
-            } else {
-              scrollToBottom();
             }
           }}
           reset={clearForm}
+          author={props.group.activeUser}
           onReset={(reset) => {
             setClearForm(reset);
           }}
         ></AddExpense>
+        <TransitionGroup component={null}>
+          {expenses.map((expense) => (
+            <CSSTransition
+              exit={false}
+              timeout={50}
+              classNames="summaries"
+              key={expense.creationDatetime}
+            >
+              <Expense value={expense} key={expense.creationDatetime}></Expense>
+            </CSSTransition>
+          ))}
+        </TransitionGroup>
       </div>
       <div className="button-container">
         <button className="ge-button">Settle Up</button>

@@ -29,7 +29,7 @@ function User(props) {
               : "balance-value user-balance-green"
           }
         >
-          {"£" + checkIndebtedness(props.user)[0]}
+          {"£" + checkIndebtedness(props.user)[0].toFixed(2)}
         </div>
       </div>
     </div>
