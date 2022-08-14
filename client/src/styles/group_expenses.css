@@ -64,6 +64,7 @@
 }
 
 .expense-container {
+  padding-bottom: 10px;
   overflow: auto;
   scroll-behavior: smooth;
 }
@@ -76,8 +77,6 @@
 
 .ge-button {
   cursor: pointer;
-  width: 140px;
-  height: 47px;
   border-radius: 8px;
   border: none;
   background-color: #3dc970;
@@ -128,7 +127,7 @@
 
 .group-expenses-container {
   display: grid;
-  grid-template-rows: [title] 110px [balance] 55px [main] auto [buttons] 80px;
+  grid-template-rows: [title] 110px [balance] 55px [main] auto;
   grid-template-columns: 400px;
   box-shadow: 0 70px 100px -20px rgb(50 50 93 / 25%);
   border-radius: 8px;

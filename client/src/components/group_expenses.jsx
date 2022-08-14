@@ -111,8 +111,7 @@ function GroupExpenses(props) {
           ))}
         </TransitionGroup>
       </div>
-      <div className="button-container">
-        <button className="ge-button">Settle Up</button>
+      {/* <div className="button-container">
         <button
           ref={addExpenseBtnRef}
           className={buttonStyle}
@@ -122,7 +121,7 @@ function GroupExpenses(props) {
         >
           Add Expense
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
