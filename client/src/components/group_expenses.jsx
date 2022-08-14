@@ -111,17 +111,6 @@ function GroupExpenses(props) {
           ))}
         </TransitionGroup>
       </div>
-      {/* <div className="button-container">
-        <button
-          ref={addExpenseBtnRef}
-          className={buttonStyle}
-          onClick={() => {
-            addExpense(tempExpense);
-          }}
-        >
-          Add Expense
-        </button>
-      </div> */}
     </div>
   );
 }

@@ -316,7 +316,18 @@ function AddExpense(props) {
         </TransitionGroup>
       </div>
       <div className={containerClass}>
-        <div className="add-expense-plus" onClick={expandContainer}>
+        <div className="button-container" onClick={expandContainer}>
+          <button
+            // ref={addExpenseBtnRef}
+            className="ge-button"
+            // onClick={() => {
+            //   addExpense(tempExpense);
+            // }}
+          >
+            Add Expense
+          </button>
+        </div>
+        {/* <div className="add-expense-plus" onClick={expandContainer}>
           <svg
             width="30"
             height="30"
@@ -347,7 +358,7 @@ function AddExpense(props) {
               </g>
             </g>
           </svg>
-        </div>
+        </div> */}
       </div>
     </div>
   );
