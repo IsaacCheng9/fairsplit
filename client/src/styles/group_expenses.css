@@ -76,6 +76,7 @@
 }
 
 .ge-button {
+  transition: opacity 0.3s ease;
   outline: none;
   box-shadow: 0 5px 0 rgb(61, 201, 112, 0.95);
   cursor: pointer;

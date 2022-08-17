@@ -1,4 +1,4 @@
-import React, { useState, createRef, useEffect } from "react";
+import React, { useState, createRef } from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import "../styles/group_expenses.css";
 import Expense from "./expense";
@@ -10,30 +10,9 @@ function GroupExpenses(props) {
 
   // Refs for transitions
   let containerRef = createRef();
-  let addExpenseBtnRef = createRef();
 
   // Reactive states for adding styles
-  let [buttonStyle, setButtonStyle] = useState("ge-button add-expense-btn");
   let [clearForm, setClearForm] = useState(false);
-  let [tempExpense, setTempExpense] = useState({});
-
-  // Button activator
-  function buttonState(valid, expense) {
-    if (valid) {
-      setButtonStyle("ge-button");
-      setTempExpense(expense);
-      addExpenseBtnRef.current.disabled = false;
-    } else {
-      setButtonStyle("ge-button add-expense-btn");
-      addExpenseBtnRef.current.disabled = true;
-    }
-  }
-
-  useEffect(() => {
-    if (clearForm) {
-      addExpenseBtnRef.current.disabled = true;
-    }
-  });
 
   // Add expense data to db
   async function addExpense(expense) {
@@ -59,8 +38,6 @@ function GroupExpenses(props) {
     }
     // Clear form
     setClearForm(true);
-    // Grey out button
-    setButtonStyle("ge-button add-expense-btn");
   }
 
   return (
@@ -87,10 +64,8 @@ function GroupExpenses(props) {
       </h2>
       <div className="expense-container" ref={containerRef}>
         <AddExpense
-          onClick={(selection, expense) => {
-            if (selection !== undefined) {
-              buttonState(selection, expense);
-            }
+          onClick={(expense) => {
+            addExpense(expense);
           }}
           reset={clearForm}
           author={props.group.activeUser}
