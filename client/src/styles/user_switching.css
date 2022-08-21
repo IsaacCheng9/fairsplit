@@ -4,6 +4,7 @@
 }
 
 select {
+  border-color: lightgrey;
   border-radius: 16px;
   font-size: 16px;
   font-family: "poppins";
