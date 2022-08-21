@@ -20,6 +20,19 @@ function GroupUsers(props) {
     <div className="group-members-container">
       <h1 className="group-members-title">Group Members</h1>
       <div className="users-container">
+        <div className="settle-container">
+          <div>
+            <select name="users">
+              {props.group.usersMinusActive.users.map((user) => (
+                <option key={user.username}>{user.username}</option>
+              ))}
+            </select>
+            <input type="Number" placeholder="£" maxLength="50"></input>
+          </div>
+          <button style={{ minWidth: "120px" }} className="ge-button">
+            Settle Up
+          </button>
+        </div>
         <TransitionGroup component={null}>
           {props.group.usersMinusActive.users.map((user) => (
             <CSSTransition
