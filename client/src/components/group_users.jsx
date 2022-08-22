@@ -98,7 +98,12 @@ function GroupUsers(props) {
               }}
             ></input>
           </div>
-          <button style={{ minWidth: "120px" }} className="ge-button">
+          <button
+            disabled={btnDisabled}
+            style={disabledBtnStyles()}
+            onClick={settleUp}
+            className="ge-button"
+          >
             Settle Up
           </button>
         </div>
