@@ -97,7 +97,6 @@ function GroupUsers(props) {
                 setSettleAmount(settleAmount);
               }}
             ></input>
-            <input type="Number" placeholder="£" maxLength="50"></input>
           </div>
           <button style={{ minWidth: "120px" }} className="ge-button">
             Settle Up
