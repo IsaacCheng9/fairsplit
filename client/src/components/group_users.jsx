@@ -72,7 +72,7 @@ function GroupUsers(props) {
       <div className="users-container">
         <div className="settle-container">
           <div>
-            <select name="users">
+            <select ref={userSelectRef} name="users">
               {props.group.usersMinusActive.users.map((user) => (
                 <option key={user.username}>{user.username}</option>
               ))}
