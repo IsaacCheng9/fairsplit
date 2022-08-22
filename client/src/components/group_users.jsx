@@ -15,6 +15,18 @@ function GroupUsers(props) {
   // Server URL
   const apiUrl = "http://localhost:3001";
 
+  // Returns styles to grey out button
+  function disabledBtnStyles() {
+    if (btnDisabled) {
+      return {
+        backgroundColor: "lightgrey",
+        boxShadow: "0 5px 0 grey",
+        transform: "none",
+        opacity: "20%",
+      };
+    }
+  }
+
   function addUserToGroup(user) {
     const newUser = {
       username: user,
