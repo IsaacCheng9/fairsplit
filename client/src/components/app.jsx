@@ -146,6 +146,15 @@ function App() {
     });
   }
 
+  // Update group state after a user settles up
+  function updateDebt(settleObject) {
+    group.usersMinusActive.debts[settleObject.to].amount -= settleObject.amount;
+
+    setGroup({
+      ...group,
+    });
+  }
+
   return (
     <div className="App">
       <div className="header-container">
@@ -164,7 +173,13 @@ function App() {
 
       <div className="main-content-container">
         <GroupExpenses group={group} onClick={updateDebts}></GroupExpenses>
-        <GroupUsers group={group} onClick={updateGroup}></GroupUsers>
+        <GroupUsers
+          group={group}
+          // Call function based on parameter passed in onClick call
+          onClick={(debts) => {
+            debts ? updateDebt(debts) : updateGroup();
+          }}
+        ></GroupUsers>
       </div>
     </div>
   );
