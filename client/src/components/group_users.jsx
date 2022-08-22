@@ -77,6 +77,26 @@ function GroupUsers(props) {
                 <option key={user.username}>{user.username}</option>
               ))}
             </select>
+            <input
+              type="Number"
+              placeholder="£"
+              maxLength="50"
+              min={0}
+              value={settleAmount || ""}
+              onChange={(e) => {
+                settleAmount = e.target.value;
+                // Handle button state based on settle-up value
+                if (btnDisabled && Number(settleAmount) > 0) {
+                  setBtnDisabled(false);
+                } else if (
+                  !btnDisabled &&
+                  (!settleAmount.length || Number(settleAmount) === 0)
+                ) {
+                  setBtnDisabled(true);
+                }
+                setSettleAmount(settleAmount);
+              }}
+            ></input>
             <input type="Number" placeholder="£" maxLength="50"></input>
           </div>
           <button style={{ minWidth: "120px" }} className="ge-button">
