@@ -5,6 +5,16 @@ import AddUser from "./add_user";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 function GroupUsers(props) {
+  // Hold state of settle amount
+  let [settleAmount, setSettleAmount] = useState(0);
+  let [btnDisabled, setBtnDisabled] = useState(true);
+
+  // Ref to user select for settling
+  let userSelectRef = createRef();
+
+  // Server URL
+  const apiUrl = "http://localhost:3001";
+
   function addUserToGroup(user) {
     const newUser = {
       username: user,
