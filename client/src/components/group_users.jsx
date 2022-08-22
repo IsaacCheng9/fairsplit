@@ -27,6 +27,34 @@ function GroupUsers(props) {
     }
   }
 
+  // Call API endpoint to settle debt
+  async function settleUp() {
+    // Creates object to send in body
+    let settleObject = {
+      from: props.group.activeUser,
+      to: userSelectRef.current.value,
+      amount: settleAmount,
+    };
+
+    // Disable and clear form
+    setBtnDisabled(true);
+    setSettleAmount("");
+
+    // Call endpoint
+    let settleDebtResponse = await fetch(`${apiUrl}/debts/settle`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(settleObject),
+    });
+
+    // If successful update debts
+    if (settleDebtResponse.status === 200) {
+      props.onClick(settleObject);
+    }
+  }
+
   function addUserToGroup(user) {
     const newUser = {
       username: user,
