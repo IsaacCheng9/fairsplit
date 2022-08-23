@@ -39,6 +39,9 @@ exports.addExpense = async (request, response) => {
     await helpers.processNewDebt(borrower, request.body.lender, owedAmount);
   }
 
+  // Recalculate debts to minimise the number of transactions, as this
+  // settlement may have changed the optimal strategy.
+  helpers.simplifyDebts();
   response.json(expense);
 };
 
