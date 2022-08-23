@@ -70,3 +70,7 @@ exports.processNewDebt = async function (from, to, amount) {
     }
   }
 };
+
+// Simplify debts to minimise the total number of transactions required to get
+// to a balanced state using a greedy heuristic algorithm.
+exports.simplifyDebts = async function () {};
