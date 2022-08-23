@@ -1,3 +1,4 @@
+const Heap = require("heap");
 const debtModel = require("../../models/debt");
 
 // Add a debt, including processing of the reverse debt.
@@ -73,4 +74,6 @@ exports.processNewDebt = async function (from, to, amount) {
 
 // Simplify debts to minimise the total number of transactions required to get
 // to a balanced state using a greedy heuristic algorithm.
-exports.simplifyDebts = async function () {};
+exports.simplifyDebts = async function () {
+  let heap = new Heap();
+};
