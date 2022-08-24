@@ -9,6 +9,12 @@ function GroupUsers(props) {
   let [settleAmount, setSettleAmount] = useState(0);
   let [btnDisabled, setBtnDisabled] = useState(true);
 
+  // State for response message after settling
+  let [responseMsg, setResponseMsg] = useState("");
+
+  // State for dynamic styling - fading message in and out
+  let [msgClasses, setMsgClasses] = useState("group-members-msg");
+
   // Ref to user select for settling
   let userSelectRef = createRef();
 
@@ -49,6 +55,15 @@ function GroupUsers(props) {
       body: JSON.stringify(settleObject),
     });
 
+    // Reset styling and set message to response of API call
+    setMsgClasses("group-members-msg");
+    setResponseMsg(await settleDebtResponse.text());
+
+    // Add class with 0 opacity to trigger fade transition after 1.5s of showing message
+    setTimeout(() => {
+      setMsgClasses(msgClasses + " group-members-msg-fade");
+    }, 1500);
+
     // If successful update debts
     if (settleDebtResponse.status === 200) {
       props.onClick(settleObject);
@@ -69,6 +84,7 @@ function GroupUsers(props) {
   return (
     <div className="group-members-container">
       <h1 className="group-members-title">Group Members</h1>
+      <p className={msgClasses}>{responseMsg}</p>
       <div className="users-container">
         <div className="settle-container">
           <div>

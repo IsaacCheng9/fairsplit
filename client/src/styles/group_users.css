@@ -7,12 +7,29 @@
   height: 550px;
   background: linear-gradient(to top, #f6f9fc 70%, #ffffff 30%);
   display: grid;
-  grid-template-rows: [title] 165px [content] auto;
+  grid-template-rows: [title] 100px [msg] 60px [content] auto;
 }
 
 .group-members-title {
   margin: 0px auto 0px auto;
   font-family: "Poppins", sans-serif;
   color: #39444e;
-  align-self: center;
+  align-self: flex-end;
+}
+
+.group-members-msg {
+  transition: all 1s ease;
+  margin: 0px auto 0px auto;
+  font-family: "Poppins", sans-serif;
+  color: #39444e;
+  font-size: 13px;
+  margin: 0 80px;
+  text-align: center;
+  hyphens: auto;
+  line-height: 16px;
+  opacity: 1;
+}
+
+.group-members-msg-fade {
+  opacity: 0;
 }
