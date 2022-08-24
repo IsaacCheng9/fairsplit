@@ -75,5 +75,14 @@ exports.processNewDebt = async function (from, to, amount) {
 // Simplify debts to minimise the total number of transactions required to get
 // to a balanced state using a greedy heuristic algorithm.
 exports.simplifyDebts = async function () {
-  let heap = new Heap();
+  const userDebt = new Map();
+  let minHeap = new Heap();
+  let maxHeap = new Heap();
+
+  // Calculate total debt for each user.
+  const debts = await debtModel.find();
+  debts.forEach((debt) => {
+    userDebt.set(debt.from, (userDebt.get(debt.from) || 0) + debt.amount);
+    userDebt.set(debt.to, (userDebt.get(debt.to) || 0) - debt.amount);
+  });
 };
