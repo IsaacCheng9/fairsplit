@@ -8,7 +8,12 @@ function AddExpense(props) {
   // Reactive variables for dynamic styling
   let [containerClass, setContainerClass] = useState("add-expense-container");
   let [overflowClass, setOverflowClass] = useState("overflow-container");
-  let [crossRotateClass, setCrossRotateClass] = useState("");
+
+  // Holds expense to be added
+  let [tempExpense, setTempExpense] = useState({});
+
+  // Holds 'add expense' button state
+  let [btnDisabled, setBtnDisabled] = useState(true);
 
   // Refs for dynamic styling
   let [titleRef, lenderRef, borrowerRef, amountRef] = [
@@ -35,7 +40,7 @@ function AddExpense(props) {
       let calc = borrowers.length * 2.5 + 11;
       return calc + "em";
     } else if (overflowClass.includes("overflow-container-expand")) {
-      return "11em";
+      return "9.6em";
     } else {
       return "0em";
     }
@@ -128,7 +133,9 @@ function AddExpense(props) {
         usernames.push([ref[1].current.value, Number(splitAmount[index + 1])]);
       }
       // If all inputs are filled, enable button
-      props.onClick(true, {
+      setBtnDisabled(false);
+
+      setTempExpense({
         title: titleRef.current.value,
         author: props.author,
         lender: lenderRef.current.value,
@@ -137,7 +144,7 @@ function AddExpense(props) {
       });
     } else {
       // If not, disable button
-      props.onClick(false);
+      setBtnDisabled(true);
     }
   }
 
@@ -157,6 +164,7 @@ function AddExpense(props) {
     splitAmount[splitAmount.length - 1] = "";
 
     setSplitAmount([...splitAmount]);
+    setBtnDisabled(true);
   }
 
   // Toggles visibility of form
@@ -168,7 +176,6 @@ function AddExpense(props) {
       setTimeout(() => {
         setOverflowClass("overflow-container");
         setContainerClass("add-expense-container");
-        setCrossRotateClass("");
       }, 300);
     }
   });
@@ -178,12 +185,21 @@ function AddExpense(props) {
     if (overflowClass.includes("expand")) {
       setOverflowClass("overflow-container");
       setContainerClass("add-expense-container");
-      setCrossRotateClass("");
     } else {
-      setCrossRotateClass("cross-rotate");
       setContainerClass("add-expense-container add-expense-container-expand");
       setOverflowClass("overflow-container overflow-container-expand");
-      props.onClick();
+    }
+  }
+
+  // Returns styles to grey out button
+  function disabledBtnStyles() {
+    if (btnDisabled) {
+      return {
+        backgroundColor: "lightgrey",
+        boxShadow: "0 5px 0 grey",
+        transform: "none",
+        opacity: "20%",
+      };
     }
   }
 
@@ -316,37 +332,20 @@ function AddExpense(props) {
         </TransitionGroup>
       </div>
       <div className={containerClass}>
-        <div className="add-expense-plus" onClick={expandContainer}>
-          <svg
-            width="30"
-            height="30"
-            viewBox="0 0 100 100"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+        <div className="button-container">
+          <button onClick={expandContainer} className="ge-button">
+            Add Expense
+          </button>
+          <button
+            disabled={btnDisabled}
+            className="ge-button"
+            style={disabledBtnStyles()}
+            onClick={() => {
+              props.onClick(tempExpense);
+            }}
           >
-            <g id="Frame 1">
-              <g id="cross" className={crossRotateClass}>
-                <line
-                  id="y-line"
-                  x1="50.5"
-                  y1="15"
-                  x2="50.5"
-                  y2="86"
-                  stroke="black"
-                  strokeWidth="4"
-                />
-                <line
-                  id="x-line"
-                  x1="14"
-                  y1="49.5"
-                  x2="85"
-                  y2="49.5"
-                  stroke="black"
-                  strokeWidth="4"
-                />
-              </g>
-            </g>
-          </svg>
+            Confirm Expense
+          </button>
         </div>
       </div>
     </div>

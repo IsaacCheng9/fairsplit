@@ -23,6 +23,12 @@ function User(props) {
       <div className="user-username">{props.user.username}</div>
       <div className="user-balance-container">
         <div
+          style={{
+            backgroundColor:
+              checkIndebtedness(props.user)[0].toFixed(2) === "0.00"
+                ? "lightgrey"
+                : "",
+          }}
           className={
             checkIndebtedness(props.user)[1]
               ? "balance-value user-balance-red"

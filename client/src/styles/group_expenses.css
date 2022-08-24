@@ -64,6 +64,7 @@
 }
 
 .expense-container {
+  padding-bottom: 10px;
   overflow: auto;
   scroll-behavior: smooth;
 }
@@ -75,15 +76,21 @@
 }
 
 .ge-button {
+  transition: opacity 0.3s ease;
+  outline: none;
+  box-shadow: 0 5px 0 rgb(61, 201, 112, 0.95);
   cursor: pointer;
-  width: 140px;
-  height: 47px;
   border-radius: 8px;
   border: none;
-  background-color: #3dc970;
-  color: white;
+  background-color: rgb(61, 201, 112, 0.65);
+  color: #39444e;
   font-size: 17px;
   font-family: "Poppins", sans-serif;
+}
+
+.ge-button:active {
+  transform: translateY(5px);
+  box-shadow: none;
 }
 
 .add-expense-btn {
@@ -128,7 +135,7 @@
 
 .group-expenses-container {
   display: grid;
-  grid-template-rows: [title] 110px [balance] 55px [main] auto [buttons] 80px;
+  grid-template-rows: [title] 110px [balance] 55px [main] auto;
   grid-template-columns: 400px;
   box-shadow: 0 70px 100px -20px rgb(50 50 93 / 25%);
   border-radius: 8px;
