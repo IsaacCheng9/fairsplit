@@ -48,7 +48,7 @@ exports.settleDebt = async (request, response) => {
     );
     // Recalculate debts to minimise the number of transactions, as this
     // settlement may have changed the optimal strategy.
-    helpers.simplifyDebts();
+    // helpers.simplifyDebts();
     response.send(
       `Debt from '${request.body.from}' to '${request.body.to}' partially\
         settled and reduced successfully.`
@@ -62,7 +62,7 @@ exports.settleDebt = async (request, response) => {
     });
     // Recalculate debts to minimise the number of transactions, as this
     // settlement may have changed the optimal strategy.
-    helpers.simplifyDebts();
+    // helpers.simplifyDebts();
     response.send(
       `Debt from '${request.body.from}' to '${request.body.to}' fully\
         settled and deleted successfully.`
