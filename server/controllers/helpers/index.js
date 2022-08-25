@@ -1,5 +1,6 @@
 const Heap = require("heap");
 const debtModel = require("../../models/debt");
+const optimisedDebtModel = require("../../models/optimised_debt");
 
 // Add a debt, including processing of the reverse debt.
 exports.processNewDebt = async function (from, to, amount) {
@@ -76,6 +77,8 @@ exports.processNewDebt = async function (from, to, amount) {
 // to a balanced state using a greedy heuristic algorithm.
 exports.simplifyDebts = async function () {
   const userDebt = new Map();
+  // Create min-heaps for debt and credit so we can automatically find the
+  // smallest amounts and who they belong to in O(n log n) time.
   let minHeapDebt = new Heap(function (a, b) {
     return a.amount - b.amount;
   });
@@ -103,5 +106,33 @@ exports.simplifyDebts = async function () {
     }
   });
 
-  // TODO: Implement min-heap for both creditors and debtors, then create transactions until the lists are empty.
+  // Create a new set of optimised debts to store the simplified debts.
+  optimisedDebtModel.collection.drop();
+  // Create transactions until the min-heaps are empty to reach a zero-state.
+  while (!minHeapDebt.empty() && !minHeapCredit.empty()) {
+    const smallestDebt = minHeapDebt.pop();
+    const smallestCredit = minHeapCredit.pop();
+    // Create a new optimised debt.
+    transactionAmount = Math.min(smallestDebt.amount, smallestCredit.amount);
+    optimisedDebtModel.create({
+      from: smallestDebt.username,
+      to: smallestCredit.username,
+      amount: transactionAmount,
+    });
+
+    // If the optimised debt only partially removed a debt/credit, then push
+    // the remainder back to the min-heap.
+    if (transactionAmount < smallestDebt.amount) {
+      minHeapDebt.push({
+        username: smallestDebt.username,
+        amount: smallestDebt.amount - transactionAmount,
+      });
+    }
+    if (transactionAmount < smallestCredit.amount) {
+      minHeapCredit.push({
+        username: smallestCredit.username,
+        amount: smallestCredit.amount - transactionAmount,
+      });
+    }
+  }
 };
