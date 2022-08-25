@@ -76,8 +76,12 @@ exports.processNewDebt = async function (from, to, amount) {
 // to a balanced state using a greedy heuristic algorithm.
 exports.simplifyDebts = async function () {
   const userDebt = new Map();
-  let minHeap = new Heap();
-  let maxHeap = new Heap();
+  let minHeapDebtors = new Heap(function (a, b) {
+    return a.amount - b.amount;
+  });
+  let maxHeapCreditors = new Heap(function (a, b) {
+    return b.amount - a.amount;
+  });
 
   // Calculate total debt for each user.
   const debts = await debtModel.find();
@@ -89,13 +93,13 @@ exports.simplifyDebts = async function () {
   // Add all users with positive debt to a min-heap.
   userDebt.forEach((debt, user) => {
     if (debt > 0) {
-      minHeap.push([debt, user]);
+      minHeapDebtors.push({ username: user, amount: debt });
     }
   });
   // Add all users with credit (negative debt) to a max-heap.
   userDebt.forEach((debt, user) => {
     if (debt < 0) {
-      maxHeap.push([debt, user]);
+      maxHeapCreditors.push({ username: user, amount: -debt });
     }
   });
 };
