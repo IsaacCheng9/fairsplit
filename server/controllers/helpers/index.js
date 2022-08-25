@@ -76,11 +76,11 @@ exports.processNewDebt = async function (from, to, amount) {
 // to a balanced state using a greedy heuristic algorithm.
 exports.simplifyDebts = async function () {
   const userDebt = new Map();
-  let minHeapDebtors = new Heap(function (a, b) {
+  let minHeapDebt = new Heap(function (a, b) {
     return a.amount - b.amount;
   });
-  let maxHeapCreditors = new Heap(function (a, b) {
-    return b.amount - a.amount;
+  let minHeapCredit = new Heap(function (a, b) {
+    return a.amount - b.amount;
   });
 
   // Calculate total debt for each user.
@@ -93,13 +93,15 @@ exports.simplifyDebts = async function () {
   // Add all users with positive debt to a min-heap.
   userDebt.forEach((debt, user) => {
     if (debt > 0) {
-      minHeapDebtors.push({ username: user, amount: debt });
+      minHeapDebt.push({ username: user, amount: debt });
     }
   });
   // Add all users with credit (negative debt) to a max-heap.
   userDebt.forEach((debt, user) => {
     if (debt < 0) {
-      maxHeapCreditors.push({ username: user, amount: -debt });
+      minHeapCredit.push({ username: user, amount: -debt });
     }
   });
+
+  // TODO: Implement min-heap for both creditors and debtors, then create transactions until the lists are empty.
 };
