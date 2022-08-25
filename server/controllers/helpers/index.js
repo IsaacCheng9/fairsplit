@@ -93,15 +93,11 @@ exports.simplifyDebts = async function () {
     userDebt.set(debt.to, (userDebt.get(debt.to) || 0) - debt.amount);
   });
 
-  // Add all users with positive debt to a min-heap.
+  // Add users to a min-heap for debt and credit.
   userDebt.forEach((debt, user) => {
     if (debt > 0) {
       minHeapDebt.push({ username: user, amount: debt });
-    }
-  });
-  // Add all users with credit (negative debt) to a max-heap.
-  userDebt.forEach((debt, user) => {
-    if (debt < 0) {
+    } else if (debt < 0) {
       minHeapCredit.push({ username: user, amount: -debt });
     }
   });
