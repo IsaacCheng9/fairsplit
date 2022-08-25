@@ -19,4 +19,4 @@ const optimisedDebtSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("debt", optimisedDebtSchema);
+module.exports = mongoose.model("optimised_debt", optimisedDebtSchema);
