@@ -1,6 +1,6 @@
 const Heap = require("heap");
 const debtModel = require("../../models/debt");
-const userDebtModel = require("../models/user_debt");
+const userDebtModel = require("../../models/user_debt");
 const optimisedDebtModel = require("../../models/optimised_debt");
 
 // Add a debt, including processing of the reverse debt.
