@@ -21,7 +21,7 @@ exports.addDebt = async (request, response) => {
     request.body.to,
     request.body.amount
   );
-  // Update the net user debts for the lender and borrower.
+  // The borrower owes more, so the lender owes less.
   await userDebtModel.findOneAndUpdate(
     { user: request.body.from },
     { $inc: { netDebt: request.body.amount } }
@@ -56,6 +56,15 @@ exports.settleDebt = async (request, response) => {
         $inc: { amount: -request.body.amount },
       }
     );
+    // The borrower owes less, so the lender owes more.
+    await userDebtModel.findOneAndUpdate(
+      { user: request.body.from },
+      { $inc: { netDebt: -request.body.amount } }
+    );
+    await userDebtModel.findOneAndUpdate(
+      { user: request.body.to },
+      { $inc: { netDebt: request.body.amount } }
+    );
     // Recalculate debts to minimise the number of transactions, as this
     // settlement may have changed the optimal strategy.
     helpers.simplifyDebts();
@@ -70,6 +79,15 @@ exports.settleDebt = async (request, response) => {
       from: request.body.to,
       to: request.body.from,
     });
+    // The borrower owes less, so the lender owes more.
+    await userDebtModel.findOneAndUpdate(
+      { user: request.body.from },
+      { $inc: { netDebt: -request.body.amount } }
+    );
+    await userDebtModel.findOneAndUpdate(
+      { user: request.body.to },
+      { $inc: { netDebt: request.body.amount } }
+    );
     // Recalculate debts to minimise the number of transactions, as this
     // settlement may have changed the optimal strategy.
     helpers.simplifyDebts();
