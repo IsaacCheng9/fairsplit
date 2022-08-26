@@ -8,6 +8,7 @@ const userDebtSchema = new mongoose.Schema({
     max: [30, "Username must be within 30 characters."],
     required: true,
   },
+  // Positive means they owe users money, negative means they're owed money.
   netDebt: {
     type: Number,
     required: true,
