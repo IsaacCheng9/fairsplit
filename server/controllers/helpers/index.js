@@ -63,7 +63,7 @@ exports.processNewDebt = async function (from, to, amount) {
       return `Debt from '${from}' to '${to}' was updated successfully.`;
     } else {
       // Create a new debt between the lender and borrower.
-      debtModel.create({
+      await debtModel.create({
         from: from,
         to: to,
         amount: debtAmount,
