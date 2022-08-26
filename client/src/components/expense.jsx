@@ -23,9 +23,9 @@ function Expense(props) {
       <div className="e-member-price">
         <div className="e-price">£{props.value.amount}</div>
         <div className="e-members">
-          {renderBorrowers()}
-          <img alt="arrow" className="e-arrow" src={smallArrow}></img>
           {props.value.lender}
+          <img alt="arrow" className="e-arrow" src={smallArrow}></img>
+          {renderBorrowers()}
         </div>
       </div>
     </div>
