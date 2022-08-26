@@ -1,4 +1,5 @@
 const debtModel = require("../models/debt");
+const userDebtModel = require("../models/user_debt");
 const helpers = require("./helpers/index");
 
 // Get a list of all debts.
@@ -19,6 +20,15 @@ exports.addDebt = async (request, response) => {
     request.body.from,
     request.body.to,
     request.body.amount
+  );
+  // Update the net user debts for the lender and borrower.
+  await userDebtModel.findOneAndUpdate(
+    { user: request.body.from },
+    { $inc: { netDebt: request.body.amount } }
+  );
+  await userDebtModel.findOneAndUpdate(
+    { user: request.body.to },
+    { $inc: { netDebt: -request.body.amount } }
   );
   response.send(message);
 };
