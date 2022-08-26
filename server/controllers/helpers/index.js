@@ -87,7 +87,9 @@ exports.simplifyDebts = async function () {
   });
 
   // Calculate total debt for each user.
-  const debts = await debtModel.find();
+  const debts = await debtModel.find({});
+  // TODO: Remove log statements.
+  console.log(debts);
   for (const debt of debts) {
     userDebt.set(debt.from, (userDebt.get(debt.from) || 0) + debt.amount);
     userDebt.set(debt.to, (userDebt.get(debt.to) || 0) - debt.amount);
@@ -101,6 +103,13 @@ exports.simplifyDebts = async function () {
       minHeapCredit.push({ username: user, amount: -debt });
     }
   });
+
+  // TODO: Remove log statements.
+  console.log("-------------------------------------------------------------");
+  console.log(userDebt);
+  console.log(minHeapDebt);
+  console.log(minHeapCredit);
+  console.log("\n\n\n");
 
   // Create a new set of optimised debts to store the simplified debts.
   optimisedDebtModel.collection.drop();
@@ -130,5 +139,10 @@ exports.simplifyDebts = async function () {
         amount: smallestCredit.amount - transactionAmount,
       });
     }
+
+    // TODO: Remove log statements.
+    console.log(minHeapDebt);
+    console.log(minHeapCredit);
+    console.log("\n\n\n");
   }
 };
