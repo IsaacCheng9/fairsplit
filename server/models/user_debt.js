@@ -8,7 +8,7 @@ const userDebtSchema = new mongoose.Schema({
     max: [30, "Username must be within 30 characters."],
     required: true,
   },
-  net_debt: {
+  netDebt: {
     type: Number,
     required: true,
   },
