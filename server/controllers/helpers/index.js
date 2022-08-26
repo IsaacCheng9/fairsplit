@@ -88,10 +88,10 @@ exports.simplifyDebts = async function () {
 
   // Calculate total debt for each user.
   const debts = await debtModel.find();
-  debts.forEach((debt) => {
+  for (const debt of debts) {
     userDebt.set(debt.from, (userDebt.get(debt.from) || 0) + debt.amount);
     userDebt.set(debt.to, (userDebt.get(debt.to) || 0) - debt.amount);
-  });
+  }
 
   // Add users to a min-heap for debt and credit.
   userDebt.forEach((debt, user) => {
