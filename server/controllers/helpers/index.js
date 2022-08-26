@@ -98,15 +98,15 @@ exports.simplifyDebts = async function () {
 
   // Add users to a min-heap for debt and credit.
   for await (const userDebt of userDebtModel.find({})) {
-    if (userDebt.amount > 0) {
+    if (userDebt.netDebt > 0) {
       minHeapDebt.push({
         username: userDebt.username,
-        amount: userDebt.amount,
+        amount: userDebt.netDebt,
       });
-    } else if (userDebt.amount < 0) {
+    } else if (userDebt.netDebt < 0) {
       minHeapCredit.push({
         username: userDebt.username,
-        amount: -userDebt.amount,
+        amount: -userDebt.netDebt,
       });
     }
   }
