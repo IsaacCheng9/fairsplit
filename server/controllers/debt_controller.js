@@ -21,15 +21,6 @@ exports.addDebt = async (request, response) => {
     request.body.to,
     request.body.amount
   );
-  // The borrower owes more, so the lender owes less.
-  await userDebtModel.findOneAndUpdate(
-    { username: request.body.from },
-    { $inc: { netDebt: request.body.amount } }
-  );
-  await userDebtModel.findOneAndUpdate(
-    { username: request.body.to },
-    { $inc: { netDebt: -request.body.amount } }
-  );
   response.send(message);
 };
 

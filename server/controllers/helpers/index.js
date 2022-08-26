@@ -5,6 +5,16 @@ const optimisedDebtModel = require("../../models/optimised_debt");
 
 // Add a debt, including processing of the reverse debt.
 exports.processNewDebt = async function (from, to, amount) {
+  // The borrower owes more, so the lender owes less.
+  await userDebtModel.findOneAndUpdate(
+    { username: from },
+    { $inc: { netDebt: amount } }
+  );
+  await userDebtModel.findOneAndUpdate(
+    { username: to },
+    { $inc: { netDebt: -amount } }
+  );
+
   // Check whether the debt exists the other way around, as this new debt may
   // cancel out the reverse debt.
   const reverseDebt = await debtModel.findOne({
