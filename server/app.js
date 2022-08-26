@@ -22,10 +22,12 @@ const password = process.env.PASSWORD || "changePasswordHere";
 let devUrl = `mongodb+srv://admin:${password}@fairsplit.fjvgxmg.mongodb.net/?retryWrites=true&w=majority`;
 var mongoDB = process.env.MONGODB_URI || devUrl;
 // Sets up the Mongoose connection.
-mongoose.connect(mongoDB, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose
+  .connect(mongoDB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .catch((error) => handleError(error));
 let db = mongoose.connection;
 
 // Binds the connection to an error event to get notification of connection
