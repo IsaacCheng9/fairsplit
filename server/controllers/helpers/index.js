@@ -1,4 +1,6 @@
+const Heap = require("heap");
 const debtModel = require("../../models/debt");
+const optimisedDebtModel = require("../../models/optimised_debt");
 
 // Add a debt, including processing of the reverse debt.
 exports.processNewDebt = async function (from, to, amount) {
@@ -61,12 +63,72 @@ exports.processNewDebt = async function (from, to, amount) {
       return `Debt from '${from}' to '${to}' was updated successfully.`;
     } else {
       // Create a new debt between the lender and borrower.
-      debtModel.create({
+      await debtModel.create({
         from: from,
         to: to,
         amount: debtAmount,
       });
       return `Debt from '${from}' to '${to}' was created successfully.`;
+    }
+  }
+};
+
+// Simplify debts to minimise the total number of transactions required to get
+// to a balanced state using a greedy heuristic algorithm.
+exports.simplifyDebts = async function () {
+  const userDebt = new Map();
+  // Create min-heaps for debt and credit so we can automatically find the
+  // smallest amounts and who they belong to in O(n log n) time.
+  let minHeapDebt = new Heap(function (a, b) {
+    return a.amount - b.amount;
+  });
+  let minHeapCredit = new Heap(function (a, b) {
+    return a.amount - b.amount;
+  });
+
+  // Calculate total debt for each user.
+  const debts = await debtModel.find({});
+  for (const debt of debts) {
+    userDebt.set(debt.from, (userDebt.get(debt.from) || 0) + debt.amount);
+    userDebt.set(debt.to, (userDebt.get(debt.to) || 0) - debt.amount);
+  }
+
+  // Add users to a min-heap for debt and credit.
+  userDebt.forEach((debt, user) => {
+    if (debt > 0) {
+      minHeapDebt.push({ username: user, amount: debt });
+    } else if (debt < 0) {
+      minHeapCredit.push({ username: user, amount: -debt });
+    }
+  });
+
+  // Create a new set of optimised debts to store the simplified debts.
+  optimisedDebtModel.collection.drop();
+  // Create transactions until the min-heaps are empty to reach a zero-state.
+  while (!minHeapDebt.empty() && !minHeapCredit.empty()) {
+    const smallestDebt = minHeapDebt.pop();
+    const smallestCredit = minHeapCredit.pop();
+    // Create a new optimised debt.
+    transactionAmount = Math.min(smallestDebt.amount, smallestCredit.amount);
+    optimisedDebtModel.create({
+      from: smallestDebt.username,
+      to: smallestCredit.username,
+      amount: transactionAmount,
+    });
+
+    // If the optimised debt only partially removed a debt/credit, then push
+    // the remainder back to the min-heap.
+    if (transactionAmount < smallestDebt.amount) {
+      minHeapDebt.push({
+        username: smallestDebt.username,
+        amount: smallestDebt.amount - transactionAmount,
+      });
+    }
+    if (transactionAmount < smallestCredit.amount) {
+      minHeapCredit.push({
+        username: smallestCredit.username,
+        amount: smallestCredit.amount - transactionAmount,
+      });
     }
   }
 };
