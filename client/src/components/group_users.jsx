@@ -1,10 +1,75 @@
-import React from "react";
+import { React, useState, createRef } from "react";
 import "../styles/group_users.css";
 import User from "./user";
 import AddUser from "./add_user";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 function GroupUsers(props) {
+  // Hold state of settle amount
+  let [settleAmount, setSettleAmount] = useState(0);
+  let [btnDisabled, setBtnDisabled] = useState(true);
+
+  // State for response message after settling
+  let [responseMsg, setResponseMsg] = useState("");
+
+  // State for dynamic styling - fading message in and out
+  let [msgClasses, setMsgClasses] = useState("group-members-msg");
+
+  // Ref to user select for settling
+  let userSelectRef = createRef();
+
+  // Server URL
+  const apiUrl = "http://localhost:3001";
+
+  // Returns styles to grey out button
+  function disabledBtnStyles() {
+    if (btnDisabled) {
+      return {
+        backgroundColor: "lightgrey",
+        boxShadow: "0 5px 0 grey",
+        transform: "none",
+        opacity: "20%",
+      };
+    }
+  }
+
+  // Call API endpoint to settle debt
+  async function settleUp() {
+    // Creates object to send in body
+    let settleObject = {
+      from: props.group.activeUser,
+      to: userSelectRef.current.value,
+      amount: settleAmount,
+    };
+
+    // Disable and clear form
+    setBtnDisabled(true);
+    setSettleAmount("");
+
+    // Call endpoint
+    let settleDebtResponse = await fetch(`${apiUrl}/debts/settle`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(settleObject),
+    });
+
+    // Reset styling and set message to response of API call
+    setMsgClasses("group-members-msg");
+    setResponseMsg(await settleDebtResponse.text());
+
+    // Add class with 0 opacity to trigger fade transition after 1.5s of showing message
+    setTimeout(() => {
+      setMsgClasses(msgClasses + " group-members-msg-fade");
+    }, 1500);
+
+    // If successful update debts
+    if (settleDebtResponse.status === 200) {
+      props.onClick(settleObject);
+    }
+  }
+
   function addUserToGroup(user) {
     const newUser = {
       username: user,
@@ -19,7 +84,45 @@ function GroupUsers(props) {
   return (
     <div className="group-members-container">
       <h1 className="group-members-title">Group Members</h1>
+      <p className={msgClasses}>{responseMsg}</p>
       <div className="users-container">
+        <div className="settle-container">
+          <div>
+            <select ref={userSelectRef} name="users">
+              {props.group.usersMinusActive.users.map((user) => (
+                <option key={user.username}>{user.username}</option>
+              ))}
+            </select>
+            <input
+              type="Number"
+              placeholder="£"
+              maxLength="50"
+              min={0}
+              value={settleAmount || ""}
+              onChange={(e) => {
+                settleAmount = e.target.value;
+                // Handle button state based on settle-up value
+                if (btnDisabled && Number(settleAmount) > 0) {
+                  setBtnDisabled(false);
+                } else if (
+                  !btnDisabled &&
+                  (!settleAmount.length || Number(settleAmount) === 0)
+                ) {
+                  setBtnDisabled(true);
+                }
+                setSettleAmount(settleAmount);
+              }}
+            ></input>
+          </div>
+          <button
+            disabled={btnDisabled}
+            style={disabledBtnStyles()}
+            onClick={settleUp}
+            className="ge-button"
+          >
+            Settle Up
+          </button>
+        </div>
         <TransitionGroup component={null}>
           {props.group.usersMinusActive.users.map((user) => (
             <CSSTransition
