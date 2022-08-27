@@ -149,6 +149,7 @@ function App() {
   // Update group state after a user settles up
   function updateDebt(settleObject) {
     group.usersMinusActive.debts[settleObject.to].amount -= settleObject.amount;
+    group.usersMinusActive.outstandingBalance -= settleObject.amount;
 
     setGroup({
       ...group,
