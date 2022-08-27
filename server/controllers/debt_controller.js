@@ -1,4 +1,5 @@
 const debtModel = require("../models/debt");
+const userDebtModel = require("../models/user_debt");
 const helpers = require("./helpers/index");
 
 // Get a list of all debts.
@@ -46,6 +47,15 @@ exports.settleDebt = async (request, response) => {
         $inc: { amount: -request.body.amount },
       }
     );
+    // The borrower owes less, so the lender owes more.
+    await userDebtModel.findOneAndUpdate(
+      { username: request.body.from },
+      { $inc: { netDebt: -request.body.amount } }
+    );
+    await userDebtModel.findOneAndUpdate(
+      { username: request.body.to },
+      { $inc: { netDebt: request.body.amount } }
+    );
     // Recalculate debts to minimise the number of transactions, as this
     // settlement may have changed the optimal strategy.
     helpers.simplifyDebts();
@@ -60,6 +70,15 @@ exports.settleDebt = async (request, response) => {
       from: request.body.to,
       to: request.body.from,
     });
+    // The borrower owes less, so the lender owes more.
+    await userDebtModel.findOneAndUpdate(
+      { username: request.body.from },
+      { $inc: { netDebt: -request.body.amount } }
+    );
+    await userDebtModel.findOneAndUpdate(
+      { username: request.body.to },
+      { $inc: { netDebt: request.body.amount } }
+    );
     // Recalculate debts to minimise the number of transactions, as this
     // settlement may have changed the optimal strategy.
     helpers.simplifyDebts();

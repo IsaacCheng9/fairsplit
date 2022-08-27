@@ -1,4 +1,5 @@
 const userModel = require("../models/user");
+const userDebtModel = require("../models/user_debt");
 
 // Get all users.
 exports.getUsers = async (_, response) => {
@@ -18,6 +19,11 @@ exports.addUser = async (request, response) => {
     username: request.body.username,
     firstName: request.body.firstName,
     lastName: request.body.lastName,
+  });
+  // Create a record to track the user's net debt.
+  await userDebtModel.create({
+    username: request.body.username,
+    netDebt: 0,
   });
   response.json(user);
 };
