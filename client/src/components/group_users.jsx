@@ -6,7 +6,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 function GroupUsers(props) {
   // Hold state of settle amount
-  let [settleAmount, setSettleAmount] = useState(0);
+  let [settleAmount, setSettleAmount] = useState("");
   let [btnDisabled, setBtnDisabled] = useState(true);
 
   // State for response message after settling
@@ -44,7 +44,7 @@ function GroupUsers(props) {
 
     // Disable and clear form
     setBtnDisabled(true);
-    setSettleAmount(0);
+    setSettleAmount("");
 
     // Call endpoint
     let settleDebtResponse = await fetch(`${apiUrl}/debts/settle`, {
@@ -98,7 +98,7 @@ function GroupUsers(props) {
               placeholder="£"
               maxLength="50"
               min={0}
-              value={settleAmount || ""}
+              value={settleAmount}
               onChange={(e) => {
                 // Only allow 2 decimal places
                 settleAmount = Math.round(e.target.value * 100) / 100;
