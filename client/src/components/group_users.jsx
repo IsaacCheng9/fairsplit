@@ -37,8 +37,8 @@ function GroupUsers(props) {
   async function settleUp() {
     // Creates object to send in body
     let settleObject = {
-      from: props.group.activeUser,
-      to: userSelectRef.current.value,
+      from: userSelectRef.current.value,
+      to: props.group.activeUser,
       amount: settleAmount,
     };
 
