@@ -49,10 +49,10 @@ function App() {
     let totalDebt = 0;
     for (let i = 0; i < group.debts.length; i++) {
       if (group.debts[i].to === group.activeUser) {
-        totalDebt += group.debts[i].amount;
+        totalDebt -= group.debts[i].amount;
         group.usersMinusActive.debts[group.debts[i].from] = group.debts[i];
       } else if (group.debts[i].from === group.activeUser) {
-        totalDebt -= group.debts[i].amount;
+        totalDebt += group.debts[i].amount;
         group.usersMinusActive.debts[group.debts[i].to] = group.debts[i];
       }
     }
