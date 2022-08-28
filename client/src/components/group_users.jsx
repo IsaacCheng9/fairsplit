@@ -44,7 +44,7 @@ function GroupUsers(props) {
 
     // Disable and clear form
     setBtnDisabled(true);
-    setSettleAmount("");
+    setSettleAmount(0);
 
     // Call endpoint
     let settleDebtResponse = await fetch(`${apiUrl}/debts/settle`, {
@@ -100,14 +100,13 @@ function GroupUsers(props) {
               min={0}
               value={settleAmount || ""}
               onChange={(e) => {
-                settleAmount = e.target.value;
+                // Only allow 2 decimal places
+                settleAmount = Math.round(e.target.value * 100) / 100;
+
                 // Handle button state based on settle-up value
                 if (btnDisabled && Number(settleAmount) > 0) {
                   setBtnDisabled(false);
-                } else if (
-                  !btnDisabled &&
-                  (!settleAmount.length || Number(settleAmount) === 0)
-                ) {
+                } else if (!btnDisabled && Number(settleAmount) === 0) {
                   setBtnDisabled(true);
                 }
                 setSettleAmount(settleAmount);
