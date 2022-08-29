@@ -161,6 +161,7 @@ function AddExpense(props) {
     borrowerRef.current.value = "";
     amountRef.current.value = "";
     firstAmount.current.value = "";
+    setExpenseAmount("");
 
     for (const [index, borrower] of borrowers.entries()) {
       borrower[1].current.value = "";
@@ -233,19 +234,20 @@ function AddExpense(props) {
             onChange={(e) => {
               if (e.target.value === "") {
                 expenseAmount = "";
+              } else if (e.target.value === "0.0") {
+                expenseAmount = e.target.value;
               } else {
                 // Only allow 2 decimal places
                 expenseAmount = Math.round(e.target.value * 100) / 100;
               }
-
               automaticSplit ? calcSplit() : inputValidation();
               setExpenseAmount(expenseAmount);
             }}
             value={expenseAmount}
             ref={amountRef}
             className="amount-input"
-            type="number"
-            min="0"
+            type="Number"
+            min={0}
           ></input>
         </div>
         <div className="input-container">

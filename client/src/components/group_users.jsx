@@ -94,14 +94,15 @@ function GroupUsers(props) {
               ))}
             </select>
             <input
-              type="Number"
-              placeholder="£"
-              maxLength="50"
-              min={0}
-              value={settleAmount}
               onChange={(e) => {
-                // Only allow 2 decimal places
-                settleAmount = Math.round(e.target.value * 100) / 100;
+                if (e.target.value === "") {
+                  settleAmount = "";
+                } else if (e.target.value === "0.0") {
+                  settleAmount = e.target.value;
+                } else {
+                  // Only allow 2 decimal places
+                  settleAmount = Math.round(e.target.value * 100) / 100;
+                }
 
                 // Handle button state based on settle-up value
                 if (btnDisabled && Number(settleAmount) > 0) {
@@ -111,6 +112,10 @@ function GroupUsers(props) {
                 }
                 setSettleAmount(settleAmount);
               }}
+              value={settleAmount}
+              type="Number"
+              placeholder="£"
+              min={0}
             ></input>
           </div>
           <button
