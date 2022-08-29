@@ -146,7 +146,7 @@ function AddExpense(props) {
         author: props.author,
         lender: lenderRef.current.value,
         borrowers: [...usernames],
-        amount: Number(amountRef.current.value) * 100,
+        amount: expenseAmount * 100,
       });
     } else {
       // If not, disable button

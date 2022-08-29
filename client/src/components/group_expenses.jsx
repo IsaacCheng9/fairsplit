@@ -48,6 +48,12 @@ function GroupExpenses(props) {
           ? "You owe: "
           : "You are owed: "}
         <span
+          style={{
+            backgroundColor:
+              props.group.usersMinusActive.outstandingBalance === 0
+                ? "lightgrey"
+                : console.log(props.group.usersMinusActive.outstandingBalance),
+          }}
           className={
             props.group.usersMinusActive.outstandingBalance > 0
               ? "balance-value user-balance-red"
