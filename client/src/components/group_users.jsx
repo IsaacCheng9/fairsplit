@@ -39,7 +39,7 @@ function GroupUsers(props) {
     let settleObject = {
       from: userSelectRef.current.value,
       to: props.group.activeUser,
-      amount: settleAmount,
+      amount: settleAmount * 100,
     };
 
     // Disable and clear form

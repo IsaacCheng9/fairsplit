@@ -56,8 +56,7 @@ function App() {
         group.usersMinusActive.debts[group.debts[i].to] = group.debts[i];
       }
     }
-    group.usersMinusActive.outstandingBalance =
-      totalDebt % 1 ? totalDebt.toFixed(2) : totalDebt;
+    group.usersMinusActive.outstandingBalance = totalDebt;
     setGroup({ ...group });
   }
 
@@ -148,6 +147,7 @@ function App() {
 
   // Update group state after a user settles up
   function updateDebt(settleObject) {
+    // Calculate outstanding balance
     group.usersMinusActive.debts[settleObject.from].amount -=
       settleObject.amount;
     group.usersMinusActive.outstandingBalance -= settleObject.amount;
