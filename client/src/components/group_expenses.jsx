@@ -52,7 +52,7 @@ function GroupExpenses(props) {
             backgroundColor:
               props.group.usersMinusActive.outstandingBalance === 0
                 ? "lightgrey"
-                : console.log(props.group.usersMinusActive.outstandingBalance),
+                : "",
           }}
           className={
             props.group.usersMinusActive.outstandingBalance > 0
