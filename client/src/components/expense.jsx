@@ -5,12 +5,15 @@ import smallArrow from "../assets/small_arrow.svg";
 function Expense(props) {
   let [dynamicHeight, setDynamicHeight] = useState(0);
 
+  // Calculate conatiner height based on number of borrowers
   function expandContainer() {
     if (dynamicHeight) {
       setDynamicHeight(0);
     } else {
-      for (const borrower of props.value.borrowers) {
-        dynamicHeight += 1.3;
+      for (let i = 0; i < props.value.borrowers.length; i++) {
+        if (i % 2 === 0) {
+          dynamicHeight += 1.87;
+        }
       }
       setDynamicHeight(dynamicHeight);
     }
@@ -56,23 +59,27 @@ function Expense(props) {
       <div
         style={{
           maxHeight: dynamicHeight + "em",
+          display: "flex",
+          flexFlow: "wrap",
         }}
         className="expand-expense"
       >
         {props.value.borrowers.map((borrower) => {
           return (
-            <div
-              style={{
-                display: "flex",
-              }}
-              className="e-member-price"
-            >
-              <div className="e-members" key={borrower[0]}>
-                {borrower}
-              </div>
-              <img alt="arrow" className="e-arrow" src={smallArrow}></img>
-              <div className="e-price" key={borrower[0] + borrower[1]}>
-                {(borrower[1] / 100).toFixed(2)}
+            <div className="e-member-price">
+              <div
+                className="e-members"
+                style={{
+                  width: "auto",
+                  margin: "0.3em",
+                }}
+                key={borrower[0]}
+              >
+                {borrower[0]}
+                <img alt="arrow" className="e-arrow" src={smallArrow}></img>
+                <div className="e-price" key={borrower[0] + borrower[1]}>
+                  {"£" + (borrower[1] / 100).toFixed(2)}
+                </div>
               </div>
             </div>
           );
