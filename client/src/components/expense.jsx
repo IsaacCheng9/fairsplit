@@ -61,6 +61,7 @@ function Expense(props) {
           maxHeight: dynamicHeight + "em",
           display: "flex",
           flexFlow: "wrap",
+          paddingBottom: "0.2em",
         }}
         className="expand-expense"
       >
