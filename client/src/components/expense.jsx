@@ -12,7 +12,7 @@ function Expense(props) {
     } else {
       for (let i = 0; i < props.value.borrowers.length; i++) {
         if (i % 2 === 0) {
-          dynamicHeight += 1.87;
+          dynamicHeight += 1.86;
         }
       }
       setDynamicHeight(dynamicHeight);
@@ -55,6 +55,26 @@ function Expense(props) {
             </div>
           </div>
         </div>
+        <div
+          style={{
+            justifySelf: "center",
+            backgroundColor: "lightgrey",
+            borderRadius: "5px",
+            width: "1em",
+            height: "1.2em",
+            padding: "0.1em",
+          }}
+        >
+          <img
+            style={{
+              width: "1em",
+              height: "1.2em",
+              transform: "rotateZ(90deg)",
+            }}
+            alt="arrow"
+            src={smallArrow}
+          ></img>
+        </div>
       </div>
       <div
         style={{
@@ -73,6 +93,7 @@ function Expense(props) {
                 style={{
                   width: "auto",
                   margin: "0.3em",
+                  backgroundColor: "lightgrey",
                 }}
                 key={borrower[0]}
               >

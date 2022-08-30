@@ -5,7 +5,7 @@
   font-family: "Poppins";
   display: grid;
   align-items: center;
-  grid-template-columns: [date] 15% [image] 15% [title] 30% [members] 40%;
+  grid-template-columns: [date] 15% [image] 15% [title] 25% [members] 35% [arrow] 10%;
   width: 90%;
   height: 50px;
   margin: 0 auto 0 auto;
