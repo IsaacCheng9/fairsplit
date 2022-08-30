@@ -6,7 +6,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 function GroupUsers(props) {
   // Hold state of settle amount
-  let [settleAmount, setSettleAmount] = useState(0);
+  let [settleAmount, setSettleAmount] = useState("");
   let [btnDisabled, setBtnDisabled] = useState(true);
 
   // State for response message after settling
@@ -37,9 +37,9 @@ function GroupUsers(props) {
   async function settleUp() {
     // Creates object to send in body
     let settleObject = {
-      from: props.group.activeUser,
-      to: userSelectRef.current.value,
-      amount: settleAmount,
+      from: userSelectRef.current.value,
+      to: props.group.activeUser,
+      amount: settleAmount * 100,
     };
 
     // Disable and clear form
@@ -94,24 +94,28 @@ function GroupUsers(props) {
               ))}
             </select>
             <input
-              type="Number"
-              placeholder="£"
-              maxLength="50"
-              min={0}
-              value={settleAmount || ""}
               onChange={(e) => {
-                settleAmount = e.target.value;
+                if (e.target.value === "") {
+                  settleAmount = "";
+                } else if (e.target.value === "0.0") {
+                  settleAmount = e.target.value;
+                } else {
+                  // Only allow 2 decimal places
+                  settleAmount = Math.round(e.target.value * 100) / 100;
+                }
+
                 // Handle button state based on settle-up value
                 if (btnDisabled && Number(settleAmount) > 0) {
                   setBtnDisabled(false);
-                } else if (
-                  !btnDisabled &&
-                  (!settleAmount.length || Number(settleAmount) === 0)
-                ) {
+                } else if (!btnDisabled && Number(settleAmount) === 0) {
                   setBtnDisabled(true);
                 }
                 setSettleAmount(settleAmount);
               }}
+              value={settleAmount}
+              type="Number"
+              placeholder="£"
+              min={0}
             ></input>
           </div>
           <button

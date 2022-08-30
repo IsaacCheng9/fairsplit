@@ -9,6 +9,9 @@ function AddExpense(props) {
   let [containerClass, setContainerClass] = useState("add-expense-container");
   let [overflowClass, setOverflowClass] = useState("overflow-container");
 
+  // State for expense amount - value locked with input
+  let [expenseAmount, setExpenseAmount] = useState("");
+
   // Holds expense to be added
   let [tempExpense, setTempExpense] = useState({});
 
@@ -127,10 +130,13 @@ function AddExpense(props) {
     ) {
       // Store usernames from refs to pass in expense object
       let usernames = [
-        [borrowerRef.current.value, Number(firstAmount.current.value)],
+        [borrowerRef.current.value, Number(firstAmount.current.value) * 100],
       ];
       for (const [index, ref] of [...borrowers].entries()) {
-        usernames.push([ref[1].current.value, Number(splitAmount[index + 1])]);
+        usernames.push([
+          ref[1].current.value,
+          Number(splitAmount[index + 1]) * 100,
+        ]);
       }
       // If all inputs are filled, enable button
       setBtnDisabled(false);
@@ -140,7 +146,7 @@ function AddExpense(props) {
         author: props.author,
         lender: lenderRef.current.value,
         borrowers: [...usernames],
-        amount: Number(amountRef.current.value),
+        amount: expenseAmount * 100,
       });
     } else {
       // If not, disable button
@@ -155,6 +161,7 @@ function AddExpense(props) {
     borrowerRef.current.value = "";
     amountRef.current.value = "";
     firstAmount.current.value = "";
+    setExpenseAmount("");
 
     for (const [index, borrower] of borrowers.entries()) {
       borrower[1].current.value = "";
@@ -224,11 +231,23 @@ function AddExpense(props) {
           <header className="add-expense-amount">Amount (£)</header>
           <input
             // Only calculate split if user hasn't changed values
-            onChange={automaticSplit ? calcSplit : inputValidation}
+            onChange={(e) => {
+              if (e.target.value === "") {
+                expenseAmount = "";
+              } else if (e.target.value === "0.0") {
+                expenseAmount = e.target.value;
+              } else {
+                // Only allow 2 decimal places
+                expenseAmount = Math.round(e.target.value * 100) / 100;
+              }
+              automaticSplit ? calcSplit() : inputValidation();
+              setExpenseAmount(expenseAmount);
+            }}
+            value={expenseAmount}
             ref={amountRef}
             className="amount-input"
-            type="number"
-            min="0"
+            type="Number"
+            min={0}
           ></input>
         </div>
         <div className="input-container">

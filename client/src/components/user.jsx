@@ -31,11 +31,11 @@ function User(props) {
           }}
           className={
             checkIndebtedness(props.user)[1]
-              ? "balance-value user-balance-red"
-              : "balance-value user-balance-green"
+              ? "balance-value user-balance-green"
+              : "balance-value user-balance-red"
           }
         >
-          {"£" + checkIndebtedness(props.user)[0].toFixed(2)}
+          {"£" + (checkIndebtedness(props.user)[0] / 100).toFixed(2)}
         </div>
       </div>
     </div>

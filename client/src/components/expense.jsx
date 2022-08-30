@@ -21,11 +21,11 @@ function Expense(props) {
       <div className="e-pic"></div>
       <div className="e-title">{props.value.title}</div>
       <div className="e-member-price">
-        <div className="e-price">£{props.value.amount}</div>
+        <div className="e-price">£{(props.value.amount / 100).toFixed(2)}</div>
         <div className="e-members">
-          {renderBorrowers()}
-          <img alt="arrow" className="e-arrow" src={smallArrow}></img>
           {props.value.lender}
+          <img alt="arrow" className="e-arrow" src={smallArrow}></img>
+          {renderBorrowers()}
         </div>
       </div>
     </div>

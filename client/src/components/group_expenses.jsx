@@ -48,6 +48,12 @@ function GroupExpenses(props) {
           ? "You owe: "
           : "You are owed: "}
         <span
+          style={{
+            backgroundColor:
+              props.group.usersMinusActive.outstandingBalance === 0
+                ? "lightgrey"
+                : "",
+          }}
           className={
             props.group.usersMinusActive.outstandingBalance > 0
               ? "balance-value user-balance-red"
@@ -56,10 +62,15 @@ function GroupExpenses(props) {
         >
           {props.group.usersMinusActive.outstandingBalance < 0
             ? "£" +
-              String(props.group.usersMinusActive.outstandingBalance).substring(
-                1
-              )
-            : "£" + props.group.usersMinusActive.outstandingBalance}
+              String(
+                (props.group.usersMinusActive.outstandingBalance / 100).toFixed(
+                  2
+                )
+              ).substring(1)
+            : "£" +
+              (props.group.usersMinusActive.outstandingBalance / 100).toFixed(
+                2
+              )}
         </span>
       </h2>
       <div className="expense-container" ref={containerRef}>
