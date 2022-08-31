@@ -5,10 +5,17 @@
   font-family: "Poppins";
   display: grid;
   align-items: center;
-  grid-template-columns: [date] 50px [image] 50px [title] 100px [members] auto;
+  grid-template-columns: [date] 15% [image] 15% [title] 25% [members] 35% [arrow] 10%;
   width: 90%;
   height: 50px;
+  margin: 0 auto 0 auto;
+}
+
+.expand-expense {
+  overflow: hidden;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s ease;
+  width: 90%;
   margin: 0 auto 0 auto;
 }
 
@@ -29,6 +36,8 @@
 }
 
 .e-member-price {
+  grid-template-columns: 100%;
+  overflow: hidden;
   display: grid;
   grid-template-rows: [price] auto [members] auto;
 }
@@ -46,7 +55,7 @@
 }
 
 .e-members {
-  min-width: max-content;
+  width: 90%;
   display: flex;
   font-size: 13px;
   background-color: rgb(61, 201, 112, 0.65);
