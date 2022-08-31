@@ -140,6 +140,7 @@ function App() {
       ...group,
       users: [...group.users, user],
       usersMinusActive: {
+        ...group.usersMinusActive,
         users: [...group.usersMinusActive.users, user],
       },
     });
@@ -178,8 +179,8 @@ function App() {
         <GroupUsers
           group={group}
           // Call function based on parameter passed in onClick call
-          onClick={(debts) => {
-            debts ? updateDebt(debts) : updateGroup();
+          onClick={(param) => {
+            param.firstName ? updateGroup(param) : updateDebt(param);
           }}
         ></GroupUsers>
       </div>
