@@ -85,9 +85,9 @@ function Expense(props) {
         }}
         className="expand-expense"
       >
-        {props.value.borrowers.map((borrower) => {
+        {props.value.borrowers.map((borrower, index) => {
           return (
-            <div className="e-member-price">
+            <div key={borrower[0] + index} className="e-member-price">
               <div
                 className="e-members"
                 style={{
@@ -95,11 +95,10 @@ function Expense(props) {
                   margin: "0.3em",
                   backgroundColor: "lightgrey",
                 }}
-                key={borrower[0]}
               >
                 {borrower[0]}
                 <img alt="arrow" className="e-arrow" src={smallArrow}></img>
-                <div className="e-price" key={borrower[0] + borrower[1]}>
+                <div className="e-price">
                   {"£" + (borrower[1] / 100).toFixed(2)}
                 </div>
               </div>
