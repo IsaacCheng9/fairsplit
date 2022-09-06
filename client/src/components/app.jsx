@@ -147,11 +147,42 @@ function App() {
   }
 
   // Update group state after a user settles up
-  function updateDebt(settleObject) {
+  async function updateDebt(settleObject) {
     // Calculate outstanding balance
     group.usersMinusActive.debts[settleObject.from].amount -=
       settleObject.amount;
     group.usersMinusActive.outstandingBalance -= settleObject.amount;
+
+    // Create settlement object with the same structure as an expense
+    let settlement = {
+      title: "SETTLEMENT",
+      lender: settleObject.to,
+      amount: settleObject.amount,
+      author: settleObject.to,
+      borrowers: [settleObject.from, settleObject.amount],
+    };
+
+    // Add settlement as expense for now
+    let validExpense = await fetch(
+      "http://localhost:3000/expenses/addSettlement",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(settlement),
+      }
+    );
+
+    let response = await validExpense.json();
+
+    if (validExpense.ok) {
+      // Add settlement to array of expenses
+      group.expenses.unshift(response);
+    } else {
+      // Display error message
+      console.error(response.error);
+    }
 
     setGroup({
       ...group,

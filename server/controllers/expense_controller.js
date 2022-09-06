@@ -50,3 +50,17 @@ exports.getExpenses = async (_, response) => {
   const expenses = await expenseModel.find({});
   response.json(expenses);
 };
+
+// Temporary controller to add settlement as expense.
+exports.addSettlement = async (request, response) => {
+  // Keep a record of the settlement for the history.
+  const settlement = await expenseModel.create({
+    title: request.body.title,
+    author: request.body.author,
+    lender: request.body.lender,
+    borrowers: request.body.borrowers,
+    amount: request.body.amount,
+  });
+
+  response.json(settlement);
+};
