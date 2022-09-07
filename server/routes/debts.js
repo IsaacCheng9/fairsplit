@@ -5,6 +5,9 @@ const app = express();
 // Gets a list of all debts.
 app.get("/debts", debtController.getDebts);
 
+// Gets a list of all optimised debts.
+app.get("/optimisedDebts", debtController.getOptimisedDebts);
+
 // Gets a debt by ID.
 app.get("/debts/:id", debtController.getDebtById);
 
