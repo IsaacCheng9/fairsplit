@@ -14,6 +14,8 @@ function GroupUsers(props) {
 
   // State for dynamic styling - fading message in and out
   let [msgClasses, setMsgClasses] = useState("group-members-msg");
+  let [togglePosition, setTogglePosition] = useState("0.3em");
+  let [toggleColour, setToggleColour] = useState("rgb(201, 61, 61, 0.65)");
 
   // Ref to user select for settling
   let userSelectRef = createRef();
@@ -81,11 +83,28 @@ function GroupUsers(props) {
     props.onClick(newUser);
   }
 
+  // Changes inline styles of smart split toggle
+  function toggleSmartSplit() {
+    if (togglePosition === "0.3em") {
+      setTogglePosition("1.7em");
+      setToggleColour("rgb(61, 201, 112, 0.65)");
+    } else {
+      setTogglePosition("0.3em");
+      setToggleColour("rgb(201, 61, 61, 0.65)");
+    }
+  }
+
   return (
     <div className="group-members-container">
       <div className="toggle-container">
-        <div className="split-toggle">
-          <div className="circle-toggle"></div>
+        <div className="split-toggle" onClick={toggleSmartSplit}>
+          <div
+            className="circle-toggle"
+            style={{
+              marginLeft: togglePosition,
+              backgroundColor: toggleColour,
+            }}
+          ></div>
         </div>
         <p className="toggle-header">Smart Split</p>
       </div>
