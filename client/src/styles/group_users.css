@@ -7,7 +7,7 @@
   height: 550px;
   background: linear-gradient(to top, #f6f9fc 70%, #ffffff 30%);
   display: grid;
-  grid-template-rows: [title] 105px [msg] 60px [content] auto;
+  grid-template-rows: [switch] 30px [title] 70px [msg] 65px [content] auto;
 }
 
 .group-members-title {
