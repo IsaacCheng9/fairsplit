@@ -24,23 +24,23 @@
 }
 
 .split-toggle {
-  justify-content: start;
+  display: flex;
+  transition: all 0.5s ease;
   margin: 0 auto;
   width: 4em;
   height: 1.8em;
   background-color: lightgrey;
   border-radius: 1em;
-  display: flex;
   align-items: center;
-  align-self: center;
 }
 
 .circle-toggle {
+  transition: all 0.3s ease;
+  margin-left: 0.3em;
   background-color: rgb(201, 61, 61, 0.65);
   width: 2em;
   height: 1.4em;
   border-radius: 1em;
-  margin: 0 0.25em 0 0.25em;
 }
 
 .group-members-title {
