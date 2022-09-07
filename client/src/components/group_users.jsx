@@ -83,7 +83,13 @@ function GroupUsers(props) {
 
   return (
     <div className="group-members-container">
-      <div>placeholder</div>
+      <div className="toggle-container">
+        <div className="split-toggle">
+          <div className="circle-toggle"></div>
+        </div>
+        <p className="toggle-header">Smart Split</p>
+      </div>
+
       <h1 className="group-members-title">Group Members</h1>
       <p className={msgClasses}>{responseMsg}</p>
       <div className="users-container">

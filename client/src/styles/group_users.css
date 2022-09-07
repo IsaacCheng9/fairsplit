@@ -7,7 +7,40 @@
   height: 550px;
   background: linear-gradient(to top, #f6f9fc 70%, #ffffff 30%);
   display: grid;
-  grid-template-rows: [switch] 30px [title] 70px [msg] 65px [content] auto;
+  grid-template-rows: [switch] 50px [title] 50px [msg] 65px [content] auto;
+}
+
+.toggle-header {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.7em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.toggle-container {
+  padding: 0.7em;
+  justify-self: flex-end;
+}
+
+.split-toggle {
+  justify-content: start;
+  margin: 0 auto;
+  width: 4em;
+  height: 1.8em;
+  background-color: lightgrey;
+  border-radius: 1em;
+  display: flex;
+  align-items: center;
+  align-self: center;
+}
+
+.circle-toggle {
+  background-color: rgb(201, 61, 61, 0.65);
+  width: 2em;
+  height: 1.4em;
+  border-radius: 1em;
+  margin: 0 0.25em 0 0.25em;
 }
 
 .group-members-title {
