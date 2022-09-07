@@ -88,9 +88,11 @@ function GroupUsers(props) {
     if (togglePosition === "0.3em") {
       setTogglePosition("1.7em");
       setToggleColour("rgb(61, 201, 112, 0.65)");
+      props.onClick(true);
     } else {
       setTogglePosition("0.3em");
       setToggleColour("rgb(201, 61, 61, 0.65)");
+      props.onClick(false);
     }
   }
 
