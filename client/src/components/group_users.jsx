@@ -3,6 +3,7 @@ import "../styles/group_users.css";
 import User from "./user";
 import AddUser from "./add_user";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import example from "../assets/Optimise.svg";
 
 function GroupUsers(props) {
   // Hold state of settle amount
@@ -99,7 +100,20 @@ function GroupUsers(props) {
   return (
     <div className="group-members-container">
       <div className="toggle-container">
-        <div className="info-div">i</div>
+        <div className="info-div">
+          i
+          <div className="info-hover">
+            Optimises debts to minimise transactions
+            <img
+              style={{
+                paddingTop: "0.5em",
+                width: "25em",
+                height: "10em",
+              }}
+              src={example}
+            ></img>
+          </div>
+        </div>
         <div>
           <div className="split-toggle" onClick={toggleSmartSplit}>
             <div
@@ -113,7 +127,6 @@ function GroupUsers(props) {
           <p className="toggle-header">Smart Split </p>
         </div>
       </div>
-
       <h1 className="group-members-title">Group Members</h1>
       <p className={msgClasses}>{responseMsg}</p>
       <div className="users-container">

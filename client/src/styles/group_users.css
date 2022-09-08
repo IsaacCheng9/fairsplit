@@ -19,6 +19,28 @@
   text-align: center;
 }
 
+.info-div:hover .info-hover {
+  opacity: 100;
+}
+
+.info-hover {
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 2px 5px -1px rgba(50, 50, 93, 0.25);
+  transition: all 0.3s ease;
+  opacity: 0;
+  background-color: white;
+  height: 12em;
+  width: 27em;
+  position: relative;
+  top: -16.5em;
+  left: -21.5em;
+  border-radius: 0.5em;
+  text-align: center;
+  padding: 1em 1em 0 1em;
+  font-size: 0.8em;
+}
+
 .info-div {
   cursor: pointer;
   background-color: lightgrey;
