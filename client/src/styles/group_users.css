@@ -23,7 +23,12 @@
   opacity: 100;
 }
 
+.info-div .info-hover:hover {
+  opacity: 0;
+}
+
 .info-hover {
+  cursor: auto;
   font-weight: bold;
   font-family: "Poppins", sans-serif;
   box-shadow: 0 2px 5px -1px rgba(50, 50, 93, 0.25);
@@ -42,6 +47,7 @@
 }
 
 .info-div {
+  grid-column-start: 1;
   cursor: pointer;
   background-color: lightgrey;
   font-size: 1em;
