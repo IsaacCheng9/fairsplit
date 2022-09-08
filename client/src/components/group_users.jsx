@@ -105,6 +105,7 @@ function GroupUsers(props) {
           <div className="info-hover">
             Optimises debts to minimise transactions
             <img
+              alt="Smart Split Explanation"
               style={{
                 paddingTop: "0.5em",
                 width: "25em",
