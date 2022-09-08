@@ -15,12 +15,33 @@
   font-family: "Poppins", sans-serif;
   font-size: 0.7em;
   font-weight: bold;
+  align-self: end;
   text-align: center;
 }
 
+.info-div {
+  cursor: pointer;
+  background-color: lightgrey;
+  font-size: 1em;
+  border-radius: 50%;
+  margin: 0;
+  height: 1em;
+  width: 1em;
+  margin-right: 0.4em;
+  margin-top: 0.2em;
+  text-align: center;
+  padding: 0.2em;
+  font-family: serif;
+  color: #39444e;
+}
+
 .toggle-container {
+  width: 6.5em;
+  flex-flow: wrap;
+  display: flex;
   padding: 0.7em;
   justify-self: flex-end;
+  justify-content: center;
 }
 
 .split-toggle {

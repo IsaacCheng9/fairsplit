@@ -99,16 +99,19 @@ function GroupUsers(props) {
   return (
     <div className="group-members-container">
       <div className="toggle-container">
-        <div className="split-toggle" onClick={toggleSmartSplit}>
-          <div
-            className="circle-toggle"
-            style={{
-              marginLeft: togglePosition,
-              backgroundColor: toggleColour,
-            }}
-          ></div>
+        <div className="info-div">i</div>
+        <div>
+          <div className="split-toggle" onClick={toggleSmartSplit}>
+            <div
+              className="circle-toggle"
+              style={{
+                marginLeft: togglePosition,
+                backgroundColor: toggleColour,
+              }}
+            ></div>
+          </div>
+          <p className="toggle-header">Smart Split </p>
         </div>
-        <p className="toggle-header">Smart Split</p>
       </div>
 
       <h1 className="group-members-title">Group Members</h1>
