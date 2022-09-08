@@ -25,6 +25,7 @@
 
 .info-div .info-hover:hover {
   opacity: 0;
+  display: none;
 }
 
 .info-hover {
@@ -34,6 +35,7 @@
   box-shadow: 0 2px 5px -1px rgba(50, 50, 93, 0.25);
   transition: all 0.3s ease;
   opacity: 0;
+  display: auto;
   background-color: white;
   height: 12em;
   width: 27em;
