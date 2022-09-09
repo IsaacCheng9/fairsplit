@@ -21,19 +21,23 @@
 
 .info-div:hover .info-hover {
   opacity: 100;
+  z-index: 1;
 }
 
 .info-div .info-hover:hover {
   opacity: 0;
+  z-index: -1;
 }
 
 .info-hover {
+  z-index: -1;
   cursor: auto;
   font-weight: bold;
   font-family: "Poppins", sans-serif;
   box-shadow: 0 2px 5px -1px rgba(50, 50, 93, 0.25);
   transition: all 0.3s ease;
   opacity: 0;
+  display: auto;
   background-color: white;
   height: 12em;
   width: 27em;
@@ -74,7 +78,7 @@
 
 .split-toggle {
   display: flex;
-  transition: all 0.5s ease;
+  transition: opacity 0.5s ease;
   margin: 0 auto;
   width: 4em;
   height: 1.8em;
