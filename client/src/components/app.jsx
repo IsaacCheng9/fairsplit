@@ -189,6 +189,27 @@ function App() {
     });
   }
 
+  // Update group state after smart split toggle switched
+  async function updateOptimisedDebts(isOptimised) {
+    let endpoint = "debts";
+    if (isOptimised) {
+      endpoint = "optimisedDebts";
+    }
+
+    // Get data from API
+    let response = await fetch(`${apiUrl}/${endpoint}`);
+    const debt = await response.json();
+
+    // Update global state
+    group.debts = debt;
+
+    // Reclaculate debts
+    setActiveUserDebt();
+
+    // Re-render debts
+    setGroup({ ...group });
+  }
+
   return (
     <div className="App">
       <div className="header-container">
@@ -211,7 +232,13 @@ function App() {
           group={group}
           // Call function based on parameter passed in onClick call
           onClick={(param) => {
-            param.firstName ? updateGroup(param) : updateDebt(param);
+            if (param.firstName) {
+              updateGroup(param);
+            } else if (param === true || param === false) {
+              updateOptimisedDebts(param);
+            } else {
+              updateDebt(param);
+            }
           }}
         ></GroupUsers>
       </div>

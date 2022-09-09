@@ -7,7 +7,93 @@
   height: 550px;
   background: linear-gradient(to top, #f6f9fc 70%, #ffffff 30%);
   display: grid;
-  grid-template-rows: [title] 105px [msg] 60px [content] auto;
+  grid-template-rows: [switch] 50px [title] 50px [msg] 65px [content] auto;
+}
+
+.toggle-header {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.7em;
+  font-weight: bold;
+  align-self: end;
+  text-align: center;
+}
+
+.info-div:hover .info-hover {
+  opacity: 100;
+  z-index: 1;
+}
+
+.info-div .info-hover:hover {
+  opacity: 0;
+  z-index: -1;
+}
+
+.info-hover {
+  z-index: -1;
+  cursor: auto;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 2px 5px -1px rgba(50, 50, 93, 0.25);
+  transition: all 0.3s ease;
+  opacity: 0;
+  display: auto;
+  background-color: white;
+  height: 12em;
+  width: 27em;
+  position: relative;
+  top: -16.5em;
+  left: -21.5em;
+  border-radius: 0.5em;
+  text-align: center;
+  padding: 1em 1em 0 1em;
+  font-size: 0.8em;
+}
+
+.info-div {
+  grid-column-start: 1;
+  cursor: pointer;
+  background-color: lightgrey;
+  font-size: 1em;
+  border-radius: 50%;
+  margin: 0;
+  height: 1em;
+  width: 1em;
+  margin-right: 0.4em;
+  margin-top: 0.2em;
+  text-align: center;
+  padding: 0.2em;
+  font-family: serif;
+  color: #39444e;
+}
+
+.toggle-container {
+  width: 6.5em;
+  flex-flow: wrap;
+  display: flex;
+  padding: 0.7em;
+  justify-self: flex-end;
+  justify-content: center;
+}
+
+.split-toggle {
+  display: flex;
+  transition: opacity 0.5s ease;
+  margin: 0 auto;
+  width: 4em;
+  height: 1.8em;
+  background-color: lightgrey;
+  border-radius: 1em;
+  align-items: center;
+}
+
+.circle-toggle {
+  transition: all 0.3s ease;
+  margin-left: 0.3em;
+  background-color: rgb(201, 61, 61, 0.65);
+  width: 2em;
+  height: 1.4em;
+  border-radius: 1em;
 }
 
 .group-members-title {
