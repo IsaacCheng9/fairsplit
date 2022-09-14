@@ -1,4 +1,5 @@
 const debtModel = require("../models/debt");
+const optimisedDebtModel = require("../models/optimised_debt");
 const userDebtModel = require("../models/user_debt");
 const helpers = require("./helpers/index");
 
@@ -6,6 +7,12 @@ const helpers = require("./helpers/index");
 exports.getDebts = async (_, response) => {
   const debt = await debtModel.find({});
   response.json(debt);
+};
+
+// Get a list of all optimised debts.
+exports.getOptimisedDebts = async (_, response) => {
+  const optimisedDebt = await optimisedDebtModel.find({});
+  response.json(optimisedDebt);
 };
 
 // Get a debt by ID.

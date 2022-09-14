@@ -147,15 +147,67 @@ function App() {
   }
 
   // Update group state after a user settles up
-  function updateDebt(settleObject) {
+  async function updateDebt(settleObject) {
     // Calculate outstanding balance
     group.usersMinusActive.debts[settleObject.from].amount -=
       settleObject.amount;
     group.usersMinusActive.outstandingBalance -= settleObject.amount;
 
+    // Create settlement object with the same structure as an expense
+    let settlement = {
+      title: "SETTLEMENT",
+      lender: settleObject.to,
+      amount: settleObject.amount,
+      author: settleObject.to,
+      borrowers: [settleObject.from, settleObject.amount],
+    };
+
+    // Add settlement as expense for now
+    let validExpense = await fetch(
+      "http://localhost:3000/expenses/addSettlement",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(settlement),
+      }
+    );
+
+    let response = await validExpense.json();
+
+    if (validExpense.ok) {
+      // Add settlement to array of expenses
+      group.expenses.unshift(response);
+    } else {
+      // Display error message
+      console.error(response.error);
+    }
+
     setGroup({
       ...group,
     });
+  }
+
+  // Update group state after smart split toggle switched
+  async function updateOptimisedDebts(isOptimised) {
+    let endpoint = "debts";
+    if (isOptimised) {
+      endpoint = "optimisedDebts";
+    }
+
+    // Get data from API
+    let response = await fetch(`${apiUrl}/${endpoint}`);
+    const debt = await response.json();
+
+    // Update global state
+    group.debts = debt;
+
+    // Reclaculate debts
+    setActiveUserDebt();
+
+    // Re-render debts
+    setGroup({ ...group });
   }
 
   return (
@@ -180,7 +232,13 @@ function App() {
           group={group}
           // Call function based on parameter passed in onClick call
           onClick={(param) => {
-            param.firstName ? updateGroup(param) : updateDebt(param);
+            if (param.firstName) {
+              updateGroup(param);
+            } else if (param === true || param === false) {
+              updateOptimisedDebts(param);
+            } else {
+              updateDebt(param);
+            }
           }}
         ></GroupUsers>
       </div>

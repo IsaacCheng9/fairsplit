@@ -3,6 +3,7 @@ import "../styles/group_users.css";
 import User from "./user";
 import AddUser from "./add_user";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import example from "../assets/Optimise.svg";
 
 function GroupUsers(props) {
   // Hold state of settle amount
@@ -14,6 +15,8 @@ function GroupUsers(props) {
 
   // State for dynamic styling - fading message in and out
   let [msgClasses, setMsgClasses] = useState("group-members-msg");
+  let [togglePosition, setTogglePosition] = useState("0.3em");
+  let [toggleColour, setToggleColour] = useState("rgb(201, 61, 61, 0.65)");
 
   // Ref to user select for settling
   let userSelectRef = createRef();
@@ -81,8 +84,50 @@ function GroupUsers(props) {
     props.onClick(newUser);
   }
 
+  // Changes inline styles of smart split toggle
+  function toggleSmartSplit() {
+    if (togglePosition === "0.3em") {
+      setTogglePosition("1.7em");
+      setToggleColour("rgb(61, 201, 112, 0.65)");
+      props.onClick(true);
+    } else {
+      setTogglePosition("0.3em");
+      setToggleColour("rgb(201, 61, 61, 0.65)");
+      props.onClick(false);
+    }
+  }
+
   return (
     <div className="group-members-container">
+      <div className="toggle-container">
+        <div className="info-div">
+          i
+          <div className="info-hover">
+            Optimises debts to minimise transactions
+            <img
+              alt="Smart Split Explanation"
+              style={{
+                paddingTop: "0.5em",
+                width: "25em",
+                height: "10em",
+              }}
+              src={example}
+            ></img>
+          </div>
+        </div>
+        <div>
+          <div className="split-toggle" onClick={toggleSmartSplit}>
+            <div
+              className="circle-toggle"
+              style={{
+                marginLeft: togglePosition,
+                backgroundColor: toggleColour,
+              }}
+            ></div>
+          </div>
+          <p className="toggle-header">Smart Split </p>
+        </div>
+      </div>
       <h1 className="group-members-title">Group Members</h1>
       <p className={msgClasses}>{responseMsg}</p>
       <div className="users-container">
