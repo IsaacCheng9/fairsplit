@@ -36,7 +36,6 @@ test("DELETE /users/:username", async () => {
 });
 
 afterAll(async () => {
-  // TODO: Create routes to delete users and user debts.
   // Delete the user we created if it still exists.
   await userModel.deleteOne({ username: "testuser123" });
   // Delete the debt record for the user we created.
