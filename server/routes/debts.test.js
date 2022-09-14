@@ -2,8 +2,7 @@ const app = require("../app");
 const supertest = require("supertest");
 const mongoose = require("mongoose");
 
-const userModel = require("../models/user");
-const userDebtModel = require("../models/user_debt");
+const debtModel = require("../models/debt");
 
 // Use the Supertest object to make requests to the app.
 const api = supertest(app);
@@ -30,10 +29,37 @@ test("POST /debts/add", async () => {
     .expect(201);
 });
 
+// Check whether we can get the new debt between two users.
+test("GET /debts/:from/:to", async () => {
+  await api.get("/debts/testuser123/testuser456").expect(200);
+});
+
+// Check whether we can settle a debt between two users.
+test("POST /debts/settle", async () => {
+  await api
+    .post("/debts/settle")
+    .send({
+      from: "testuser456",
+      to: "testuser123",
+      amount: 50,
+    })
+    .expect(200);
+
+  // Check whether the debt was successfully reduced by 50.
+  await debtModel
+    .findOne({
+      from: "testuser123",
+      to: "testuser456",
+    })
+    .then((debt) => {
+      expect(debt.amount).toBe(50);
+    });
+});
+
 afterAll(async () => {
   // Delete the debt we created if it still exists.
   // TODO: Create endpoint to delete debt.
-  await userDebtModel.deleteOne({ from: "testuser123", to: "testuser456" });
+  await debtModel.deleteOne({ from: "testuser123", to: "testuser456" });
   // TODO: Fix open handles.
   mongoose.connection.close();
 });
