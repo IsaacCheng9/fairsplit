@@ -9,7 +9,7 @@ app.get("/debts", debtController.getDebts);
 app.get("/optimisedDebts", debtController.getOptimisedDebts);
 
 // Gets a debt by ID.
-app.get("/debts/:id", debtController.getDebtById);
+app.get("/debts/:from/:to", debtController.getDebtBetweenUsers);
 
 // Adds a new debt between two users.
 app.post("/debts/add", debtController.addDebt);

@@ -16,8 +16,11 @@ exports.getOptimisedDebts = async (_, response) => {
 };
 
 // Get a debt by ID.
-exports.getDebtById = async (request, response) => {
-  const debt = await debtModel.findById(request.params.id);
+exports.getDebtBetweenUsers = async (request, response) => {
+  const debt = await debtModel.findOne({
+    from: request.params.from,
+    to: request.params.to,
+  });
   response.json(debt);
 };
 
