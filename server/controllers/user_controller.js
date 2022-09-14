@@ -7,9 +7,8 @@ exports.getUsers = async (_, response) => {
   response.json(users);
 };
 
-// Get a user by ID.
-exports.getUserById = async (request, response) => {
-  const user = await userModel.findById(request.params.id);
+exports.getUserByUsername = async (request, response) => {
+  const user = await userModel.findOne({ username: request.params.username });
   response.json(user);
 };
 

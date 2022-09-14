@@ -128,7 +128,7 @@ function App() {
 
   async function updateGroup(user) {
     // Add user to db
-    await fetch(`${apiUrl}/users/add`, {
+    await fetch(`${apiUrl}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
