@@ -25,5 +25,5 @@ exports.addUser = async (request, response) => {
     username: request.body.username,
     netDebt: 0,
   });
-  response.json(user);
+  response.status(201).json(user);
 };
