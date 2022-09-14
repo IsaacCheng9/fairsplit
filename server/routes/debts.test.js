@@ -18,6 +18,15 @@ test("GET /optimisedDebts", async () => {
   await api.get("/optimisedDebts").expect(200);
 });
 
+// Check whether we can add a debt between two users.
+test("POST /debts/add", async () => {
+  await api.post("/debts/add").send({
+    from: "testuser123",
+    to: "testuser456",
+    amount: 100,
+  }).expect(201);
+});
+
 afterAll(async () => {
   // TODO: Fix open handles.
   mongoose.connection.close();
