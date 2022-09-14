@@ -20,11 +20,14 @@ test("GET /optimisedDebts", async () => {
 
 // Check whether we can add a debt between two users.
 test("POST /debts/add", async () => {
-  await api.post("/debts/add").send({
-    from: "testuser123",
-    to: "testuser456",
-    amount: 100,
-  }).expect(201);
+  await api
+    .post("/debts/add")
+    .send({
+      from: "testuser123",
+      to: "testuser456",
+      amount: 100,
+    })
+    .expect(201);
 });
 
 afterAll(async () => {
