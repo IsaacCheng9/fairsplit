@@ -30,9 +30,14 @@ test("GET /users/:username", async () => {
   await api.get("/users/testuser123").expect(200);
 });
 
+// Check whether our user can be deleted.
+test("DELETE /users/:username", async () => {
+  await api.delete("/users/testuser123").expect(200);
+});
+
 afterAll(async () => {
   // TODO: Create routes to delete users and user debts.
-  // Delete the user we created.
+  // Delete the user we created if it still exists.
   await userModel.deleteOne({ username: "testuser123" });
   // Delete the debt record for the user we created.
   await userDebtModel.deleteOne({ username: "testuser123" });
