@@ -31,7 +31,7 @@ exports.addDebt = async (request, response) => {
     request.body.to,
     request.body.amount
   );
-  response.send(message);
+  response.status(201).send(message);
 };
 
 // Settle a debt by ID.
