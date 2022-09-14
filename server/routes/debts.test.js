@@ -28,6 +28,9 @@ test("POST /debts/add", async () => {
 });
 
 afterAll(async () => {
+  // Delete the debt we created if it still exists.
+  // TODO: Create endpoint to delete debt.
+  await userDebtModel.deleteOne({ from: "testuser123", to: "testuser456" });
   // TODO: Fix open handles.
   mongoose.connection.close();
 });
