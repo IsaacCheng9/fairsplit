@@ -11,10 +11,7 @@ app.post("/users", userController.addUser);
 // Get a user by their username.
 app.get("/users/:username", userController.getUserByUsername);
 
-// Updates a user by ID.
-// app.put("/users/update/:id", userController.updateUser);
-
-// Deletes a user by ID.
-// app.delete("/users/delete/:id", userController.deleteUser);
+// Delete a user by their username.
+app.delete("/users/:username", userController.deleteUser);
 
 module.exports = app;

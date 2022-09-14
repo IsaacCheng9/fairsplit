@@ -12,7 +12,6 @@ exports.getUserByUsername = async (request, response) => {
   response.json(user);
 };
 
-// Add a new user.
 exports.addUser = async (request, response) => {
   const user = await userModel.create({
     username: request.body.username,
@@ -25,4 +24,9 @@ exports.addUser = async (request, response) => {
     netDebt: 0,
   });
   response.status(201).json(user);
+};
+
+exports.deleteUser = async (request, response) => {
+  const user = await userModel.deleteOne({ username: request.params.username });
+  response.json(user);
 };
