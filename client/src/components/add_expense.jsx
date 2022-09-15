@@ -43,7 +43,7 @@ function AddExpense(props) {
       let calc = borrowers.length * 2.5 + 11;
       return calc + "em";
     } else if (overflowClass.includes("overflow-container-expand")) {
-      return "9.6em";
+      return "9.8em";
     } else {
       return "0em";
     }
@@ -252,11 +252,20 @@ function AddExpense(props) {
         </div>
         <div className="input-container">
           <header className="add-expense-lender">Lender</header>
-          <input
+          <select
+            onChange={inputValidation}
+            ref={lenderRef}
+            className="lender-select"
+          >
+            {props.groupUsers.map((user) => (
+              <option key={user.username}>{user.username}</option>
+            ))}
+          </select>
+          {/* <input
             onChange={inputValidation}
             ref={lenderRef}
             className="lender-input"
-          ></input>
+          ></input> */}
         </div>
         <div className="input-container">
           <header className="add-expense-borrower">Borrower</header>
