@@ -53,8 +53,8 @@
 }
 
 input {
-  padding-left: 10px;
-  font-size: 20px;
+  font-size: 16px;
+  padding: 5px 5px 5px 10px;
   background-color: white;
   border-radius: 5px;
   border: solid 1px rgba(0, 0, 0, 0.2);
@@ -63,12 +63,25 @@ input {
 }
 
 .settle-container input {
+  padding: 1px;
   border-radius: 7px;
   border-left: none;
   font-size: 20px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   outline: none;
+}
+
+.settle-container input {
+  width: 80px;
+  flex-grow: 0;
+}
+
+.lender-select {
+  border-radius: 5px;
+  font-weight: lighter;
+  margin-bottom: 5px;
+  flex-grow: inherit;
 }
 
 .settle-container select {
