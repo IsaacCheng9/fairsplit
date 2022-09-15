@@ -55,7 +55,7 @@
 }
 
 .e-members {
-  width: 90%;
+  max-width: 90%;
   display: flex;
   font-size: 13px;
   background-color: rgb(61, 201, 112, 0.65);
