@@ -9,6 +9,9 @@ function AddExpense(props) {
   let [containerClass, setContainerClass] = useState("add-expense-container");
   let [overflowClass, setOverflowClass] = useState("overflow-container");
 
+  // State for lender field
+  let [activeLender, setActiveLender] = useState(props.activeUser);
+
   // State for expense amount - value locked with input
   let [expenseAmount, setExpenseAmount] = useState("");
 
@@ -33,6 +36,11 @@ function AddExpense(props) {
   let [automaticSplit, setAutomaticSplit] = useState(true);
   let [splitAmount, setSplitAmount] = useState([""]);
   let firstAmount = useRef();
+
+  // Update lender state when active user is updated in root element
+  useEffect(() => {
+    setActiveLender(props.activeUser);
+  }, [props.activeUser]);
 
   // Calculates height to transition to when borrower is added / removed
   function calcHeight() {
@@ -253,9 +261,13 @@ function AddExpense(props) {
         <div className="input-container">
           <header className="add-expense-lender">Lender</header>
           <select
-            onChange={inputValidation}
+            onChange={(e) => {
+              setActiveLender(e.target.value);
+              inputValidation();
+            }}
             ref={lenderRef}
             className="lender-select"
+            value={activeLender}
           >
             {props.groupUsers.map((user) => (
               <option key={user.username}>{user.username}</option>
