@@ -266,27 +266,24 @@ function AddExpense(props) {
               inputValidation();
             }}
             ref={lenderRef}
-            className="lender-select"
+            className="user-dropdown"
             value={activeLender}
           >
             {props.groupUsers.map((user) => (
               <option key={user.username}>{user.username}</option>
             ))}
           </select>
-          {/* <input
-            onChange={inputValidation}
-            ref={lenderRef}
-            className="lender-input"
-          ></input> */}
         </div>
         <div className="input-container">
           <header className="add-expense-borrower">Borrower</header>
           <div className="borrower-container">
-            <input
-              onChange={inputValidation}
-              ref={borrowerRef}
-              className="borrower-input"
-            ></input>
+            <select ref={borrowerRef} className="user-dropdown">
+              {props.usersMinusActive.users
+                .filter((user) => user.username !== lenderRef.current.value)
+                .map((user) => (
+                  <option key={user.username}>{user.username}</option>
+                ))}
+            </select>
             <input
               placeholder="£"
               ref={firstAmount}
@@ -321,11 +318,20 @@ function AddExpense(props) {
               <div className="input-container">
                 <header key={borrower[0] + 1}>Borrower</header>
                 <div key={borrower[0]} className="borrower-container">
-                  <input
+                  <select ref={borrower[1]} className="user-dropdown">
+                    {props.usersMinusActive.users
+                      .filter(
+                        (user) => user.username !== lenderRef.current.value
+                      )
+                      .map((user) => (
+                        <option key={user.username}>{user.username}</option>
+                      ))}
+                  </select>
+                  {/* <input
                     onChange={inputValidation}
                     ref={borrower[1]}
                     className="borrower-input"
-                  ></input>
+                  ></input> */}
                   <input
                     placeholder="£"
                     type="number"
