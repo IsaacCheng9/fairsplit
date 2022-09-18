@@ -21,12 +21,11 @@ function Expense(props) {
 
   // Format borrowers with commas
   function renderBorrowers() {
-    const borrowers = [];
-    for (const borrower of props.value.borrowers) {
-      borrowers.push(borrower[0]);
+    if (props.value.borrowers.length > 1) {
+      return props.value.borrowers.length + " users";
+    } else {
+      return props.value.borrowers[0][0];
     }
-
-    return borrowers.join(", ");
   }
 
   return (
