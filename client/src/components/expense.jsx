@@ -11,7 +11,7 @@ function Expense(props) {
       setDynamicHeight(0);
     } else {
       for (let i = 0; i < props.value.borrowers.length; i++) {
-        if (i % 2 === 0) {
+        if (i % 4 === 0) {
           dynamicHeight += 1.86;
         }
       }
