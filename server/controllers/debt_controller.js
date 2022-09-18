@@ -15,7 +15,7 @@ exports.getOptimisedDebts = async (_, response) => {
   response.json(optimisedDebt);
 };
 
-// Get a debt by ID.
+// Get a debt by lender and borrower.
 exports.getDebtBetweenUsers = async (request, response) => {
   const debt = await debtModel.findOne({
     from: request.params.from,
@@ -101,4 +101,16 @@ exports.settleDebt = async (request, response) => {
       .status(400)
       .send("You cannot settle more than the amount of the debt.");
   }
+};
+
+// Delete a debt between a lender and borrower.
+exports.deleteDebtBetweenUsers = async (request, response) => {
+  await debtModel.findOneAndDelete({
+    from: request.params.from,
+    to: request.params.to,
+  });
+  response.send(
+    `Debt from '${request.params.from}' to '${request.params.to}' deleted\
+      successfully.`
+  );
 };
