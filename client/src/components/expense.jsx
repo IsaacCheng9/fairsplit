@@ -4,6 +4,7 @@ import smallArrow from "../assets/small_arrow.svg";
 
 function Expense(props) {
   let [dynamicHeight, setDynamicHeight] = useState(0);
+  let [textOverflow, setTextOverflow] = useState(0);
 
   // Calculate conatiner height based on number of borrowers
   function expandContainer() {
@@ -28,6 +29,17 @@ function Expense(props) {
     }
   }
 
+  // Check if borrower text is truncated
+  function checkTextOverflow(e) {
+    if (e.target.offsetWidth < e.target.scrollWidth) {
+      setTextOverflow(100);
+      return 100;
+    } else {
+      setTextOverflow(0);
+      return 0;
+    }
+  }
+
   return (
     <div onClick={expandContainer}>
       <div className="expense">
@@ -44,6 +56,8 @@ function Expense(props) {
             <div>{props.value.lender}</div>
             <img alt="arrow" className="e-arrow" src={smallArrow}></img>
             <div
+              onMouseEnter={checkTextOverflow}
+              onMouseLeave={() => setTextOverflow(0)}
               style={{
                 overflow: "hidden",
                 whiteSpace: "nowrap",
@@ -73,6 +87,18 @@ function Expense(props) {
             alt="arrow"
             src={smallArrow}
           ></img>
+        </div>
+        <div className="expense-hover" style={{ opacity: textOverflow }}>
+          {props.value.lender}
+          <img
+            style={{
+              textAlign: "center",
+            }}
+            alt="arrow"
+            className="e-arrow"
+            src={smallArrow}
+          ></img>
+          {renderBorrowers()}
         </div>
       </div>
       <div
