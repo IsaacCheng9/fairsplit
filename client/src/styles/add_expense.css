@@ -64,7 +64,7 @@ input {
 }
 
 .settle-container input {
-  padding: 1px;
+  padding: 1px 1px 1px 5px;
   border-radius: 7px;
   border-left: none;
   font-size: 20px;
