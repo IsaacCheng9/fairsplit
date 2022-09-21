@@ -286,7 +286,7 @@ function AddExpense(props) {
               ref={borrowerRef}
               className="user-dropdown"
             >
-              <option>--- Select an option ---</option>
+              <option>--- Select a user ---</option>
               {props.usersMinusActive.users
                 .filter((user) => user.username !== lenderRef.current.value)
                 .map((user) => (
@@ -332,7 +332,7 @@ function AddExpense(props) {
                     ref={borrower[1]}
                     className="user-dropdown"
                   >
-                    <option>--- Select an option ---</option>
+                    <option>--- Select a user ---</option>
                     {props.usersMinusActive.users
                       .filter(
                         (user) => user.username !== lenderRef.current.value
