@@ -111,7 +111,11 @@ function AddExpense(props) {
   function borrowersValidation() {
     // Check borrower usernames are filled out
     for (const borrower of borrowers) {
-      if (!borrower[1].current || borrower[1].current.value.length < 1) {
+      if (
+        !borrower[1].current ||
+        borrower[1].current.value.length < 1 ||
+        borrower[1].current.value.includes("--- S")
+      ) {
         return false;
       }
     }
@@ -131,7 +135,7 @@ function AddExpense(props) {
     if (
       titleRef.current.value.length > 0 &&
       lenderRef.current.value.length > 0 &&
-      borrowerRef.current.value.length > 0 &&
+      !borrowerRef.current.value.includes("--- S") &&
       amountRef.current.value.length > 0 &&
       amountRef.current.value > 0 &&
       borrowersValidation()
@@ -277,7 +281,12 @@ function AddExpense(props) {
         <div className="input-container">
           <header className="add-expense-borrower">Borrower</header>
           <div className="borrower-container">
-            <select ref={borrowerRef} className="user-dropdown">
+            <select
+              onChange={inputValidation}
+              ref={borrowerRef}
+              className="user-dropdown"
+            >
+              <option>--- Select an option ---</option>
               {props.usersMinusActive.users
                 .filter((user) => user.username !== lenderRef.current.value)
                 .map((user) => (
@@ -318,7 +327,12 @@ function AddExpense(props) {
               <div className="input-container">
                 <header key={borrower[0] + 1}>Borrower</header>
                 <div key={borrower[0]} className="borrower-container">
-                  <select ref={borrower[1]} className="user-dropdown">
+                  <select
+                    onChange={inputValidation}
+                    ref={borrower[1]}
+                    className="user-dropdown"
+                  >
+                    <option>--- Select an option ---</option>
                     {props.usersMinusActive.users
                       .filter(
                         (user) => user.username !== lenderRef.current.value
