@@ -240,8 +240,9 @@ function AddExpense(props) {
           ></input>
         </div>
         <div className="input-container">
-          <header className="add-expense-amount">Amount (£)</header>
+          <header className="add-expense-amount">Amount</header>
           <input
+            placeholder="£"
             // Only calculate split if user hasn't changed values
             onChange={(e) => {
               if (e.target.value === "") {
