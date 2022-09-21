@@ -249,7 +249,7 @@ function AddExpense(props) {
                 expenseAmount = "";
               } else if (e.target.value === "0.0") {
                 expenseAmount = e.target.value;
-              } else {
+              } else if (!e.target.value.includes("0.00")) {
                 // Only allow 2 decimal places
                 expenseAmount = Math.round(e.target.value * 100) / 100;
               }
