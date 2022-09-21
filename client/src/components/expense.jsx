@@ -4,6 +4,7 @@ import smallArrow from "../assets/small_arrow.svg";
 
 function Expense(props) {
   let [dynamicHeight, setDynamicHeight] = useState(0);
+  let [textOverflow, setTextOverflow] = useState(0);
 
   // Calculate conatiner height based on number of borrowers
   function expandContainer() {
@@ -11,7 +12,7 @@ function Expense(props) {
       setDynamicHeight(0);
     } else {
       for (let i = 0; i < props.value.borrowers.length; i++) {
-        if (i % 2 === 0) {
+        if (i % 4 === 0) {
           dynamicHeight += 1.86;
         }
       }
@@ -21,12 +22,22 @@ function Expense(props) {
 
   // Format borrowers with commas
   function renderBorrowers() {
-    const borrowers = [];
-    for (const borrower of props.value.borrowers) {
-      borrowers.push(borrower[0]);
+    if (props.value.borrowers.length > 1) {
+      return props.value.borrowers.length + " users";
+    } else {
+      return props.value.borrowers[0][0];
     }
+  }
 
-    return borrowers.join(", ");
+  // Check if borrower text is truncated
+  function checkTextOverflow(e) {
+    if (e.target.offsetWidth < e.target.scrollWidth) {
+      setTextOverflow(100);
+      return 100;
+    } else {
+      setTextOverflow(0);
+      return 0;
+    }
   }
 
   return (
@@ -45,6 +56,8 @@ function Expense(props) {
             <div>{props.value.lender}</div>
             <img alt="arrow" className="e-arrow" src={smallArrow}></img>
             <div
+              onMouseEnter={checkTextOverflow}
+              onMouseLeave={() => setTextOverflow(0)}
               style={{
                 overflow: "hidden",
                 whiteSpace: "nowrap",
@@ -74,6 +87,18 @@ function Expense(props) {
             alt="arrow"
             src={smallArrow}
           ></img>
+        </div>
+        <div className="expense-hover" style={{ opacity: textOverflow }}>
+          {props.value.lender}
+          <img
+            style={{
+              textAlign: "center",
+            }}
+            alt="arrow"
+            className="e-arrow"
+            src={smallArrow}
+          ></img>
+          {renderBorrowers()}
         </div>
       </div>
       <div

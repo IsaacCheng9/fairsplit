@@ -83,6 +83,9 @@ function GroupExpenses(props) {
           onReset={(reset) => {
             setClearForm(reset);
           }}
+          groupUsers={props.group.users}
+          activeUser={props.group.activeUser}
+          usersMinusActive={props.group.usersMinusActive}
         ></AddExpense>
         <TransitionGroup component={null}>
           {expenses.map((expense) => (
