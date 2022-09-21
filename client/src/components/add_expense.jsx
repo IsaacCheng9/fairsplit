@@ -259,7 +259,7 @@ function AddExpense(props) {
             value={expenseAmount}
             ref={amountRef}
             className="amount-input"
-            type="Number"
+            type="number"
             min={0}
           ></input>
         </div>
