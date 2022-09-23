@@ -9,6 +9,9 @@ function AddExpense(props) {
   let [containerClass, setContainerClass] = useState("add-expense-container");
   let [overflowClass, setOverflowClass] = useState("overflow-container");
 
+  // State for lender field
+  let [activeLender, setActiveLender] = useState(props.activeUser);
+
   // State for expense amount - value locked with input
   let [expenseAmount, setExpenseAmount] = useState("");
 
@@ -34,6 +37,11 @@ function AddExpense(props) {
   let [splitAmount, setSplitAmount] = useState([""]);
   let firstAmount = useRef();
 
+  // Update lender state when active user is updated in root element
+  useEffect(() => {
+    setActiveLender(props.activeUser);
+  }, [props.activeUser]);
+
   // Calculates height to transition to when borrower is added / removed
   function calcHeight() {
     if (
@@ -43,7 +51,7 @@ function AddExpense(props) {
       let calc = borrowers.length * 2.5 + 11;
       return calc + "em";
     } else if (overflowClass.includes("overflow-container-expand")) {
-      return "9.6em";
+      return "9.8em";
     } else {
       return "0em";
     }
@@ -103,7 +111,11 @@ function AddExpense(props) {
   function borrowersValidation() {
     // Check borrower usernames are filled out
     for (const borrower of borrowers) {
-      if (!borrower[1].current || borrower[1].current.value.length < 1) {
+      if (
+        !borrower[1].current ||
+        borrower[1].current.value.length < 1 ||
+        borrower[1].current.value.includes("--- S")
+      ) {
         return false;
       }
     }
@@ -123,7 +135,7 @@ function AddExpense(props) {
     if (
       titleRef.current.value.length > 0 &&
       lenderRef.current.value.length > 0 &&
-      borrowerRef.current.value.length > 0 &&
+      !borrowerRef.current.value.includes("--- S") &&
       amountRef.current.value.length > 0 &&
       amountRef.current.value > 0 &&
       borrowersValidation()
@@ -228,15 +240,16 @@ function AddExpense(props) {
           ></input>
         </div>
         <div className="input-container">
-          <header className="add-expense-amount">Amount (£)</header>
+          <header className="add-expense-amount">Amount</header>
           <input
+            placeholder="£"
             // Only calculate split if user hasn't changed values
             onChange={(e) => {
               if (e.target.value === "") {
                 expenseAmount = "";
               } else if (e.target.value === "0.0") {
                 expenseAmount = e.target.value;
-              } else {
+              } else if (!e.target.value.includes("0.00")) {
                 // Only allow 2 decimal places
                 expenseAmount = Math.round(e.target.value * 100) / 100;
               }
@@ -246,26 +259,41 @@ function AddExpense(props) {
             value={expenseAmount}
             ref={amountRef}
             className="amount-input"
-            type="Number"
+            type="number"
             min={0}
           ></input>
         </div>
         <div className="input-container">
           <header className="add-expense-lender">Lender</header>
-          <input
-            onChange={inputValidation}
+          <select
+            onChange={(e) => {
+              setActiveLender(e.target.value);
+              inputValidation();
+            }}
             ref={lenderRef}
-            className="lender-input"
-          ></input>
+            className="user-dropdown"
+            value={activeLender}
+          >
+            {props.groupUsers.map((user) => (
+              <option key={user.username}>{user.username}</option>
+            ))}
+          </select>
         </div>
         <div className="input-container">
           <header className="add-expense-borrower">Borrower</header>
           <div className="borrower-container">
-            <input
+            <select
               onChange={inputValidation}
               ref={borrowerRef}
-              className="borrower-input"
-            ></input>
+              className="user-dropdown"
+            >
+              <option>--- Select a user ---</option>
+              {props.usersMinusActive.users
+                .filter((user) => user.username !== lenderRef.current.value)
+                .map((user) => (
+                  <option key={user.username}>{user.username}</option>
+                ))}
+            </select>
             <input
               placeholder="£"
               ref={firstAmount}
@@ -300,11 +328,25 @@ function AddExpense(props) {
               <div className="input-container">
                 <header key={borrower[0] + 1}>Borrower</header>
                 <div key={borrower[0]} className="borrower-container">
-                  <input
+                  <select
+                    onChange={inputValidation}
+                    ref={borrower[1]}
+                    className="user-dropdown"
+                  >
+                    <option>--- Select a user ---</option>
+                    {props.usersMinusActive.users
+                      .filter(
+                        (user) => user.username !== lenderRef.current.value
+                      )
+                      .map((user) => (
+                        <option key={user.username}>{user.username}</option>
+                      ))}
+                  </select>
+                  {/* <input
                     onChange={inputValidation}
                     ref={borrower[1]}
                     className="borrower-input"
-                  ></input>
+                  ></input> */}
                   <input
                     placeholder="£"
                     type="number"

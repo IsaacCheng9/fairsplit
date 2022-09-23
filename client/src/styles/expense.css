@@ -5,10 +5,29 @@
   font-family: "Poppins";
   display: grid;
   align-items: center;
-  grid-template-columns: [date] 15% [image] 15% [title] 25% [members] 35% [arrow] 10%;
+  grid-template-columns: [date] 10% [image] 10% [title] 30% [members] 40% [arrow] 9% [tooltip] 1%;
   width: 90%;
   height: 50px;
   margin: 0 auto 0 auto;
+}
+
+.expense-hover {
+  right: 22em;
+  top: -1em;
+  display: flex;
+  cursor: auto;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 2px 5px -1px rgba(50, 50, 93, 0.25);
+  transition: all 0.3s ease;
+  /* opacity: 0; */
+  background-color: white;
+  width: fit-content;
+  border-radius: 0.5em;
+  text-align: center;
+  padding: 0.2em 0.5em;
+  font-size: 0.7em;
+  position: relative;
 }
 
 .expand-expense {
@@ -36,6 +55,7 @@
 }
 
 .e-member-price {
+  align-self: flex-start;
   grid-template-columns: 100%;
   overflow: hidden;
   display: grid;
@@ -55,7 +75,7 @@
 }
 
 .e-members {
-  width: 90%;
+  max-width: 90%;
   display: flex;
   font-size: 13px;
   background-color: rgb(61, 201, 112, 0.65);

@@ -53,8 +53,9 @@
 }
 
 input {
-  padding-left: 10px;
-  font-size: 20px;
+  height: 33px;
+  font-size: 16px;
+  padding: 0px 5px 0px 10px;
   background-color: white;
   border-radius: 5px;
   border: solid 1px rgba(0, 0, 0, 0.2);
@@ -63,12 +64,25 @@ input {
 }
 
 .settle-container input {
+  padding: 1px 1px 1px 5px;
   border-radius: 7px;
   border-left: none;
   font-size: 20px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   outline: none;
+}
+
+.settle-container input {
+  width: 80px;
+  flex-grow: 0;
+}
+
+.user-dropdown {
+  border-radius: 5px;
+  font-weight: lighter;
+  margin-bottom: 5px;
+  flex-grow: inherit;
 }
 
 .settle-container select {
