@@ -6,8 +6,9 @@ const app = express();
 app.get("/expenses", expenseController.getExpenses);
 
 // Adds an expense.
-app.post("/expenses/add", expenseController.addExpense);
+app.post("/expenses", expenseController.addExpense);
 
+// TODO: Improve the implementation of this.
 // Temporary route for adding settlement as expense.
 app.post("/expenses/addSettlement", expenseController.addSettlement);
 

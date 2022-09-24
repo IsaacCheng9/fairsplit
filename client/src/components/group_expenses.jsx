@@ -17,7 +17,7 @@ function GroupExpenses(props) {
   // Add expense data to db
   async function addExpense(expense) {
     // Call route to add expense to db
-    let validExpense = await fetch("http://localhost:3000/expenses/add", {
+    let validExpense = await fetch("http://localhost:3000/expenses", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

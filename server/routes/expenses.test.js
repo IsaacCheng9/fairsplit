@@ -14,9 +14,9 @@ test("GET /expenses", async () => {
 });
 
 // Check whether we can add an expense between two users.
-test("POST /expenses/add", async () => {
+test("POST /expenses", async () => {
   await api
-    .post("/expenses/add")
+    .post("/expenses")
     .send({
       title: "testexpense",
       author: "testuser123",
