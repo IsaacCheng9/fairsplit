@@ -12,10 +12,4 @@ app.post("/expenses", expenseController.addExpense);
 // Temporary route for adding settlement as expense.
 app.post("/expenses/addSettlement", expenseController.addSettlement);
 
-// Updates an expense by ID.
-// app.put("/expenses/update/:id", expenseController.updateExpenseById);
-
-// Deletes an expense by ID.
-// app.delete("/expenses/delete/:id", expenseController.deleteExpense);
-
 module.exports = app;
