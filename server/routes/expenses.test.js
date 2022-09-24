@@ -28,9 +28,14 @@ test("POST /expenses", async () => {
 });
 
 afterAll(async () => {
-  // TODO: Create an endpoint to delete an expense and use it here.
   // Delete the expense we created.
-  await expenseModel.deleteOne({ title: "testexpense" });
+  await expenseModel.deleteOne({
+    title: "testexpense",
+    author: "testuser123",
+    lender: "testuser123",
+    borrowers: [["testuser456", 100]],
+    amount: 100,
+  });
   // TODO: Fix open handles.
   mongoose.connection.close();
 });
