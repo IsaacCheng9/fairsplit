@@ -3,7 +3,6 @@ const supertest = require("supertest");
 const mongoose = require("mongoose");
 
 const expenseModel = require("../models/expense");
-const expenseController = require("../controllers/expense_controller");
 
 // Use the Supertest object to make requests to the app.
 const api = supertest(app);
@@ -27,6 +26,20 @@ test("POST /expenses", async () => {
     .expect(201);
 });
 
+// Check whether we can add a settlement between two users as an expense.
+test("POST /expenses/settlement", async () => {
+  await api
+    .post("/expenses/settlement")
+    .send({
+      title: "SETTLEMENT",
+      author: "testuser456",
+      lender: "testuser456",
+      borrowers: [["testuser123", 100]],
+      amount: 100,
+    })
+    .expect(201);
+});
+
 afterAll(async () => {
   // Delete the expense we created.
   await expenseModel.deleteOne({
@@ -34,6 +47,14 @@ afterAll(async () => {
     author: "testuser123",
     lender: "testuser123",
     borrowers: [["testuser456", 100]],
+    amount: 100,
+  });
+  // Delete the settlement expense we created.
+  await expenseModel.deleteOne({
+    title: "SETTLEMENT",
+    author: "testuser456",
+    lender: "testuser456",
+    borrowers: [["testuser123", 100]],
     amount: 100,
   });
   // TODO: Fix open handles.
