@@ -3,7 +3,6 @@ const supertest = require("supertest");
 const mongoose = require("mongoose");
 
 const debtModel = require("../models/debt");
-const debtController = require("../controllers/debt_controller");
 
 // Use the Supertest object to make requests to the app.
 const api = supertest(app);
