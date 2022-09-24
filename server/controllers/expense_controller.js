@@ -42,7 +42,7 @@ exports.addExpense = async (request, response) => {
   // Recalculate debts to minimise the number of transactions, as this
   // settlement may have changed the optimal strategy.
   helpers.simplifyDebts();
-  response.json(expense);
+  response.status(201).json(expense);
 };
 
 // Get all expenses.
