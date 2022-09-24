@@ -104,13 +104,12 @@ exports.settleDebt = async (request, response) => {
 };
 
 // Delete a debt between a lender and borrower.
-exports.deleteDebtBetweenUsers = async (request, response) => {
+exports.deleteDebtBetweenUsers = async function (from, to) {
   await debtModel.findOneAndDelete({
-    from: request.params.from,
-    to: request.params.to,
+    from: from,
+    to: to,
   });
-  response.send(
-    `Debt from '${request.params.from}' to '${request.params.to}' deleted\
-      successfully.`
-  );
+  // Now that we've deleted the debt, there may be a better way of allocating
+  // the debt, so recalculate debts to minimise the number of transactions.
+  helpers.simplifyDebts();
 };

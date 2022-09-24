@@ -3,6 +3,7 @@ const supertest = require("supertest");
 const mongoose = require("mongoose");
 
 const debtModel = require("../models/debt");
+const debtController = require("../controllers/debt_controller");
 
 // Use the Supertest object to make requests to the app.
 const api = supertest(app);
@@ -58,8 +59,8 @@ test("POST /debts/settle", async () => {
 
 afterAll(async () => {
   // Delete the debt we created if it still exists.
-  // TODO: Create endpoint to delete debt.
-  await debtModel.deleteOne({ from: "testuser123", to: "testuser456" });
+  await debtController.deleteDebtBetweenUsers("testuser123", "testuser456");
   // TODO: Fix open handles.
-  mongoose.connection.close();
+  // TODO: Fix MongoNotConnectedError.
+  // mongoose.connection.close();
 });
