@@ -57,10 +57,12 @@ test("POST /debts/settle", async () => {
     });
 });
 
+// Check whether we can delete the debt we created between two users.
+test("DELETE /debts/:from/:to", async () => {
+  await api.delete("/debts/testuser123/testuser456").expect(200);
+});
+
 afterAll(async () => {
-  // Delete the debt we created if it still exists.
-  await debtController.deleteDebtBetweenUsers("testuser123", "testuser456");
   // TODO: Fix open handles.
-  // TODO: Fix MongoNotConnectedError.
-  // mongoose.connection.close();
+  mongoose.connection.close();
 });
