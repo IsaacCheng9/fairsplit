@@ -61,6 +61,5 @@ exports.addSettlement = async (request, response) => {
     borrowers: request.body.borrowers,
     amount: request.body.amount,
   });
-
-  response.json(settlement);
+  response.status(201).json(settlement);
 };
