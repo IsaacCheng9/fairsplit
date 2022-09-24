@@ -3,8 +3,8 @@
   height: 100px;
   box-shadow: 0 70px 100px -20px rgb(50 50 93 / 25%);
   border-radius: 8px;
-  width: 400px;
-  height: 550px;
+  width: 30em;
+  height: 35em;
   background: linear-gradient(to top, #f6f9fc 70%, #ffffff 30%);
   display: grid;
   grid-template-rows: [switch] 50px [title] 50px [msg] 65px [content] auto;

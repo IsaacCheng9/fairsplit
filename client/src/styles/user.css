@@ -30,6 +30,7 @@
 }
 
 .settle-container input {
+  height: auto;
   width: 80px;
   flex-grow: 0;
 }

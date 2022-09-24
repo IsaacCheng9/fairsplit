@@ -136,12 +136,11 @@
 .group-expenses-container {
   display: grid;
   grid-template-rows: [title] 110px [balance] 55px [main] auto;
-  grid-template-columns: 400px;
   box-shadow: 0 70px 100px -20px rgb(50 50 93 / 25%);
   border-radius: 8px;
   position: relative;
-  width: 400px;
-  height: 550px;
+  width: 30em;
+  height: 35em;
   background: linear-gradient(to top, #f6f9fc 70%, #ffffff 30%);
 }
 
