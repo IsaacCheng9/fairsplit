@@ -164,7 +164,7 @@ function App() {
 
     // Add settlement as expense for now
     let validExpense = await fetch(
-      "http://localhost:3000/expenses/addSettlement",
+      "http://localhost:3000/expenses/settlement",
       {
         method: "POST",
         headers: {
