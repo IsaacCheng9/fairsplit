@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest --forceExit"
+    "test": "jest"
   },
   "keywords": [],
   "contributors": [
@@ -26,6 +26,7 @@
     "express": "^4.18.1",
     "heap": "^0.2.7",
     "mongodb": "^4.7.0",
+    "mongodb-memory-server": "^8.9.3",
     "mongoose": "^6.3.8",
     "supertest": "^6.2.4",
     "validation": "^0.0.1"
