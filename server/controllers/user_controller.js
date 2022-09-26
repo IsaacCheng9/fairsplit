@@ -7,13 +7,11 @@ exports.getUsers = async (_, response) => {
   response.json(users);
 };
 
-// Get a user by ID.
-exports.getUserById = async (request, response) => {
-  const user = await userModel.findById(request.params.id);
+exports.getUserByUsername = async (request, response) => {
+  const user = await userModel.findOne({ username: request.params.username });
   response.json(user);
 };
 
-// Add a new user.
 exports.addUser = async (request, response) => {
   const user = await userModel.create({
     username: request.body.username,
@@ -25,5 +23,10 @@ exports.addUser = async (request, response) => {
     username: request.body.username,
     netDebt: 0,
   });
+  response.status(201).json(user);
+};
+
+exports.deleteUser = async (request, response) => {
+  const user = await userModel.deleteOne({ username: request.params.username });
   response.json(user);
 };
