@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest --verbose"
+    "test": "jest --verbose --coverage"
   },
   "keywords": [],
   "contributors": [
