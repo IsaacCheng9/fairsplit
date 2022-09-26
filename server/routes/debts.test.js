@@ -19,7 +19,6 @@ describe("Test for debt routes", () => {
   });
 
   afterAll(async () => {
-    // TODO: Fix open handles.
     mongoose.connection.close();
   });
 
