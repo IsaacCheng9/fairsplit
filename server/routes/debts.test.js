@@ -1,18 +1,26 @@
-const app = require("../app");
+const express = require("express");
 const supertest = require("supertest");
 const mongoose = require("mongoose");
 
+const debtsRouter = require("../routes/debts.js");
 const debtModel = require("../models/debt");
 
 describe("Test for debt routes", () => {
+  const app = express();
+  app.use(express.json());
+  app.use(debtsRouter);
+
+  beforeAll(async () => {
+    // Connect to the mock database.
+    connection = await mongoose.connect(globalThis.__MONGO_URI__, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+  });
+
   afterAll(async () => {
     // TODO: Fix open handles.
     mongoose.connection.close();
-  });
-
-  beforeEach(async () => {
-    // Connect to in-memory MongoDB.
-    // Set up collections.
   });
 
   // Check whether we can get a list of all debts.
