@@ -15,9 +15,12 @@ exports.getOptimisedDebts = async (_, response) => {
   response.json(optimisedDebt);
 };
 
-// Get a debt by ID.
-exports.getDebtById = async (request, response) => {
-  const debt = await debtModel.findById(request.params.id);
+// Get a debt by lender and borrower.
+exports.getDebtBetweenUsers = async (request, response) => {
+  const debt = await debtModel.findOne({
+    from: request.params.from,
+    to: request.params.to,
+  });
   response.json(debt);
 };
 
@@ -28,7 +31,7 @@ exports.addDebt = async (request, response) => {
     request.body.to,
     request.body.amount
   );
-  response.send(message);
+  response.status(201).send(message);
 };
 
 // Settle a debt by ID.
@@ -98,4 +101,19 @@ exports.settleDebt = async (request, response) => {
       .status(400)
       .send("You cannot settle more than the amount of the debt.");
   }
+};
+
+// Delete a debt between a lender and borrower.
+exports.deleteDebtBetweenUsers = async (request, response) => {
+  await debtModel.deleteOne({
+    from: request.params.from,
+    to: request.params.to,
+  });
+  // Now that we've deleted the debt, there may be a better way of allocating
+  // the debt, so recalculate debts to minimise the number of transactions.
+  helpers.simplifyDebts();
+  response.send(
+    `Debt from '${request.params.from}' to '${request.params.to}' deleted\
+      successfully.`
+  );
 };
