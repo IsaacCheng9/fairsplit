@@ -33,6 +33,6 @@
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^4.1.0",
-    "jest": "^29.0.1"
+    "jest": "^29.0.3"
   }
 }
