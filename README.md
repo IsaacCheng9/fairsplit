@@ -9,12 +9,21 @@ Node and React.
 ## Explanation of Transaction Minimisation Algorithm
 
 We implemented a greedy algorithm to minimise the number of transactions
-required to settle the debts between all members of a group.
-
-The algorithm runs in O(n log n), where n is the number of users. This means
-that it scales well with the number of users.
+required to settle the debts between all members of a group. The algorithm runs
+in O(n log n), where n is the number of users. This means that it scales well
+with the number of users.
 
 <!-- TODO: Explain simple example with Alice -> Bob -> Charlie, and then advanced example. -->
+
+A simple example of this algorithm is shown below. In this example, Alice owes
+Bob £10 and Bob owes Charlie £10 for a total of two transactions. The algorithm
+will suggest that Alice pays Charlie £10 directly, and thus only requiring one
+transaction to settle the debts.
+
+This may seem like a trivial problem to solve, but it becomes more complex as
+the number of users increases. The following diagram shows a more complex
+example when there are six users with six transactions between them. This is
+reduced to only four transactions by the algorithm.
 
 ## Screenshots
 
