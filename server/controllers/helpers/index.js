@@ -112,7 +112,7 @@ exports.simplifyDebts = async function () {
   }
 
   // Create a new set of optimised debts to store the simplified debts.
-  optimisedDebtModel.deleteMany({});
+  await optimisedDebtModel.deleteMany({});
   // Create transactions until the min-heaps are empty to reach a zero-state.
   while (!minHeapDebt.empty() && !minHeapCredit.empty()) {
     const smallestDebt = minHeapDebt.pop();
