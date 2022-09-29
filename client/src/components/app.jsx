@@ -11,7 +11,7 @@ function App() {
 
   // Use this as global group
   let [group, setGroup] = useState({
-    name: "4 Portal Road",
+    name: "Expenses",
     balance: 0,
     users: [],
     activeUser: "",
