@@ -10,13 +10,16 @@ Node and React.
 
 ## Installation and Usage
 
-### Running Tests on the Server
+### Setting up the MongoDB Database
 
-1. Open a terminal window.
-2. Ensure that you're in the root directory: `fairsplit`
-3. Navigate to the server directory: `cd server`
-4. Install dependencies: `npm install`
-5. Run the unit tests: `npm test`
+1. Create a file in the root directory with the name: `.env`
+2. Open the file in a text editor (such as Notepad or TextEdit).
+3. Add the following line to the file, replacing `<uri>` with the URI of your
+   MongoDB database:
+
+```txt
+MONGODB_URI="<uri>"
+```
 
 ### Running the Server
 
@@ -34,6 +37,16 @@ Node and React.
 4. Install dependencies: `npm install`
 5. Run the client: `npm start`
 6. Browse to the URL provided in the terminal window.
+
+## Running Tests
+
+### Running Tests on the Server
+
+1. Open a terminal window.
+2. Ensure that you're in the root directory: `fairsplit`
+3. Navigate to the server directory: `cd server`
+4. Install dependencies: `npm install`
+5. Run the unit tests: `npm test`
 
 ## Contributing
 
