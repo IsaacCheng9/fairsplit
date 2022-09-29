@@ -6,7 +6,19 @@
 A bill-splitting application to track shared expenses in a group, developed with
 Node and React.
 
+## Explanation of Transaction Minimisation Algorithm
+
+We implemented a greedy algorithm to minimise the number of transactions
+required to settle the debts between all members of a group.
+
+The algorithm runs in O(n log n), where n is the number of users. This means
+that it scales well with the number of users.
+
+<!-- TODO: Explain simple example with Alice -> Bob -> Charlie, and then advanced example. -->
+
 ## Screenshots
+
+<!-- TODO: Add screenshots here. -->
 
 ## Installation and Usage
 
@@ -20,6 +32,8 @@ Node and React.
 ```txt
 MONGODB_URI="<uri>"
 ```
+
+4. Save the file.
 
 ### Running the Server
 
