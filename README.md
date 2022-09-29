@@ -1,6 +1,7 @@
 # FairSplit
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+![CI](https://github.com/IsaacCheng9/fairsplit/actions/workflows/main.yml/badge.svg)
 
 A bill-splitting application to track shared expenses in a group, developed with
 Node and React.
