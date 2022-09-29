@@ -11,12 +11,12 @@ Node and React.
 We implemented a greedy algorithm to minimise the number of transactions
 required to settle the debts between all members of a group when the user
 toggles 'Smart Split'. The algorithm runs in O(n log n), where n is the number
-of users. This means that it scales well with the number of users.
+of users – this means that it scales well with the number of users.
 
 A simple example of this algorithm is shown below. In this example, Alice owes
 Bob £10 and Bob owes Charlie £10 for a total of two transactions. The algorithm
-will suggest that Alice pays Charlie £10 directly, and thus only requiring one
-transaction to settle the debts.
+will suggest that Alice pays Charlie £10 directly, meaning only one transaction
+is required to settle the debts.
 
 ![FairSplit - Minimising Transactions@2x Simple](https://user-images.githubusercontent.com/47993930/193157219-12522cfb-f831-48d3-9140-bf1cab09d3b5.png)
 
