@@ -9,9 +9,9 @@ Node and React.
 ## Explanation of Transaction Minimisation Algorithm
 
 We implemented a greedy algorithm to minimise the number of transactions
-required to settle the debts between all members of a group. The algorithm runs
-in O(n log n), where n is the number of users. This means that it scales well
-with the number of users.
+required to settle the debts between all members of a group when the user
+toggles 'Smart Split'. The algorithm runs in O(n log n), where n is the number
+of users. This means that it scales well with the number of users.
 
 <!-- TODO: Explain simple example with Alice -> Bob -> Charlie, and then advanced example. -->
 
@@ -20,12 +20,14 @@ Bob £10 and Bob owes Charlie £10 for a total of two transactions. The algorith
 will suggest that Alice pays Charlie £10 directly, and thus only requiring one
 transaction to settle the debts.
 
+![FairSplit - Minimising Transactions@2x Simple](https://user-images.githubusercontent.com/47993930/193157219-12522cfb-f831-48d3-9140-bf1cab09d3b5.png)
+
 This may seem like a trivial problem to solve, but it becomes more complex as
 the number of users increases. The following diagram shows a more complex
 example when there are six users with six transactions between them. This is
 reduced to only four transactions by the algorithm.
 
-![FairSplit - Minimising Transactions@2x](https://user-images.githubusercontent.com/47993930/193153479-7923726b-7ad9-479b-8fbf-1bd3affc442a.png)
+![FairSplit - Minimising Transactions@2x](https://user-images.githubusercontent.com/47993930/193157096-98f00f14-8548-4093-a213-8e8975a6e036.png)
 
 
 ## Screenshots
