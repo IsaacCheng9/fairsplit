@@ -7,31 +7,32 @@ Node and React.
 
 ## Screenshots
 
-## Installation
+## Installation and Usage
 
 ### Running Tests on the Server
 
 1. Open a terminal window.
 2. Ensure that you're in the root directory: `fairsplit`
 3. Navigate to the server directory: `cd server`
-4. Run the unit tests: `npm test`
-
-## Usage
+4. Install dependencies: `npm install`
+5. Run the unit tests: `npm test`
 
 ### Running the Server
 
 1. Open a terminal window.
 2. Ensure that you're in the root directory: `fairsplit`
 3. Navigate to the server directory: `cd server`
-4. Run the server: `node app`
+4. Install dependencies: `npm install`
+5. Run the server: `node app`
 
 ### Running the Client
 
 1. Open a new terminal window (separate to the previous one).
 2. Ensure that you're in the root directory: `fairsplit`
 3. Navigate to the server directory: `cd client`
-4. Run the client: `npm start`
-5. Browse to the URL provided in the terminal window.
+4. Install dependencies: `npm install`
+5. Run the client: `npm start`
+6. Browse to the URL provided in the terminal window.
 
 ## Contributing
 
