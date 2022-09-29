@@ -13,8 +13,6 @@ required to settle the debts between all members of a group when the user
 toggles 'Smart Split'. The algorithm runs in O(n log n), where n is the number
 of users. This means that it scales well with the number of users.
 
-<!-- TODO: Explain simple example with Alice -> Bob -> Charlie, and then advanced example. -->
-
 A simple example of this algorithm is shown below. In this example, Alice owes
 Bob £10 and Bob owes Charlie £10 for a total of two transactions. The algorithm
 will suggest that Alice pays Charlie £10 directly, and thus only requiring one
@@ -29,10 +27,12 @@ reduced to only four transactions by the algorithm.
 
 ![FairSplit - Minimising Transactions@2x](https://user-images.githubusercontent.com/47993930/193157096-98f00f14-8548-4093-a213-8e8975a6e036.png)
 
-
 ## Screenshots
 
-<!-- TODO: Add screenshots here. -->
+![Screenshot 2022-09-30 at 00 23 22](https://user-images.githubusercontent.com/47993930/193159080-2e312e29-a5a1-4f75-afa5-dbd22d45cd9c.jpg)
+![Screenshot 2022-09-30 at 00 23 52](https://user-images.githubusercontent.com/47993930/193159103-97d5e28d-e330-4804-a0b8-d3e3ece88747.jpg)
+![Screenshot 2022-09-30 at 00 27 59](https://user-images.githubusercontent.com/47993930/193159498-3b7ba9de-e972-4425-85ae-34c6abfdb838.jpg)
+![Screenshot 2022-09-30 at 00 29 59](https://user-images.githubusercontent.com/47993930/193159686-2ffb1f4d-e09b-4325-9056-be97ca315a10.jpg)
 
 ## Installation and Usage
 
