@@ -25,6 +25,9 @@ the number of users increases. The following diagram shows a more complex
 example when there are six users with six transactions between them. This is
 reduced to only four transactions by the algorithm.
 
+![FairSplit - Minimising Transactions@2x](https://user-images.githubusercontent.com/47993930/193153479-7923726b-7ad9-479b-8fbf-1bd3affc442a.png)
+
+
 ## Screenshots
 
 <!-- TODO: Add screenshots here. -->
