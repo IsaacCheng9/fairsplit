@@ -11,7 +11,7 @@ function App() {
 
   // Use this as global group
   let [group, setGroup] = useState({
-    name: "4 Portal Road",
+    name: "Expenses",
     balance: 0,
     users: [],
     activeUser: "",
@@ -216,16 +216,6 @@ function App() {
         <h1 className="title">FairSplit</h1>
         <UserSwitching group={group} onClick={changeActiveUser}></UserSwitching>
       </div>
-
-      <div className="bg-container">
-        <div className="bg-element bg-top-left"></div>
-        <div className="bg-element bg-top-center"></div>
-        <div className="bg-element bg-top-right"></div>
-        <div className="bg-element bg-left"></div>
-        <div className="bg-element bg-center"></div>
-        <div className="bg-element bg-right"></div>
-      </div>
-
       <div className="main-content-container">
         <GroupExpenses group={group} onClick={updateDebts}></GroupExpenses>
         <GroupUsers
