@@ -38,7 +38,7 @@ reduced to only four transactions by the algorithm.
 
 ### Setting up the MongoDB Database
 
-1. Create a file in the root directory with the name: `.env`
+1. Create a file in the `server` directory with the name: `.env`
 2. Open the file in a text editor (such as Notepad or TextEdit).
 3. Add the following line to the file, replacing `<uri>` with the URI of your
    MongoDB database:
