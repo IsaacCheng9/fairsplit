@@ -29,7 +29,7 @@ exports.addDebt = async (request, response) => {
   let message = await helpers.processNewDebt(
     request.body.from,
     request.body.to,
-    request.body.amount
+    request.body.amount,
   );
   response.status(201).send(message);
 };
@@ -55,23 +55,23 @@ exports.settleDebt = async (request, response) => {
       },
       {
         $inc: { amount: -request.body.amount },
-      }
+      },
     );
     // The borrower owes less, so the lender owes more.
     await userDebtModel.findOneAndUpdate(
       { username: request.body.from },
-      { $inc: { netDebt: -request.body.amount } }
+      { $inc: { netDebt: -request.body.amount } },
     );
     await userDebtModel.findOneAndUpdate(
       { username: request.body.to },
-      { $inc: { netDebt: request.body.amount } }
+      { $inc: { netDebt: request.body.amount } },
     );
     // Recalculate debts to minimise the number of transactions, as this
     // settlement may have changed the optimal strategy.
     helpers.simplifyDebts();
     response.send(
       `Debt from '${request.body.from}' to '${request.body.to}' partially\
-        settled and reduced successfully.`
+        settled and reduced successfully.`,
     );
   } else if (existingDebt && existingDebt.amount === request.body.amount) {
     // If the existing debt is equal to the amount to be settled, then delete
@@ -83,18 +83,18 @@ exports.settleDebt = async (request, response) => {
     // The borrower owes less, so the lender owes more.
     await userDebtModel.findOneAndUpdate(
       { username: request.body.from },
-      { $inc: { netDebt: -request.body.amount } }
+      { $inc: { netDebt: -request.body.amount } },
     );
     await userDebtModel.findOneAndUpdate(
       { username: request.body.to },
-      { $inc: { netDebt: request.body.amount } }
+      { $inc: { netDebt: request.body.amount } },
     );
     // Recalculate debts to minimise the number of transactions, as this
     // settlement may have changed the optimal strategy.
     helpers.simplifyDebts();
     response.send(
       `Debt from '${request.body.from}' to '${request.body.to}' fully\
-        settled and deleted successfully.`
+        settled and deleted successfully.`,
     );
   } else {
     response
@@ -114,6 +114,6 @@ exports.deleteDebtBetweenUsers = async (request, response) => {
   helpers.simplifyDebts();
   response.send(
     `Debt from '${request.params.from}' to '${request.params.to}' deleted\
-      successfully.`
+      successfully.`,
   );
 };

@@ -8,11 +8,11 @@ exports.processNewDebt = async function (from, to, amount) {
   // The borrower owes more, so the lender owes less.
   await userDebtModel.findOneAndUpdate(
     { username: from },
-    { $inc: { netDebt: amount } }
+    { $inc: { netDebt: amount } },
   );
   await userDebtModel.findOneAndUpdate(
     { username: to },
-    { $inc: { netDebt: -amount } }
+    { $inc: { netDebt: -amount } },
   );
 
   // Check whether the debt exists the other way around, as this new debt may
@@ -34,7 +34,7 @@ exports.processNewDebt = async function (from, to, amount) {
       },
       {
         $inc: { amount: -amount },
-      }
+      },
     );
     debtAmount = 0;
   } else if (reverseDebt && reverseDebt.amount <= amount) {
@@ -69,7 +69,7 @@ exports.processNewDebt = async function (from, to, amount) {
         },
         {
           $inc: { amount: debtAmount },
-        }
+        },
       );
       return `Debt from '${from}' to '${to}' was updated successfully.`;
     } else {

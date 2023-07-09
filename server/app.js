@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: "http://localhost:3000",
-  })
+  }),
 );
 app.use(usersRouter);
 app.use(expensesRouter);
