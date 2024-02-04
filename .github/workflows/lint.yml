@@ -1,4 +1,4 @@
-name: CI
+name: lint
 
 # Controls when the action will run.
 on:
@@ -21,21 +21,3 @@ jobs:
         uses: creyD/prettier_action@v4.3
         with:
           commit_message: Format code with Prettier
-
-  perform-backend-unit-tests:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-        working-directory: ./server
-      - run: npm test
-        working-directory: ./server
