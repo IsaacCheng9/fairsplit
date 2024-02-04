@@ -1,4 +1,4 @@
-name: prettier
+name: lint
 
 # Controls when the action will run.
 on:
