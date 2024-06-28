@@ -26,14 +26,6 @@ Include the following information when submitting a pull request:
   - Using the `Fixes {link to issue}` syntax will automatically close the
     issue once merged.
 
-## Merge Strategy
-
-We use the _squash merging_ strategy when merging pull requests to improve the
-quality of the change history and make the commit log easier to navigate.
-
-A further explanation about the benefits of this strategy can be found
-[here](https://blog.dnsimple.com/2019/01/two-years-of-squash-merge/).
-
 ## GitHub Actions
 
 After pushing to the repository, the workflow in GitHub Actions consists of:
