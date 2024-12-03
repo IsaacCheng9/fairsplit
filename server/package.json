@@ -27,7 +27,7 @@
     "heap": "^0.2.7",
     "jest": "^29.0.3",
     "mongodb": "^4.7.0",
-    "mongoose": "^6.3.8",
+    "mongoose": "^8.8.3",
     "supertest": "^6.2.4",
     "validation": "^0.0.1"
   },
