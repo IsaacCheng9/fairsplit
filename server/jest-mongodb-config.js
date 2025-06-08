@@ -1,12 +1,12 @@
 module.exports = {
   mongodbMemoryServerOptions: {
     binary: {
-      version: '6.0.0',
+      version: "6.0.0",
       skipMD5: true,
     },
     autoStart: false,
     instance: {
-      dbName: 'fairsplit-test',
+      dbName: "fairsplit-test",
     },
   },
 };
