@@ -5,7 +5,7 @@ const expenseModel = require("../models/expense");
 exports.addExpense = async (request, response) => {
   // Check that the sum of amounts owed matches the total expense amount.
   let currentSum = 0;
-  for (borrower of request.body.borrowers) {
+  for (const borrower of request.body.borrowers) {
     if (borrower[1] <= 0) {
       return response.status(400).json({
         error: "The amount owed must be a positive number.",
@@ -30,7 +30,7 @@ exports.addExpense = async (request, response) => {
   });
 
   // Loop through each borrower and create/update debts accordingly.
-  for (borrowerInfo of request.body.borrowers) {
+  for (const borrowerInfo of request.body.borrowers) {
     const borrower = borrowerInfo[0];
     // The amount they owe must be handled before this to account for different
     // methods of splitting the expense (e.g. specific amounts, by percentage,
@@ -41,7 +41,7 @@ exports.addExpense = async (request, response) => {
 
   // Recalculate debts to minimise the number of transactions, as this
   // settlement may have changed the optimal strategy.
-  helpers.simplifyDebts();
+  await helpers.simplifyDebts();
   response.status(201).json(expense);
 };
 
