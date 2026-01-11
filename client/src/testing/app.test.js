@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import App from "../components/App";
 
-test("renders learn react link", () => {
+test("renders FairSplit title", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const titleElement = screen.getByText(/FairSplit/i);
+  expect(titleElement).toBeInTheDocument();
 });
