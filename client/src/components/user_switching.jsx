@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import "../styles/user_switching.css";
-import { createRef } from "react";
 
 function UserSwitching(props) {
   let group = props.group;
-  let selectRef = createRef();
+  let selectRef = useRef();
 
   function handleChange() {
     // Get the selected user

@@ -20,7 +20,7 @@ app.use(debtsRouter);
 // !IMPORTANT: Create .env file with password
 const password = process.env.PASSWORD || "changePasswordHere";
 let devUrl = `mongodb+srv://admin:${password}@fairsplit.fjvgxmg.mongodb.net/?retryWrites=true&w=majority`;
-var mongoDB = process.env.MONGODB_URI || devUrl;
+const mongoDB = process.env.MONGODB_URI || devUrl;
 // Set up the Mongoose connection.
 mongoose
   .connect(mongoDB)
