@@ -105,12 +105,33 @@ exports.settleDebt = async (request, response) => {
 
 // Delete a debt between a lender and borrower.
 exports.deleteDebtBetweenUsers = async (request, response) => {
+  // Find the debt first so we know the amount to adjust balances.
+  const debt = await debtModel.findOne({
+    from: request.params.from,
+    to: request.params.to,
+  });
+
+  if (!debt) {
+    return response.status(404).send("Debt not found.");
+  }
+
+  // Delete the debt.
   await debtModel.deleteOne({
     from: request.params.from,
     to: request.params.to,
   });
-  // Now that we've deleted the debt, there may be a better way of allocating
-  // the debt, so recalculate debts to minimise the number of transactions.
+
+  // Update userDebt balances: the borrower owes less, the lender is owed less.
+  await userDebtModel.findOneAndUpdate(
+    { username: request.params.from },
+    { $inc: { netDebt: -debt.amount } },
+  );
+  await userDebtModel.findOneAndUpdate(
+    { username: request.params.to },
+    { $inc: { netDebt: debt.amount } },
+  );
+
+  // Recalculate optimised debts.
   await helpers.simplifyDebts();
   response.send(
     `Debt from '${request.params.from}' to '${request.params.to}' deleted\
