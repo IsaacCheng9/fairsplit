@@ -118,7 +118,10 @@ exports.simplifyDebts = async function () {
     const smallestDebt = minHeapDebt.pop();
     const smallestCredit = minHeapCredit.pop();
     // Create a new optimised debt.
-    const transactionAmount = Math.min(smallestDebt.amount, smallestCredit.amount);
+    const transactionAmount = Math.min(
+      smallestDebt.amount,
+      smallestCredit.amount,
+    );
     await optimisedDebtModel.create({
       from: smallestDebt.username,
       to: smallestCredit.username,
