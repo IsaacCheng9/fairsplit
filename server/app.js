@@ -23,11 +23,8 @@ let devUrl = `mongodb+srv://admin:${password}@fairsplit.fjvgxmg.mongodb.net/?ret
 var mongoDB = process.env.MONGODB_URI || devUrl;
 // Set up the Mongoose connection.
 mongoose
-  .connect(mongoDB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .catch((error) => handleError(error));
+  .connect(mongoDB)
+  .catch((error) => console.error("MongoDB connection error:", error));
 let db = mongoose.connection;
 
 // Bind the connection to an error event to get notification of connection

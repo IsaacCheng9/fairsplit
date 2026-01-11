@@ -12,10 +12,7 @@ describe("Test for debt routes", () => {
 
   beforeAll(async () => {
     // Connect to the mock database.
-    connection = await mongoose.connect(globalThis.__MONGO_URI__, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    connection = await mongoose.connect(globalThis.__MONGO_URI__);
   });
 
   afterAll(async () => {
@@ -55,6 +52,13 @@ describe("Test for debt routes", () => {
 
   // Check whether we can settle a debt between two users.
   test("POST /debts/settle", async () => {
+    // Create a debt between the two users so we have something to settle.
+    await debtModel.create({
+      from: "testuser123",
+      to: "testuser456",
+      amount: 100,
+    });
+
     const server = supertest(app);
     await server
       .post("/debts/settle")

@@ -13,10 +13,7 @@ describe("Test for user routes", () => {
 
   beforeAll(async () => {
     // Connect to the mock database.
-    connection = await mongoose.connect(globalThis.__MONGO_URI__, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    connection = await mongoose.connect(globalThis.__MONGO_URI__);
   });
 
   afterAll(async () => {
