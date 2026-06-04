@@ -125,7 +125,43 @@ describe("Test for debt routes", () => {
 
   // Check whether we can delete the debt we created between two users.
   test("DELETE /debts/:from/:to", async () => {
+    await debtModel.create({
+      from: "testuser123",
+      to: "testuser456",
+      amount: 100,
+    });
+
     const server = supertest(app);
     await server.delete("/debts/testuser123/testuser456").expect(200);
+  });
+
+  // Check that deleting a debt updates userDebt balances correctly.
+  test("DELETE /debts/:from/:to updates userDebt balances", async () => {
+    const server = supertest(app);
+
+    await userDebtModel.create({ username: "alice", netDebt: 0 });
+    await userDebtModel.create({ username: "bob", netDebt: 0 });
+
+    // Add a debt: Alice owes Bob £50.
+    // This should update userDebt: Alice +50, Bob -50.
+    await server
+      .post("/debts/add")
+      .send({ from: "alice", to: "bob", amount: 50 })
+      .expect(201);
+    const aliceAfterAdd = await userDebtModel.findOne({ username: "alice" });
+    const bobAfterAdd = await userDebtModel.findOne({ username: "bob" });
+    expect(aliceAfterAdd.netDebt).toBe(50);
+    expect(bobAfterAdd.netDebt).toBe(-50);
+
+    // Delete the debt.
+    await server.delete("/debts/alice/bob").expect(200);
+    const deletedDebt = await debtModel.findOne({ from: "alice", to: "bob" });
+    expect(deletedDebt).toBeNull();
+
+    // Verify userDebt balances are updated back to 0.
+    const aliceAfterDelete = await userDebtModel.findOne({ username: "alice" });
+    const bobAfterDelete = await userDebtModel.findOne({ username: "bob" });
+    expect(aliceAfterDelete.netDebt).toBe(0);
+    expect(bobAfterDelete.netDebt).toBe(0);
   });
 });
