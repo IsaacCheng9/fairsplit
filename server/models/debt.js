@@ -3,17 +3,20 @@ const mongoose = require("mongoose");
 const debtSchema = new mongoose.Schema({
   from: {
     type: String,
-    max: [30, "Username must be within 30 characters."],
+    lowercase: true,
+    maxlength: [30, "Username must be within 30 characters."],
     required: true,
   },
   to: {
     type: String,
-    max: [30, "Username must be within 30 characters."],
+    lowercase: true,
+    maxlength: [30, "Username must be within 30 characters."],
     required: true,
   },
   amount: {
     type: Number,
     required: true,
+    min: [1, "Amount must be greater than 0 pence."],
   },
 });
 
