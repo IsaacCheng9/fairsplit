@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const debtsRouter = require("../routes/debts.js");
 const helpers = require("../controllers/helpers");
 const debtModel = require("../models/debt");
+const expenseModel = require("../models/expense");
 const optimisedDebtModel = require("../models/optimised_debt");
 const userDebtModel = require("../models/user_debt");
 
@@ -26,6 +27,7 @@ describe("Test for debt routes", () => {
 
   afterEach(async () => {
     await debtModel.deleteMany({});
+    await expenseModel.deleteMany({});
     await optimisedDebtModel.deleteMany({});
     await userDebtModel.deleteMany({});
   });
@@ -147,9 +149,11 @@ describe("Test for debt routes", () => {
       to: "testuser456",
       amount: 100,
     });
+    await userDebtModel.create({ username: "testuser123", netDebt: 100 });
+    await userDebtModel.create({ username: "testuser456", netDebt: -100 });
 
     const server = supertest(app);
-    await server
+    const response = await server
       .post("/debts/settle")
       .send({
         from: "testuser456",
@@ -157,6 +161,15 @@ describe("Test for debt routes", () => {
         amount: 50,
       })
       .expect(200);
+
+    expect(response.body.message).toMatch(/partially/);
+    expect(response.body.settlement).toMatchObject({
+      title: "SETTLEMENT",
+      author: "testuser123",
+      lender: "testuser123",
+      borrowers: [["testuser456", 50]],
+      amount: 50,
+    });
 
     // Check whether the debt was successfully reduced by 50.
     await debtModel
@@ -167,6 +180,54 @@ describe("Test for debt routes", () => {
       .then((debt) => {
         expect(debt.amount).toBe(50);
       });
+
+    const borrowerDebt = await userDebtModel.findOne({
+      username: "testuser123",
+    });
+    const lenderDebt = await userDebtModel.findOne({
+      username: "testuser456",
+    });
+    expect(borrowerDebt.netDebt).toBe(50);
+    expect(lenderDebt.netDebt).toBe(-50);
+
+    const settlement = await expenseModel.findOne({ title: "SETTLEMENT" });
+    expect(settlement.borrowers).toEqual([["testuser456", 50]]);
+  });
+
+  test("POST /debts/settle rolls back debt changes when history fails", async () => {
+    await debtModel.create({
+      from: "alice",
+      to: "bob",
+      amount: 100,
+    });
+    await userDebtModel.create({ username: "alice", netDebt: 100 });
+    await userDebtModel.create({ username: "bob", netDebt: -100 });
+    const saveSettlement = jest
+      .spyOn(expenseModel.prototype, "save")
+      .mockRejectedValueOnce(new Error("Forced settlement history failure."));
+
+    const server = supertest(app);
+    try {
+      await server
+        .post("/debts/settle")
+        .send({
+          from: "bob",
+          to: "alice",
+          amount: 50,
+        })
+        .expect(500);
+
+      const debt = await debtModel.findOne({ from: "alice", to: "bob" });
+      const borrowerDebt = await userDebtModel.findOne({ username: "alice" });
+      const lenderDebt = await userDebtModel.findOne({ username: "bob" });
+
+      expect(debt.amount).toBe(100);
+      expect(borrowerDebt.netDebt).toBe(100);
+      expect(lenderDebt.netDebt).toBe(-100);
+      await expect(expenseModel.countDocuments({})).resolves.toBe(0);
+    } finally {
+      saveSettlement.mockRestore();
+    }
   });
 
   // Check whether we can delete the debt we created between two users.

@@ -161,19 +161,4 @@ describe("Test for expense routes", () => {
       processNewDebt.mockRestore();
     }
   });
-
-  // Check whether we can add a settlement between two users as an expense.
-  test("POST /expenses/settlement", async () => {
-    const server = supertest(app);
-    await server
-      .post("/expenses/settlement")
-      .send({
-        title: "SETTLEMENT",
-        author: "testuser456",
-        lender: "testuser456",
-        borrowers: [["testuser123", 100]],
-        amount: 100,
-      })
-      .expect(201);
-  });
 });

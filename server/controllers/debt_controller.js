@@ -1,4 +1,5 @@
 const debtModel = require("../models/debt");
+const expenseModel = require("../models/expense");
 const optimisedDebtModel = require("../models/optimised_debt");
 const helpers = require("./helpers/index");
 
@@ -80,17 +81,30 @@ exports.settleDebt = async (request, response) => {
       );
     }
 
-    // The borrower owes less, so the lender owes more.
+    // The borrower owes less, and the lender is owed less.
     await helpers.adjustUserDebt(
       request.body.from,
+      request.body.amount,
+      session,
+    );
+    await helpers.adjustUserDebt(
+      request.body.to,
       -request.body.amount,
       session,
     );
-    await helpers.adjustUserDebt(request.body.to, request.body.amount, session);
 
     // Recalculate debts to minimise the number of transactions, as this
     // settlement may have changed the optimal strategy.
     await helpers.simplifyDebts(session);
+
+    const settlement = new expenseModel({
+      title: "SETTLEMENT",
+      author: request.body.to,
+      lender: request.body.to,
+      borrowers: [[request.body.from, request.body.amount]],
+      amount: request.body.amount,
+    });
+    await settlement.save({ session });
 
     const settlementType =
       existingDebt.amount === request.body.amount ? "fully" : "partially";
@@ -101,10 +115,18 @@ exports.settleDebt = async (request, response) => {
       status: 200,
       message: `Debt from '${request.body.from}' to '${request.body.to}' ${settlementType}\
         settled and ${settlementAction} successfully.`,
+      settlement,
     };
   });
 
-  response.status(result.status).send(result.message);
+  if (result.status !== 200) {
+    return response.status(result.status).send(result.message);
+  }
+
+  response.status(result.status).json({
+    message: result.message,
+    settlement: result.settlement,
+  });
 };
 
 // Delete a debt between a lender and borrower.
