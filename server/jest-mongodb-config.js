@@ -8,5 +8,9 @@ module.exports = {
     instance: {
       dbName: "fairsplit-test",
     },
+    replSet: {
+      count: 1,
+      storageEngine: "wiredTiger",
+    },
   },
 };

@@ -3,6 +3,7 @@ const supertest = require("supertest");
 const mongoose = require("mongoose");
 
 const debtsRouter = require("../routes/debts.js");
+const helpers = require("../controllers/helpers");
 const debtModel = require("../models/debt");
 const optimisedDebtModel = require("../models/optimised_debt");
 const userDebtModel = require("../models/user_debt");
@@ -18,6 +19,9 @@ describe("Test for debt routes", () => {
     connection = await mongoose.connect(globalThis.__MONGO_URI__, {
       dbName: "fairsplit-debts-test",
     });
+    await debtModel.syncIndexes();
+    await optimisedDebtModel.syncIndexes();
+    await userDebtModel.syncIndexes();
   });
 
   afterEach(async () => {
@@ -85,6 +89,48 @@ describe("Test for debt routes", () => {
       .expect((response) => {
         expect(response.body.error).toMatch(/integer number of pence/);
       });
+  });
+
+  test("POST /debts/add coalesces concurrent matching debts", async () => {
+    const server = supertest(app);
+    await userDebtModel.create({ username: "alice", netDebt: 0 });
+    await userDebtModel.create({ username: "bob", netDebt: 0 });
+
+    await Promise.all(
+      Array.from({ length: 8 }, () => {
+        return server
+          .post("/debts/add")
+          .send({ from: "alice", to: "bob", amount: 1 })
+          .expect(201);
+      }),
+    );
+
+    const debts = await debtModel.find({ from: "alice", to: "bob" });
+    expect(debts).toHaveLength(1);
+    expect(debts[0].amount).toBe(8);
+
+    const aliceDebt = await userDebtModel.findOne({ username: "alice" });
+    const bobDebt = await userDebtModel.findOne({ username: "bob" });
+    expect(aliceDebt.netDebt).toBe(8);
+    expect(bobDebt.netDebt).toBe(-8);
+  });
+
+  test("simplifyDebts coalesces concurrent optimised debt rebuilds", async () => {
+    await userDebtModel.create({ username: "alice", netDebt: 10 });
+    await userDebtModel.create({ username: "bob", netDebt: -10 });
+
+    await Promise.all(
+      Array.from({ length: 8 }, () => {
+        return helpers.simplifyDebts();
+      }),
+    );
+
+    const optimisedDebts = await optimisedDebtModel.find({
+      from: "alice",
+      to: "bob",
+    });
+    expect(optimisedDebts).toHaveLength(1);
+    expect(optimisedDebts[0].amount).toBe(10);
   });
 
   // Check whether we can get the new debt between two users.
