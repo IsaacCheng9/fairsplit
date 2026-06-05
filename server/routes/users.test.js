@@ -10,10 +10,13 @@ describe("Test for user routes", () => {
   const app = express();
   app.use(express.json());
   app.use(usersRouter);
+  let connection;
 
   beforeAll(async () => {
     // Connect to the mock database.
-    connection = await mongoose.connect(globalThis.__MONGO_URI__);
+    connection = await mongoose.connect(globalThis.__MONGO_URI__, {
+      dbName: "fairsplit-users-test",
+    });
   });
 
   afterAll(async () => {
@@ -21,7 +24,7 @@ describe("Test for user routes", () => {
     await userModel.deleteOne({ username: "testuser123" });
     // Delete the debt record for the user we created.
     await userDebtModel.deleteOne({ username: "testuser123" });
-    mongoose.connection.close();
+    connection.connection.close();
   });
 
   // Check whether we can get a list of all users.
@@ -41,6 +44,58 @@ describe("Test for user routes", () => {
         lastName: "User",
       })
       .expect(201);
+  });
+
+  test("POST /users rejects missing fields", async () => {
+    const server = supertest(app);
+    await server
+      .post("/users")
+      .send({
+        username: "testuser456",
+      })
+      .expect(400)
+      .expect((response) => {
+        expect(response.body.error).toMatch(/First name/);
+      });
+  });
+
+  test("POST /users rejects over-length names", async () => {
+    const server = supertest(app);
+    await server
+      .post("/users")
+      .send({
+        username: "testuser456",
+        firstName: "A".repeat(31),
+        lastName: "User",
+      })
+      .expect(400)
+      .expect((response) => {
+        expect(response.body.error).toMatch(/30 characters or fewer/);
+      });
+  });
+
+  test("POST /users rejects duplicate usernames", async () => {
+    const server = supertest(app);
+    await server
+      .post("/users")
+      .send({
+        username: "duplicateuser",
+        firstName: "Test",
+        lastName: "User",
+      })
+      .expect(201);
+
+    await server
+      .post("/users")
+      .send({
+        username: "duplicateuser",
+        firstName: "Test",
+        lastName: "User",
+      })
+      .expect(409)
+      .expect((response) => {
+        expect(response.body.error).toMatch(/already exists/);
+      });
   });
 
   // Check whether our user was created.

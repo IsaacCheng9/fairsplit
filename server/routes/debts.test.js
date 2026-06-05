@@ -4,20 +4,30 @@ const mongoose = require("mongoose");
 
 const debtsRouter = require("../routes/debts.js");
 const debtModel = require("../models/debt");
+const optimisedDebtModel = require("../models/optimised_debt");
 const userDebtModel = require("../models/user_debt");
 
 describe("Test for debt routes", () => {
   const app = express();
   app.use(express.json());
   app.use(debtsRouter);
+  let connection;
 
   beforeAll(async () => {
     // Connect to the mock database.
-    connection = await mongoose.connect(globalThis.__MONGO_URI__);
+    connection = await mongoose.connect(globalThis.__MONGO_URI__, {
+      dbName: "fairsplit-debts-test",
+    });
   });
 
-  afterAll(async () => {
-    mongoose.connection.close();
+  afterEach(async () => {
+    await debtModel.deleteMany({});
+    await optimisedDebtModel.deleteMany({});
+    await userDebtModel.deleteMany({});
+  });
+
+  afterAll(() => {
+    connection.connection.close();
   });
 
   // Check whether we can get a list of all debts.
@@ -43,6 +53,38 @@ describe("Test for debt routes", () => {
         amount: 100,
       })
       .expect(201);
+  });
+
+  test("POST /debts/add rejects negative amounts", async () => {
+    const server = supertest(app);
+    await server
+      .post("/debts/add")
+      .send({
+        from: "testuser123",
+        to: "testuser456",
+        amount: -100,
+      })
+      .expect(400)
+      .expect((response) => {
+        expect(response.body.error).toMatch(/greater than 0 pence/);
+      });
+
+    await expect(debtModel.countDocuments({})).resolves.toBe(0);
+  });
+
+  test("POST /debts/add rejects non-integer pence amounts", async () => {
+    const server = supertest(app);
+    await server
+      .post("/debts/add")
+      .send({
+        from: "testuser123",
+        to: "testuser456",
+        amount: 100.5,
+      })
+      .expect(400)
+      .expect((response) => {
+        expect(response.body.error).toMatch(/integer number of pence/);
+      });
   });
 
   // Check whether we can get the new debt between two users.
@@ -83,6 +125,12 @@ describe("Test for debt routes", () => {
 
   // Check whether we can delete the debt we created between two users.
   test("DELETE /debts/:from/:to", async () => {
+    await debtModel.create({
+      from: "testuser123",
+      to: "testuser456",
+      amount: 100,
+    });
+
     const server = supertest(app);
     await server.delete("/debts/testuser123/testuser456").expect(200);
   });
