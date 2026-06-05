@@ -1,4 +1,5 @@
 import { React, useState, createRef } from "react";
+import { apiPath } from "../api";
 import "../styles/group_users.css";
 import User from "./user";
 import AddUser from "./add_user";
@@ -20,9 +21,6 @@ function GroupUsers(props) {
 
   // Ref to user select for settling
   let userSelectRef = createRef();
-
-  // Server URL
-  const apiUrl = "http://localhost:3001";
 
   // Returns styles to grey out button
   function disabledBtnStyles() {
@@ -50,7 +48,7 @@ function GroupUsers(props) {
     setSettleAmount("");
 
     // Call endpoint
-    let settleDebtResponse = await fetch(`${apiUrl}/debts/settle`, {
+    let settleDebtResponse = await fetch(apiPath("/debts/settle"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
