@@ -17,6 +17,9 @@ describe("Test for user routes", () => {
     connection = await mongoose.connect(globalThis.__MONGO_URI__, {
       dbName: "fairsplit-users-test",
     });
+    // Ensure unique indexes exist before duplicate-key assertions run.
+    await userModel.init();
+    await userDebtModel.init();
   });
 
   afterAll(async () => {
