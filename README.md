@@ -48,6 +48,8 @@ MONGODB_URI="<uri>"
 ```
 
 4. Save the file.
+5. Optional: add `CORS_ORIGIN="<origin>"` if the client is not served from
+   `http://localhost:3000`.
 
 ### Running the Server
 
@@ -55,7 +57,7 @@ MONGODB_URI="<uri>"
 2. Ensure that you're in the root directory: `fairsplit`
 3. Navigate to the server directory: `cd server`
 4. Install dependencies: `npm install`
-5. Run the server: `node app`
+5. Run the server: `npm start`
 
 ### Running the Client
 
