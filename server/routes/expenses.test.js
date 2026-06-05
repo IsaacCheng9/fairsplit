@@ -3,6 +3,7 @@ const supertest = require("supertest");
 const mongoose = require("mongoose");
 
 const expensesRouter = require("../routes/expenses.js");
+const helpers = require("../controllers/helpers");
 const debtModel = require("../models/debt");
 const expenseModel = require("../models/expense");
 const optimisedDebtModel = require("../models/optimised_debt");
@@ -19,6 +20,9 @@ describe("Test for expense routes", () => {
     connection = await mongoose.connect(globalThis.__MONGO_URI__, {
       dbName: "fairsplit-expenses-test",
     });
+    await debtModel.syncIndexes();
+    await optimisedDebtModel.syncIndexes();
+    await userDebtModel.syncIndexes();
   });
 
   afterEach(async () => {
@@ -129,6 +133,33 @@ describe("Test for expense routes", () => {
       .expect((response) => {
         expect(response.body.error).toMatch(/Borrower 1/);
       });
+  });
+
+  test("POST /expenses rolls back history when debt processing fails", async () => {
+    const processNewDebt = jest
+      .spyOn(helpers, "processNewDebt")
+      .mockRejectedValueOnce(new Error("Forced ledger failure."));
+    const server = supertest(app);
+
+    try {
+      await server
+        .post("/expenses")
+        .send({
+          title: "rollbackexpense",
+          author: "testuser123",
+          lender: "testuser123",
+          borrowers: [["testuser456", 100]],
+          amount: 100,
+        })
+        .expect(500);
+
+      await expect(
+        expenseModel.countDocuments({ title: "rollbackexpense" }),
+      ).resolves.toBe(0);
+      await expect(debtModel.countDocuments({})).resolves.toBe(0);
+    } finally {
+      processNewDebt.mockRestore();
+    }
   });
 
   // Check whether we can add a settlement between two users as an expense.
