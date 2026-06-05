@@ -42,7 +42,7 @@ function GroupUsers(props) {
     let settleObject = {
       from: userSelectRef.current.value,
       to: props.group.activeUser,
-      amount: settleAmount * 100,
+      amount: Math.round(Number(settleAmount) * 100),
     };
 
     // Disable and clear form
@@ -58,9 +58,18 @@ function GroupUsers(props) {
       body: JSON.stringify(settleObject),
     });
 
+    const contentType = settleDebtResponse.headers.get("content-type") || "";
+    const responseBody = contentType.includes("application/json")
+      ? await settleDebtResponse.json()
+      : await settleDebtResponse.text();
+    const responseMessage =
+      typeof responseBody === "string"
+        ? responseBody
+        : responseBody.message || responseBody.error;
+
     // Reset styling and set message to response of API call
     setMsgClasses("group-members-msg");
-    setResponseMsg(await settleDebtResponse.text());
+    setResponseMsg(responseMessage);
 
     // Add class with 0 opacity to trigger fade transition after 1.5s of showing message
     setTimeout(() => {
@@ -69,7 +78,7 @@ function GroupUsers(props) {
 
     // If successful update debts
     if (settleDebtResponse.status === 200) {
-      props.onClick(settleObject);
+      props.onClick(responseBody.settlement);
     }
   }
 

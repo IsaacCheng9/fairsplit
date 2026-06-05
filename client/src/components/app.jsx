@@ -147,42 +147,22 @@ function App() {
   }
 
   // Update group state after a user settles up
-  async function updateDebt(settleObject) {
+  async function updateDebt(settlement) {
+    const settledUsername = settlement.borrowers[0][0];
+    const settledAmount = settlement.amount;
+    const settledDebt = group.usersMinusActive.debts[settledUsername];
+
     // Calculate outstanding balance
-    group.usersMinusActive.debts[settleObject.from].amount -=
-      settleObject.amount;
-    group.usersMinusActive.outstandingBalance -= settleObject.amount;
-
-    // Create settlement object with the same structure as an expense
-    let settlement = {
-      title: "SETTLEMENT",
-      lender: settleObject.to,
-      amount: settleObject.amount,
-      author: settleObject.to,
-      borrowers: [settleObject.from, settleObject.amount],
-    };
-
-    // Add settlement as expense for now
-    let validExpense = await fetch(
-      "http://localhost:3000/expenses/settlement",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(settlement),
+    if (settledDebt) {
+      settledDebt.amount -= settledAmount;
+      if (settledDebt.amount <= 0) {
+        delete group.usersMinusActive.debts[settledUsername];
       }
-    );
-
-    let response = await validExpense.json();
-
-    if (validExpense.ok) {
-      // Add settlement to array of expenses
-      group.expenses.unshift(response);
-    } else {
-      // Display error message
-      console.error(response.error);
     }
+    group.usersMinusActive.outstandingBalance -= settledAmount;
+
+    // Add settlement to array of expenses
+    group.expenses.unshift(settlement);
 
     setGroup({
       ...group,

@@ -14,13 +14,6 @@ app.post(
   asyncHandler(expenseController.addExpense),
 );
 
-// Temporary route for adding settlement as expense.
-app.post(
-  "/expenses/settlement",
-  validateExpense,
-  asyncHandler(expenseController.addSettlement),
-);
-
 app.use(errorHandler);
 
 module.exports = app;
