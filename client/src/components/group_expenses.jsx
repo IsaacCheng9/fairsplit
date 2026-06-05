@@ -1,5 +1,6 @@
 import React, { useState, createRef } from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { apiPath } from "../api";
 import "../styles/group_expenses.css";
 import Expense from "./expense";
 import AddExpense from "./add_expense";
@@ -17,7 +18,7 @@ function GroupExpenses(props) {
   // Add expense data to db
   async function addExpense(expense) {
     // Call route to add expense to db
-    let validExpense = await fetch("http://localhost:3000/expenses", {
+    let validExpense = await fetch(apiPath("/expenses"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,12 +65,12 @@ function GroupExpenses(props) {
             ? "£" +
               String(
                 (props.group.usersMinusActive.outstandingBalance / 100).toFixed(
-                  2
-                )
+                  2,
+                ),
               ).substring(1)
             : "£" +
               (props.group.usersMinusActive.outstandingBalance / 100).toFixed(
-                2
+                2,
               )}
         </span>
       </h2>

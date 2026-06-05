@@ -41,7 +41,7 @@ function AddUser(props) {
     } else {
       // Add classes that will animate the add user button
       setTransitionClass(
-        transitionClass + " add-user-plus-clicked x-rotate y-rotate"
+        transitionClass + " add-user-plus-clicked x-rotate y-rotate",
       );
 
       // Add class that will animate the cross SVG icon on the add user button
@@ -64,7 +64,18 @@ function AddUser(props) {
         className={inputClass}
         type="text"
       ></input>
-      <div className={transitionClass} onClick={addTransformClass}>
+      <div
+        aria-label="Add user"
+        className={transitionClass}
+        onClick={addTransformClass}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            addTransformClass();
+          }
+        }}
+        role="button"
+        tabIndex="0"
+      >
         <svg
           width="30"
           height="30"

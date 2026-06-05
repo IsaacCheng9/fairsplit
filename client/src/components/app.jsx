@@ -2,13 +2,13 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import "../styles/app.css";
+import { apiPath } from "../api";
+import AddUser from "./add_user";
 import GroupExpenses from "./group_expenses";
 import GroupUsers from "./group_users";
 import UserSwitching from "./user_switching";
 
 function App() {
-  const apiUrl = "http://localhost:3001";
-
   // Use this as global group
   let [group, setGroup] = useState({
     name: "Expenses",
@@ -23,10 +23,11 @@ function App() {
       outstandingBalance: 0,
     },
   });
+  let [isLoading, setIsLoading] = useState(true);
 
   // Gets all debt from db
   async function getAllDebt() {
-    let response = await fetch(`${apiUrl}/debts`);
+    let response = await fetch(apiPath("/debts"));
     let data = await response.json();
     return data;
   }
@@ -34,7 +35,7 @@ function App() {
   // Update Debts when expense is added
   async function updateDebts() {
     // Get Debts
-    let debtResponse = await fetch(`${apiUrl}/debts`);
+    let debtResponse = await fetch(apiPath("/debts"));
     const updatedDebt = await debtResponse.json();
     group.debts = updatedDebt;
     setActiveUserDebt();
@@ -62,14 +63,14 @@ function App() {
 
   // Gets all expenses from db
   async function getAllExpenses() {
-    const response = await fetch(`${apiUrl}/expenses`);
+    const response = await fetch(apiPath("/expenses"));
     const data = await response.json();
     return data;
   }
 
   // Gets all users from db
   async function getAllUsers() {
-    const response = await fetch(`${apiUrl}/users`);
+    const response = await fetch(apiPath("/users"));
     const data = await response.json();
     return data;
   }
@@ -91,20 +92,28 @@ function App() {
 
   // Updates global group with data from db
   async function loadDataIntoGroup() {
-    const debt = await getAllDebt();
-    const expenses = await getAllExpenses();
-    const users = await getAllUsers();
-    group = {
-      ...group,
-      expenses: expenses.reverse(),
-      users: users,
-      activeUser: users[0].username,
-      debts: debt,
-      usersMinusActive: {
-        users: users.slice(1),
-      },
-    };
-    setActiveUserDebt();
+    try {
+      const debt = await getAllDebt();
+      const expenses = await getAllExpenses();
+      const users = await getAllUsers();
+      const activeUser = users.length > 0 ? users[0].username : "";
+      group = {
+        ...group,
+        expenses: expenses.reverse(),
+        users: users,
+        activeUser: activeUser,
+        debts: debt,
+        usersMinusActive: {
+          ...group.usersMinusActive,
+          users: activeUser ? users.slice(1) : [],
+        },
+      };
+      setActiveUserDebt();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   // Load all users and expenses into group
@@ -128,7 +137,7 @@ function App() {
 
   async function updateGroup(user) {
     // Add user to db
-    await fetch(`${apiUrl}/users`, {
+    const response = await fetch(apiPath("/users"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -136,12 +145,25 @@ function App() {
       body: JSON.stringify(user),
     });
 
+    const createdUser = await response.json();
+    if (!response.ok) {
+      console.error(createdUser.error);
+      return;
+    }
+
+    const users = [...group.users, createdUser];
+    const activeUser = group.activeUser || createdUser.username;
+    const usersMinusActive = users.filter((user) => {
+      return user.username !== activeUser;
+    });
+
     setGroup({
       ...group,
-      users: [...group.users, user],
+      users: users,
+      activeUser: activeUser,
       usersMinusActive: {
         ...group.usersMinusActive,
-        users: [...group.usersMinusActive.users, user],
+        users: usersMinusActive,
       },
     });
   }
@@ -177,7 +199,7 @@ function App() {
     }
 
     // Get data from API
-    let response = await fetch(`${apiUrl}/${endpoint}`);
+    let response = await fetch(apiPath(`/${endpoint}`));
     const debt = await response.json();
 
     // Update global state
@@ -188,6 +210,44 @@ function App() {
 
     // Re-render debts
     setGroup({ ...group });
+  }
+
+  if (isLoading) {
+    return (
+      <div className="App">
+        <div className="header-container">
+          <h1 className="title">FairSplit</h1>
+        </div>
+      </div>
+    );
+  }
+
+  if (group.users.length === 0) {
+    return (
+      <div className="App">
+        <div className="header-container">
+          <h1 className="title">FairSplit</h1>
+        </div>
+        <div className="main-content-container">
+          <div className="group-members-container">
+            <h1 className="group-members-title">Group Members</h1>
+            <div className="users-container">
+              <AddUser
+                onClick={(username) => {
+                  updateGroup({
+                    username: username,
+                    firstName: "Cosmo",
+                    lastName: "Kramer",
+                    indebted: false,
+                    balance: 0,
+                  });
+                }}
+              ></AddUser>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
